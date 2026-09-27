@@ -1,10 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { User } from 'firebase/auth';
 import { UserProfile } from '../types';
-import { subscribeToAuthState, logoutUser } from '../services/authService';
+import { getCurrentLocalProfile, logoutUser } from '../services/authService';
 
 interface AuthContextType {
-  firebaseUser: User | null;
+  firebaseUser: { uid: string; email?: string } | null;
   profile: UserProfile | null;
   loading: boolean;
   isAdmin: boolean;
@@ -22,26 +21,31 @@ const AuthContext = createContext<AuthContextType>({
 });
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [firebaseUser, setFirebaseUser] = useState<User | null>(null);
-  const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [profile, setProfile] = useState<UserProfile | null>(() => getCurrentLocalProfile());
+  const [loading, setLoading] = useState(false);
+
+  const updateState = () => {
+    const p = getCurrentLocalProfile();
+    setProfile(p);
+  };
 
   useEffect(() => {
-    const unsubscribe = subscribeToAuthState((user, userProfile) => {
-      setFirebaseUser(user);
-      setProfile(userProfile);
-      setLoading(false);
-    });
-    return unsubscribe;
+    updateState();
+    window.addEventListener('trustforge_auth_changed', updateState);
+    window.addEventListener('storage', updateState);
+    return () => {
+      window.removeEventListener('trustforge_auth_changed', updateState);
+      window.removeEventListener('storage', updateState);
+    };
   }, []);
 
   const handleLogout = async () => {
     await logoutUser();
-    setFirebaseUser(null);
     setProfile(null);
   };
 
   const isAdmin = profile?.role === 'admin';
+  const firebaseUser = profile ? { uid: profile.id, email: profile.email } : null;
 
   return (
     <AuthContext.Provider
@@ -51,7 +55,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         loading,
         isAdmin,
         logout: handleLogout,
-        refreshProfile: () => {}
+        refreshProfile: updateState
       }}
     >
       {children}

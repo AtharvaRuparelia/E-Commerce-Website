@@ -1,292 +1,373 @@
-import {
-  collection,
-  doc,
-  setDoc,
-  getDocs,
-  updateDoc,
-  deleteDoc,
-  onSnapshot,
-  query,
-  orderBy
-} from 'firebase/firestore';
-import { db } from '../config/firebase';
 import { MenuItem } from '../types';
 
-const MENU_COLLECTION = 'menu';
-
-export const INITIAL_MENU_ITEMS: Omit<MenuItem, 'id'>[] = [
-  // --- BURGERS (100% Pure Veg) ---
+export const INITIAL_YANTRA_ITEMS: MenuItem[] = [
+  // --- COPPER YANTRA SECTION ---
   {
-    name: 'Paneer Tikka Burger',
-    category: 'Burgers',
-    price: 9.90,
-    priceINR: 199,
-    description: 'Charred spiced paneer slab, mint chutney mayo, crisp pickled onions & melted cheddar on toasted brioche.',
-    imageUrl: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80',
+    id: 'yantra-1',
+    name: 'Shree Yantra',
+    section: 'Copper Yantra',
+    category: 'Shree Yantra',
+    price: 1499,
+    description: 'Masterfully etched pure copper Shree Yantra with precise sacred 3D geometric energy alignments for wealth, harmony, and prosperity.',
+    imageUrl: '/items/shree-yantra.jpg',
     isAvailable: true,
-    isVeg: true,
     rating: 4.9,
     badge: 'BESTSELLER',
-    stockCountRemaining: 24,
-    preparationTimeMinutes: 10
-  },
-  {
-    name: 'Smash Veggie Burger',
-    category: 'Burgers',
-    price: 8.90,
-    priceINR: 179,
-    description: 'Crispy spiced potato & sweet corn smash patty with spicy peri peri sauce and crunchy lettuce.',
-    imageUrl: 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80',
-    isAvailable: true,
-    isVeg: true,
-    rating: 4.8,
-    badge: 'CRISPY',
-    stockCountRemaining: 18,
-    preparationTimeMinutes: 8
-  },
-  {
-    name: 'Classic Veggie Cheeseburger',
-    category: 'Burgers',
-    price: 8.50,
-    priceINR: 169,
-    description: 'The all-time campus classic grilled potato & herb patty with double cheese, mustard relish and pickles.',
-    imageUrl: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=600&q=80',
-    isAvailable: true,
-    isVeg: true,
-    rating: 4.8,
-    badge: 'FAVORITE',
-    stockCountRemaining: 30,
-    preparationTimeMinutes: 7
-  },
-  {
-    name: 'Spicy Paneer Zinger Burger',
-    category: 'Burgers',
-    price: 10.50,
-    priceINR: 219,
-    description: 'Extra crispy battered cottage cheese block tossed in fiery ghost chili spice with crunchy coleslaw.',
-    imageUrl: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=600&q=80',
-    isAvailable: true,
-    isVeg: true,
-    rating: 4.9,
-    badge: 'HOT 🔥',
-    stockCountRemaining: 12,
-    preparationTimeMinutes: 10
-  },
-
-  // --- SIDES ---
-  {
-    name: 'Waffle Fries Cone (Large)',
-    category: 'Sides',
-    price: 4.90,
-    priceINR: 110,
-    description: 'Crispy criss-cross cut potato waffle fries dusted with smoky peri-peri seasoning and garlic dip.',
-    imageUrl: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80',
-    isAvailable: true,
-    isVeg: true,
-    rating: 4.9,
-    badge: 'CRISPY',
     stockCountRemaining: 35,
-    preparationTimeMinutes: 5
+    minSafetyLimit: 5,
+    metalWeightGrams: 250,
+    dimensionsInches: '6x6 in',
+    etchingQuality: 'Precision Deep Etched (0.8mm Copper)'
   },
   {
-    name: 'Crispy Onion Rings',
-    category: 'Sides',
-    price: 4.50,
-    priceINR: 99,
-    description: 'Golden beer-battered thick sweet onion rings served steaming hot with tangy dipping sauce.',
-    imageUrl: 'https://images.unsplash.com/photo-1639024471283-03518883512d?auto=format&fit=crop&w=600&q=80',
+    id: 'yantra-2',
+    name: 'Kuber Yantra',
+    section: 'Copper Yantra',
+    category: 'Kuber Yantra',
+    price: 1199,
+    description: 'Authentic Lord Kuber sacred copper grid matrix. Formulated for shop counters, office desks, and home lockers to attract abundance and financial stability.',
+    imageUrl: '/items/kuber-yantra.jpg',
     isAvailable: true,
-    isVeg: true,
-    rating: 4.6,
-    stockCountRemaining: 15,
-    preparationTimeMinutes: 6
-  },
-  {
-    name: 'Classic Salted French Fries',
-    category: 'Sides',
-    price: 3.90,
-    priceINR: 80,
-    description: 'Double-fried hand-cut golden Russet potato fries tossed in fine Himalayan rock salt.',
-    imageUrl: 'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=600&q=80',
-    isAvailable: true,
-    isVeg: true,
-    rating: 4.7,
-    stockCountRemaining: 40,
-    preparationTimeMinutes: 4
-  },
-
-  // --- DESSERTS ---
-  {
-    name: 'Strawberry Dream Cake',
-    category: 'Desserts',
-    price: 5.50,
-    priceINR: 130,
-    description: 'Layered fluffy sponge cake filled with Mahabaleshwar fresh strawberry compote and whipped cream.',
-    imageUrl: 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=600&q=80',
-    isAvailable: true,
-    isVeg: true,
-    rating: 4.9,
-    badge: 'SWEET',
-    stockCountRemaining: 10,
-    preparationTimeMinutes: 3
-  },
-  {
-    name: 'Chocolate Lava Truffle',
-    category: 'Desserts',
-    price: 5.90,
-    priceINR: 140,
-    description: 'Warm molten dark chocolate cake served with vanilla bean soft serve scoop.',
-    imageUrl: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80',
-    isAvailable: true,
-    isVeg: true,
-    rating: 4.9,
-    stockCountRemaining: 8,
-    preparationTimeMinutes: 4
-  },
-
-  // --- DRINKS ---
-  {
-    name: 'Cold Coffee with Ice Cream',
-    category: 'Drinks',
-    price: 3.90,
-    priceINR: 90,
-    description: 'Rich thick blended espresso cold coffee topped with a creamy scoop of vanilla ice cream.',
-    imageUrl: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80',
-    isAvailable: true,
-    isVeg: true,
     rating: 4.8,
-    badge: 'POPULAR',
-    stockCountRemaining: 25,
-    preparationTimeMinutes: 3
+    badge: 'HIGH DEMAND',
+    stockCountRemaining: 18,
+    minSafetyLimit: 5,
+    metalWeightGrams: 180,
+    dimensionsInches: '5x5 in',
+    etchingQuality: 'Traditional Shop Etched'
   },
   {
-    name: 'Fresh Mint Lemon Soda',
-    category: 'Drinks',
-    price: 2.90,
-    priceINR: 60,
-    description: 'Sparkling refreshing soda infused with crushed mint leaves, fresh lime juice and black salt.',
-    imageUrl: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80',
+    id: 'yantra-3',
+    name: 'Mahalakshmi Yantra',
+    section: 'Copper Yantra',
+    category: 'Mahalakshmi Yantra',
+    price: 2499,
+    description: '8-Form divine Mahalakshmi geometry engraved on heavy 99.9% pure copper sheet. Ideal for Diwali Lakshmi Pooja and temple altars.',
+    imageUrl: '/items/mahalakshmi-yantra.jpg',
     isAvailable: true,
-    isVeg: true,
+    rating: 5.0,
+    badge: 'PREMIUM',
+    stockCountRemaining: 12,
+    minSafetyLimit: 3,
+    metalWeightGrams: 450,
+    dimensionsInches: '9x9 in',
+    etchingQuality: 'Heavy Duty Metal Cut & Etched'
+  },
+  {
+    id: 'yantra-4',
+    name: 'Surya Yantra',
+    section: 'Copper Yantra',
+    category: 'Surya Yantra',
+    price: 899,
+    description: 'Sun god sacred mathematical diagram etched in pure copper with protective lacquer coating. Promotes leadership, focus, and good health.',
+    imageUrl: '/items/surya-yantra.jpg',
+    isAvailable: true,
     rating: 4.7,
+    badge: 'POPULAR',
+    stockCountRemaining: 22,
+    minSafetyLimit: 5,
+    metalWeightGrams: 150,
+    dimensionsInches: '4x4 in',
+    etchingQuality: 'Laser Precision Etched'
+  },
+  {
+    id: 'yantra-5',
+    name: 'Vastu Dosh Nivaran Yantra',
+    section: 'Copper Yantra',
+    category: 'Vastu Yantra',
+    price: 2999,
+    description: 'Comprehensive 13-in-1 Vastu correction copper framework designed to neutralize architectural directional flaws in homes and commercial properties.',
+    imageUrl: '/items/vastu-dosh-nivaran-yantra.jpg',
+    isAvailable: true,
+    rating: 4.9,
+    badge: 'RECOMMENDED',
+    stockCountRemaining: 8,
+    minSafetyLimit: 4,
+    metalWeightGrams: 600,
+    dimensionsInches: '12x12 in',
+    etchingQuality: 'Master Artisan Hand Finish'
+  },
+  {
+    id: 'yantra-6',
+    name: 'Mahamrityunjaya Yantra',
+    section: 'Copper Yantra',
+    category: 'Mahamrityunjaya Yantra',
+    price: 1299,
+    description: 'Sacred Lord Shiva Yantra for protection against illness, negative energies, and untimely mishaps. Deep etched 0.8mm copper sheet.',
+    imageUrl: '/items/mahamrityunjaya-yantra.jpg',
+    isAvailable: true,
+    rating: 4.9,
+    badge: 'SHIELD OF PROTECTION',
+    stockCountRemaining: 15,
+    minSafetyLimit: 5,
+    metalWeightGrams: 200,
+    dimensionsInches: '6x6 in',
+    etchingQuality: '0.8mm Deep Acid Etched'
+  },
+  {
+    id: 'yantra-7',
+    name: 'Saraswati Yantra',
+    section: 'Copper Yantra',
+    category: 'Saraswati Yantra',
+    price: 1199,
+    description: 'Dedicated to Goddess Saraswati. Enhances concentration, academic success, and artistic clarity.',
+    imageUrl: '/items/saraswati-yantra.jpg',
+    isAvailable: true,
+    rating: 4.8,
+    badge: 'FOR STUDENTS',
+    stockCountRemaining: 25,
+    minSafetyLimit: 5,
+    metalWeightGrams: 180,
+    dimensionsInches: '6x6 in',
+    etchingQuality: '0.8mm Acid Etched'
+  },
+
+  // --- POOJA PRODUCTS SECTION ---
+  // Sub-category: Aggarbatti
+  {
+    id: 'pooja-1',
+    name: 'Chandan Agarbatti',
+    section: 'Pooja Products',
+    category: 'Aggarbatti',
+    price: 249,
+    description: '100% natural Mysore Sandalwood aromatic incense sticks. Hand-rolled with natural essential oils for divine tranquility during daily prayers.',
+    imageUrl: '/items/chandan-agarbatti.jpg',
+    isAvailable: true,
+    rating: 4.9,
+    badge: 'AROMATIC',
+    stockCountRemaining: 50,
+    minSafetyLimit: 10,
+    metalWeightGrams: 250
+  },
+  {
+    id: 'pooja-2',
+    name: 'Mogra Agarbatti',
+    section: 'Pooja Products',
+    category: 'Aggarbatti',
+    price: 199,
+    description: 'Refreshing floral incense sticks crafted from natural white Mogra & Kewra flower extracts. Charcoal-free formula providing long-lasting fragrance.',
+    imageUrl: '/items/mogra-agarbatti.jpg',
+    isAvailable: true,
+    rating: 4.8,
+    stockCountRemaining: 40,
+    minSafetyLimit: 10,
+    metalWeightGrams: 200
+  },
+
+  // Sub-category: Dhoop Batti
+  {
+    id: 'pooja-3',
+    name: 'Rose Dhoop Batti',
+    section: 'Pooja Products',
+    category: 'Dhoop Batti',
+    price: 299,
+    description: 'Balaji Premium Rose wet dhoop batti crafted with natural Indian rose extracts for soothing aromatic prayer rituals.',
+    imageUrl: '/items/rose-dhoop-batti.jpg',
+    isAvailable: true,
+    rating: 4.9,
+    badge: 'PREMIUM ROSE',
     stockCountRemaining: 30,
-    preparationTimeMinutes: 2
+    minSafetyLimit: 8,
+    metalWeightGrams: 220
+  },
+  {
+    id: 'pooja-4',
+    name: 'Kewda Dhoop Batti',
+    section: 'Pooja Products',
+    category: 'Dhoop Batti',
+    price: 249,
+    description: 'Balaji Premium Thick Kewda bamboo-less dhoop sticks infused with natural screwpine flower fragrance for long-lasting aroma.',
+    imageUrl: '/items/kewda-dhoop-batti.jpg',
+    isAvailable: true,
+    rating: 4.8,
+    badge: 'KEWDA FLAVOR',
+    stockCountRemaining: 25,
+    minSafetyLimit: 5,
+    metalWeightGrams: 180
+  },
+
+  // Sub-category: Dhoop
+  {
+    id: 'pooja-5',
+    name: 'Guggle Dhoop',
+    section: 'Pooja Products',
+    category: 'Dhoop',
+    price: 180,
+    description: 'Pure authentic Guggle resin for traditional temple-style aromatic purification smoke.',
+    imageUrl: '/items/guggle-dhoop.jpg',
+    isAvailable: true,
+    rating: 4.9,
+    badge: 'PURE GUGGLE',
+    stockCountRemaining: 60,
+    minSafetyLimit: 12,
+    metalWeightGrams: 150
+  },
+
+  // Sub-category: Mala
+  {
+    id: 'pooja-6',
+    name: 'Rudraksha Mala',
+    section: 'Pooja Products',
+    category: 'Mala',
+    price: 899,
+    description: 'Authentic 5-faced Nepal Rudraksha rosary mala certified for mantra chanting, meditation, and daily wearing.',
+    imageUrl: '/items/rudraksha-mala.jpg',
+    isAvailable: true,
+    rating: 5.0,
+    badge: 'CERTIFIED',
+    stockCountRemaining: 20,
+    minSafetyLimit: 5,
+    metalWeightGrams: 110
+  },
+  {
+    id: 'pooja-7',
+    name: 'Tulsi Mala',
+    section: 'Pooja Products',
+    category: 'Mala',
+    price: 499,
+    description: 'Handcrafted sacred Tulsi wood mala beads blessed for Vishnu & Krishna bhakti prayers.',
+    imageUrl: '/items/tulsi-mala.jpg',
+    isAvailable: true,
+    rating: 4.9,
+    stockCountRemaining: 30,
+    minSafetyLimit: 8,
+    metalWeightGrams: 80
+  },
+
+  // Sub-category: Copper Products
+  {
+    id: 'pooja-8',
+    name: 'Copper Pooja Thali Set',
+    section: 'Pooja Products',
+    category: 'Copper Products',
+    price: 1899,
+    description: '7-Piece complete ritual set including heavy copper thali, diya, agarbatti stand, bell, water kalash, spoon, and kumkum katori.',
+    imageUrl: '/items/copper-thali-set.jpg',
+    isAvailable: true,
+    rating: 4.9,
+    badge: '7 PIECE SET',
+    stockCountRemaining: 15,
+    minSafetyLimit: 5,
+    metalWeightGrams: 850,
+    dimensionsInches: '11 in Dia'
+  },
+  {
+    id: 'pooja-9',
+    name: 'Copper Kalash',
+    section: 'Pooja Products',
+    category: 'Copper Products',
+    price: 799,
+    description: 'Traditional heavy gauge seamless copper kalash with sacred Swastik & Om engravings for Abhishek rituals.',
+    imageUrl: '/items/copper-kalash.jpg',
+    isAvailable: true,
+    rating: 4.8,
+    stockCountRemaining: 40,
+    minSafetyLimit: 8,
+    metalWeightGrams: 320,
+    dimensionsInches: '6 in Height'
+  },
+
+  // Sub-category: Others
+  {
+    id: 'pooja-10',
+    name: 'Bhimseni Kapoor',
+    section: 'Pooja Products',
+    category: 'Others',
+    price: 350,
+    description: 'Edible grade pure Bhimseni camphor flakes for Aarti, Havan, and medicinal air purification.',
+    imageUrl: '/items/bhimseni-kapoor.jpg',
+    isAvailable: true,
+    rating: 4.9,
+    stockCountRemaining: 45,
+    minSafetyLimit: 10,
+    metalWeightGrams: 200
+  },
+  {
+    id: 'pooja-11',
+    name: 'Kumkum',
+    section: 'Pooja Products',
+    category: 'Others',
+    price: 150,
+    description: 'Pure natural red vermilion kumkum powder for sacred tilak and ritual worship.',
+    imageUrl: '/items/kumkum.jpg',
+    isAvailable: true,
+    rating: 4.8,
+    stockCountRemaining: 50,
+    minSafetyLimit: 10,
+    metalWeightGrams: 100
   }
 ];
 
-export const seedInitialMenuIfEmpty = async (): Promise<void> => {
+const LOCAL_STORAGE_KEY = 'bhavna_pooja_catalog_v19';
+
+export function getLocalItems(): MenuItem[] {
   try {
-    const snap = await getDocs(collection(db, MENU_COLLECTION));
-    const names = snap.docs.map((d) => d.data().name);
-    const hasDuplicates = new Set(names).size !== names.length;
-
-    const needsReseed =
-      snap.empty ||
-      hasDuplicates ||
-      snap.docs.length > 15 ||
-      snap.docs.some((docSnap) => {
-        const data = docSnap.data();
-        return (
-          !data.priceINR ||
-          data.price > 50 ||
-          (data.imageUrl && (data.imageUrl.includes('cdn') || data.imageUrl.includes('website-files')))
-        );
-      });
-
-    if (needsReseed) {
-      console.log('Detected stale, broken, or duplicated menu data. Auto-cleaning menu...');
-      await forceReseedMenu();
+    const data = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (data) {
+      return JSON.parse(data);
     }
-  } catch (error) {
-    console.warn('Could not seed menu to Firestore:', error);
+  } catch (e) {
+    console.error('LocalStorage catalog error:', e);
   }
-};
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(INITIAL_YANTRA_ITEMS));
+  return INITIAL_YANTRA_ITEMS;
+}
 
-/** Wipes ALL existing menu items and re-seeds with the canonical INITIAL_MENU_ITEMS.
- *  Call this from the admin panel when images or item data need a full refresh. */
-export const forceReseedMenu = async (): Promise<void> => {
+export function saveLocalItems(items: MenuItem[]): void {
   try {
-    // 1. Delete every existing document in the menu collection
-    const snap = await getDocs(collection(db, MENU_COLLECTION));
-    const deletions = snap.docs.map((d) => deleteDoc(doc(db, MENU_COLLECTION, d.id)));
-    await Promise.all(deletions);
-
-    // 2. Re-seed with the updated INITIAL_MENU_ITEMS (local /items/ images)
-    for (const item of INITIAL_MENU_ITEMS) {
-      const itemRef = doc(collection(db, MENU_COLLECTION));
-      await setDoc(itemRef, {
-        ...item,
-        id: itemRef.id,
-        createdAt: Date.now()
-      });
-    }
-  } catch (error) {
-    console.error('forceReseedMenu failed:', error);
-    throw error;
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(items));
+    window.dispatchEvent(new Event('trustforge_menu_updated'));
+  } catch (e) {
+    console.error('Save local items error:', e);
   }
-};
+}
 
+export async function seedInitialMenuIfEmpty(): Promise<void> {
+  const current = getLocalItems();
+  if (!current || current.length === 0) {
+    saveLocalItems(INITIAL_YANTRA_ITEMS);
+  }
+}
 
-export const listenToMenuItems = (callback: (items: MenuItem[]) => void): (() => void) => {
-  // Trigger automatic check and repair if stale/duplicate data exists in Firestore
-  seedInitialMenuIfEmpty().catch((err) => console.warn('Auto-reseed check warning:', err));
+export function listenToMenuItems(callback: (items: MenuItem[]) => void): () => void {
+  callback(getLocalItems());
 
-  const q = query(collection(db, MENU_COLLECTION), orderBy('name'));
-  return onSnapshot(
-    q,
-    (snapshot) => {
-      if (snapshot.empty) {
-        callback(
-          INITIAL_MENU_ITEMS.map((item, idx) => ({
-            ...item,
-            id: `seed-item-${idx}`,
-            createdAt: Date.now()
-          }))
-        );
-        return;
-      }
-      const items: MenuItem[] = [];
-      const seenNames = new Set<string>();
-      snapshot.forEach((docSnap) => {
-        const data = docSnap.data() as Omit<MenuItem, 'id'>;
-        if (data.name && !seenNames.has(data.name)) {
-          seenNames.add(data.name);
-          items.push({ id: docSnap.id, ...data });
-        }
-      });
-      callback(items);
-    },
-    (err) => {
-      console.warn('Firestore offline, fallback to local initial menu:', err);
-      callback(
-        INITIAL_MENU_ITEMS.map((item, idx) => ({
-          ...item,
-          id: `local-item-${idx}`,
-          createdAt: Date.now()
-        }))
-      );
-    }
+  const handleUpdate = () => {
+    callback(getLocalItems());
+  };
+
+  window.addEventListener('trustforge_menu_updated', handleUpdate);
+  window.addEventListener('storage', handleUpdate);
+
+  return () => {
+    window.removeEventListener('trustforge_menu_updated', handleUpdate);
+    window.removeEventListener('storage', handleUpdate);
+  };
+}
+
+export async function updateMenuItemStock(productId: string, newStock: number): Promise<void> {
+  const items = getLocalItems();
+  const updated = items.map((item) =>
+    item.id === productId ? { ...item, stockCountRemaining: newStock, isAvailable: newStock > 0 } : item
   );
-};
+  saveLocalItems(updated);
+}
 
-export const addMenuItem = async (item: Omit<MenuItem, 'id' | 'createdAt'>): Promise<string> => {
-  const itemRef = doc(collection(db, MENU_COLLECTION));
-  await setDoc(itemRef, {
-    ...item,
-    id: itemRef.id,
-    createdAt: Date.now()
-  });
-  return itemRef.id;
-};
+export async function addOrUpdateYantraItem(item: MenuItem): Promise<void> {
+  const items = getLocalItems();
+  const index = items.findIndex((i) => i.id === item.id);
+  let updated: MenuItem[];
+  if (index >= 0) {
+    updated = [...items];
+    updated[index] = item;
+  } else {
+    updated = [item, ...items];
+  }
+  saveLocalItems(updated);
+}
 
-export const updateMenuItemAvailability = async (id: string, isAvailable: boolean): Promise<void> => {
-  const itemRef = doc(db, MENU_COLLECTION, id);
-  await updateDoc(itemRef, { isAvailable });
-};
-
-export const deleteMenuItem = async (id: string): Promise<void> => {
-  const itemRef = doc(db, MENU_COLLECTION, id);
-  await deleteDoc(itemRef);
-};
-
-export const toggleItemAvailability = updateMenuItemAvailability;
+export async function deleteYantraItem(productId: string): Promise<void> {
+  const items = getLocalItems();
+  const updated = items.filter((i) => i.id !== productId);
+  saveLocalItems(updated);
+}

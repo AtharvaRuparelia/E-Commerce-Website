@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { loginUser, registerUser } from '../services/authService';
 import { UserRole, UserProfile } from '../types';
+import { ShieldCheck, User, X, Lock, KeyRound, Info, Factory, CheckCircle2 } from 'lucide-react';
 
 interface BiteJoyAuthModalProps {
   isOpen: boolean;
@@ -14,22 +15,35 @@ export const BiteJoyAuthModal: React.FC<BiteJoyAuthModalProps> = ({
   onSuccess
 }) => {
   const [isRegister, setIsRegister] = useState(false);
-  const [role, setRole] = useState<UserRole>('student');
+  const [activeRole, setActiveRole] = useState<UserRole>('customer');
   const [name, setName] = useState('');
-  const [rollNumber, setRollNumber] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('customer@bhavnapooja.com');
+  const [password, setPassword] = useState('Customer@123');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   if (!isOpen) return null;
+
+  const handleRoleSelect = (selectedRole: UserRole) => {
+    setActiveRole(selectedRole);
+    setError('');
+    if (!isRegister) {
+      if (selectedRole === 'admin') {
+        setEmail('admin@bhavnapooja.com');
+        setPassword('Admin@123');
+      } else {
+        setEmail('customer@bhavnapooja.com');
+        setPassword('Customer@123');
+      }
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
     if (!email || !password) {
-      setError('Please provide both email and password.');
+      setError('Please enter both your email address and password.');
       return;
     }
 
@@ -37,198 +51,151 @@ export const BiteJoyAuthModal: React.FC<BiteJoyAuthModalProps> = ({
     try {
       let loggedProfile: UserProfile;
       if (isRegister) {
-        loggedProfile = await registerUser(name, email, password, role, rollNumber);
+        loggedProfile = await registerUser(name, email, password, activeRole);
       } else {
         loggedProfile = await loginUser(email, password);
       }
       onSuccess(loggedProfile);
       onClose();
     } catch (err: any) {
-      setError(err.message || 'Authentication failed.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleDemo = async (demoRole: UserRole) => {
-    setLoading(true);
-    setError('');
-    const demoEmail = demoRole === 'admin' ? 'admin@kayjevnar.edu' : 'student@kayjevnar.edu';
-    const demoPass = 'Pass123!';
-    try {
-      let loggedProfile: UserProfile;
-      try {
-        loggedProfile = await loginUser(demoEmail, demoPass);
-      } catch (e) {
-        loggedProfile = await registerUser(
-          demoRole === 'admin' ? 'Kitchen Head' : 'Campus Student',
-          demoEmail,
-          demoPass,
-          demoRole,
-          demoRole === 'student' ? '2026CS101' : undefined
-        );
-      }
-      onSuccess(loggedProfile);
-      onClose();
-    } catch (err: any) {
-      setError(err.message || 'Demo login failed.');
+      setError(err.message || 'Authentication failed. Invalid email or password.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="cart-modal-backdrop" style={{ justifyContent: 'center', alignItems: 'center' }} onClick={onClose}>
+    <div
+      className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+      onClick={onClose}
+    >
       <div
-        style={{
-          backgroundColor: '#FFFFFF',
-          width: '100%',
-          maxWidth: '440px',
-          borderRadius: '28px',
-          padding: '32px',
-          boxShadow: '0 20px 60px rgba(0, 0, 0, 0.2)',
-          position: 'relative'
-        }}
+        className="bg-stone-900 border border-amber-600/40 text-stone-100 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative space-y-5"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={onClose}
-          style={{ position: 'absolute', top: '20px', right: '20px', background: 'none', border: 'none', fontSize: '18px', cursor: 'pointer', color: '#9CA3AF' }}
+          className="absolute top-4 right-4 p-1.5 text-stone-400 hover:text-white bg-stone-800 rounded-full transition-colors"
         >
-          ✕
+          <X className="w-5 h-5" />
         </button>
 
-        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-          <img
-            src="/logo.png"
-            alt="काय Jevnar?"
-            style={{ height: '54px', maxWidth: '220px', objectFit: 'contain', margin: '0 auto 10px', display: 'block' }}
-          />
-          <h3 style={{ margin: '4px 0', fontSize: '22px', fontWeight: '900', color: '#161616' }}>
-            {isRegister
-              ? 'Create Account'
-              : (role === 'admin' ? 'Canteen Admin Portal' : 'Welcome to काय Jevnar')}
+        <div className="text-center space-y-1">
+          <h3 className="font-serif font-bold text-amber-200 text-xl">
+            {isRegister ? 'Register Account' : 'Sign In to Bhavna Pooja Center'}
           </h3>
-          <p style={{ margin: 0, fontSize: '13px', color: '#78716C' }}>
-            {isRegister
-              ? 'Join to skip long canteen queues'
-              : (role === 'admin' ? 'Sign in to access KDS & inventory controls' : 'Sign in to place campus orders')}
+          <p className="text-xs text-stone-400">
+            Select role & enter valid credentials below
           </p>
         </div>
 
+        {/* Role Selector Tabs (Customer vs Admin) */}
+        <div className="bg-stone-950 p-1.5 rounded-2xl border border-stone-800 grid grid-cols-2 gap-1">
+          <button
+            type="button"
+            onClick={() => handleRoleSelect('customer')}
+            className={`py-2.5 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 ${
+              activeRole === 'customer'
+                ? 'bg-amber-600 text-stone-950 shadow-md font-black'
+                : 'text-stone-400 hover:text-stone-200'
+            }`}
+          >
+            <User className="w-4 h-4" />
+            <span>Customer Login</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => handleRoleSelect('admin')}
+            className={`py-2.5 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 ${
+              activeRole === 'admin'
+                ? 'bg-amber-600 text-stone-950 shadow-md font-black'
+                : 'text-stone-400 hover:text-stone-200'
+            }`}
+          >
+            <Factory className="w-4 h-4" />
+            <span>Admin Login</span>
+          </button>
+        </div>
+
         {error && (
-          <div style={{ backgroundColor: '#FEE2E2', border: '1px solid #FCA5A5', color: '#B91C1C', padding: '10px 14px', borderRadius: '12px', fontSize: '13px', marginBottom: '16px', fontWeight: '600' }}>
+          <div className="bg-rose-950/90 border border-rose-800 text-rose-200 p-3 rounded-xl text-xs text-center font-medium shadow">
             {error}
           </div>
         )}
 
-        {/* Role Picker (Always visible for both Sign In and Register) */}
-        <div style={{ display: 'flex', background: '#F5F5F5', borderRadius: '14px', padding: '4px', marginBottom: '16px' }}>
-          <button
-            type="button"
-            onClick={() => {
-              setRole('student');
-              if (email === 'admin@kayjevnar.edu') {
-                setEmail('');
-                setPassword('');
-              }
-            }}
-            style={{
-              flex: 1,
-              padding: '10px 8px',
-              border: 'none',
-              borderRadius: '10px',
-              fontWeight: '800',
-              fontSize: '13px',
-              cursor: 'pointer',
-              background: role === 'student' ? '#FFFFFF' : 'transparent',
-              color: role === 'student' ? '#161616' : '#78716C',
-              boxShadow: role === 'student' ? '0 2px 6px rgba(0,0,0,0.08)' : 'none',
-              transition: 'all 0.2s ease'
-            }}
-          >
-            🎓 Student
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setRole('admin');
-              if (!email) {
-                setEmail('admin@kayjevnar.edu');
-                setPassword('Pass123!');
-              }
-            }}
-            style={{
-              flex: 1,
-              padding: '10px 8px',
-              border: 'none',
-              borderRadius: '10px',
-              fontWeight: '800',
-              fontSize: '13px',
-              cursor: 'pointer',
-              background: role === 'admin' ? '#FFFFFF' : 'transparent',
-              color: role === 'admin' ? '#161616' : '#78716C',
-              boxShadow: role === 'admin' ? '0 2px 6px rgba(0,0,0,0.08)' : 'none',
-              transition: 'all 0.2s ease'
-            }}
-          >
-            👨‍🍳 Canteen Admin
-          </button>
-        </div>
-
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        <form onSubmit={handleSubmit} className="space-y-4 text-xs">
           {isRegister && (
-            <>
+            <div className="space-y-1">
+              <label className="font-semibold text-stone-300">Full Name</label>
               <input
                 type="text"
-                placeholder="Full Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                style={{ padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #EBE6DF', fontSize: '14px', outline: 'none' }}
+                placeholder="Atharva Ruparelia"
+                className="w-full bg-stone-950 border border-stone-800 rounded-xl p-3 text-stone-200 focus:outline-none focus:border-amber-500"
+                required
               />
-              {role === 'student' && (
-                <input
-                  type="text"
-                  placeholder="Roll Number / Student ID"
-                  value={rollNumber}
-                  onChange={(e) => setRollNumber(e.target.value)}
-                  style={{ padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #EBE6DF', fontSize: '14px', outline: 'none' }}
-                />
-              )}
-            </>
+            </div>
           )}
 
-          <input
-            type="email"
-            placeholder="College Email Address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={{ padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #EBE6DF', fontSize: '14px', outline: 'none' }}
-          />
+          <div className="space-y-1">
+            <label className="font-semibold text-stone-300">
+              {activeRole === 'admin' ? 'Admin Email Address' : 'Customer Email Address'}
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder={activeRole === 'admin' ? 'admin@bhavnapooja.com' : 'customer@bhavnapooja.com'}
+              className="w-full bg-stone-950 border border-stone-800 rounded-xl p-3 text-stone-200 focus:outline-none focus:border-amber-500 font-mono"
+              required
+            />
+          </div>
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={{ padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #EBE6DF', fontSize: '14px', outline: 'none' }}
-          />
+          <div className="space-y-1">
+            <label className="font-semibold text-stone-300">Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              className="w-full bg-stone-950 border border-stone-800 rounded-xl p-3 text-stone-200 focus:outline-none focus:border-amber-500 font-mono"
+              required
+            />
+          </div>
 
           <button
             type="submit"
             disabled={loading}
-            style={{ backgroundColor: '#FF5B22', color: '#FFFFFF', border: 'none', padding: '14px', borderRadius: '14px', fontWeight: '900', fontSize: '15px', cursor: 'pointer', marginTop: '8px' }}
+            className="w-full py-3 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-stone-950 font-black rounded-xl shadow-lg transition-all active:scale-95 text-xs"
           >
-            {loading ? 'Processing...' : isRegister ? 'Register' : 'Sign In'}
+            {loading ? 'Validating Credentials...' : isRegister ? `Register as ${activeRole.toUpperCase()}` : `Sign In as ${activeRole.toUpperCase()}`}
           </button>
         </form>
 
-        <div style={{ textAlign: 'center', marginTop: '14px' }}>
+        {/* Registered Credentials Helper Box */}
+        <div className="bg-stone-950/90 p-3 rounded-2xl border border-stone-800 text-[11px] space-y-1">
+          <div className="flex justify-between items-center text-stone-400">
+            <span className="font-semibold text-amber-300">Active {activeRole.toUpperCase()} Credentials:</span>
+            <span className="font-mono text-stone-500">Preset Ready</span>
+          </div>
+          <p className="font-mono text-stone-300">
+            Email: <strong className="text-amber-200">{email}</strong>
+          </p>
+          <p className="font-mono text-stone-300">
+            Pass: <strong className="text-amber-200">{password}</strong>
+          </p>
+        </div>
+
+        <div className="text-center pt-1">
           <button
-            onClick={() => { setIsRegister(!isRegister); setError(''); }}
-            style={{ background: 'none', border: 'none', color: '#FF5B22', fontWeight: '800', fontSize: '13px', cursor: 'pointer' }}
+            onClick={() => {
+              setIsRegister(!isRegister);
+              setError('');
+            }}
+            className="text-xs text-amber-400 hover:underline font-medium"
           >
-            {isRegister ? 'Already have an account? Sign In' : "Don't have an account? Create One"}
+            {isRegister ? 'Already registered? Sign In' : 'Need a new account? Register here'}
           </button>
         </div>
       </div>

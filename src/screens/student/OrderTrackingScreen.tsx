@@ -1,508 +1,308 @@
 import React, { useState, useEffect } from 'react';
 import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-  ActivityIndicator
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { doc, onSnapshot } from 'firebase/firestore';
-import { db } from '../../config/firebase';
-import { Order } from '../../types';
-import { OrderProgressTracker } from '../../components/OrderProgressTracker';
-import { StatusBadge } from '../../components/StatusBadge';
-import { getItemPriceINR } from '../../utils/price';
+  PackageCheck,
+  Truck,
+  CheckCircle2,
+  Clock,
+  FileText,
+  MapPin,
+  ChevronRight,
+  ShieldCheck,
+  Sparkles,
+  RefreshCw
+} from 'lucide-react';
+import { Order, OrderStatus } from '../../types';
+import { listenToStudentOrders } from '../../services/orderService';
+import { useAuth } from '../../context/AuthContext';
+import { InvoiceModal } from '../../components/InvoiceModal';
 
 interface OrderTrackingScreenProps {
-  orderId: string;
-  onBackToMenu: () => void;
+  orderId?: string | null;
+  onBackToMenu?: () => void;
 }
 
 export const OrderTrackingScreen: React.FC<OrderTrackingScreenProps> = ({
   orderId,
   onBackToMenu
 }) => {
-  const [order, setOrder] = useState<Order | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { firebaseUser } = useAuth();
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [invoiceModalOpen, setInvoiceModalOpen] = useState(false);
 
   useEffect(() => {
-    const orderDoc = doc(db, 'orders', orderId);
-    const unsubscribe = onSnapshot(orderDoc, (docSnap) => {
-      if (docSnap.exists()) {
-        setOrder({ id: docSnap.id, ...(docSnap.data() as Omit<Order, 'id'>) });
+    const unsub = listenToStudentOrders(firebaseUser?.uid || 'guest-user', (fetchedOrders) => {
+      setOrders(fetchedOrders);
+      if (fetchedOrders.length > 0) {
+        if (orderId) {
+          const match = fetchedOrders.find((o) => o.id === orderId);
+          setSelectedOrder(match || fetchedOrders[0]);
+        } else {
+          setSelectedOrder(fetchedOrders[0]);
+        }
       }
-      setLoading(false);
-    }, (err) => {
-      console.warn('Error tracking order:', err);
-      setLoading(false);
     });
+    return unsub;
+  }, [firebaseUser, orderId]);
 
-    return unsubscribe;
-  }, [orderId]);
-
-  if (loading) {
+  if (orders.length === 0) {
     return (
-      <SafeAreaView style={styles.safeArea}>
-        <View style={styles.centerContainer}>
-          <ActivityIndicator size="large" color="#FF6B00" />
-          <Text style={styles.loadingText}>Connecting to campus kitchen...</Text>
-        </View>
-      </SafeAreaView>
+      <div className="w-full bg-[#120F0D] text-stone-100 min-h-screen flex items-center justify-center p-6">
+        <div className="bg-stone-900/90 border border-stone-800 rounded-3xl p-8 max-w-md text-center space-y-4 shadow-xl">
+          <div className="w-16 h-16 bg-amber-950/80 border border-amber-600/40 rounded-full flex items-center justify-center mx-auto text-amber-400">
+            <PackageCheck className="w-8 h-8" />
+          </div>
+          <h3 className="font-serif text-2xl font-bold text-amber-200">No Orders Found</h3>
+          <p className="text-xs text-stone-400">
+            You have not placed any copper Yantra orders yet. Select items from our catalog to receive live delivery status updates!
+          </p>
+          {onBackToMenu && (
+            <button
+              onClick={onBackToMenu}
+              className="px-6 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-stone-950 text-xs font-bold transition-all shadow"
+            >
+              Browse Yantra Catalog ➔
+            </button>
+          )}
+        </div>
+      </div>
     );
   }
 
-  if (!order) {
-    return (
-      <SafeAreaView style={styles.safeArea}>
-        <View style={styles.centerContainer}>
-          <Text style={styles.errorEmoji}>⚠️</Text>
-          <Text style={styles.errorTitle}>Order Not Found</Text>
-          <TouchableOpacity style={styles.primaryBtn} onPress={onBackToMenu}>
-            <Text style={styles.primaryBtnText}>Return to Menu</Text>
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
-    );
-  }
+  const currentOrder = selectedOrder || orders[0];
 
-  const isReady = order.status === 'Ready';
-  const isCompleted = order.status === 'Completed';
+  const statusSteps: { status: OrderStatus; label: string; desc: string; icon: React.ReactNode }[] = [
+    {
+      status: 'Placed',
+      label: 'Order Placed',
+      desc: 'Order verified & payment confirmed',
+      icon: <Clock className="w-4 h-4" />
+    },
+    {
+      status: 'Packed',
+      label: 'Shop Packed',
+      desc: 'Cleaned, ritual checked & securely boxed',
+      icon: <PackageCheck className="w-4 h-4" />
+    },
+    {
+      status: 'Dispatched',
+      label: 'In Transit',
+      desc: 'Handed to courier for doorstep delivery',
+      icon: <Truck className="w-4 h-4" />
+    },
+    {
+      status: 'Delivered',
+      label: 'Delivered',
+      desc: 'Successfully delivered to customer',
+      icon: <CheckCircle2 className="w-4 h-4" />
+    }
+  ];
+
+  const getStepIndex = (status: OrderStatus) => {
+    switch (status) {
+      case 'Placed':
+        return 0;
+      case 'Packed':
+      case 'Preparing':
+        return 1;
+      case 'Dispatched':
+      case 'Ready':
+        return 2;
+      case 'Delivered':
+      case 'Completed':
+        return 3;
+      default:
+        return 0;
+    }
+  };
+
+  const currentStepIdx = getStepIndex(currentOrder.status);
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.backBtn} onPress={onBackToMenu}>
-          <Text style={styles.backBtnText}>← Menu</Text>
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Live Order Tracking</Text>
-        <View style={{ width: 60 }} />
-      </View>
+    <div className="w-full bg-[#120F0D] text-stone-100 min-h-screen pb-16 pt-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone-800 pb-4">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs bg-amber-950 text-amber-300 font-mono px-2 py-0.5 rounded border border-amber-800">
+                LIVE ORDER TRACKING
+              </span>
+              <span className="text-xs text-stone-400 font-mono">ID: {currentOrder.orderNumber}</span>
+            </div>
+            <h1 className="text-2xl font-serif font-bold text-amber-200 mt-1">
+              Customer Order & Delivery Status
+            </h1>
+          </div>
 
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Ready Banner Alert */}
-        {isReady && (
-          <View style={styles.readyAlertBox}>
-            <Text style={styles.readyAlertIcon}>🔔</Text>
-            <View style={{ flex: 1 }}>
-              <Text style={styles.readyAlertTitle}>FOOD IS READY FOR PICKUP!</Text>
-              <Text style={styles.readyAlertSub}>
-                Please head to Counter #1 or #2 and show your Order Token.
-              </Text>
-            </View>
-          </View>
-        )}
+          <button
+            onClick={() => setInvoiceModalOpen(true)}
+            className="self-start sm:self-auto px-4 py-2 bg-stone-900 hover:bg-stone-800 text-amber-300 border border-amber-600/40 rounded-xl text-xs font-bold flex items-center gap-2 transition-colors"
+          >
+            <FileText className="w-4 h-4" />
+            <span>Download PDF Invoice</span>
+          </button>
+        </div>
 
-        {isCompleted && (
-          <View style={styles.completedAlertBox}>
-            <Text style={styles.readyAlertIcon}>✅</Text>
-            <View style={{ flex: 1 }}>
-              <Text style={styles.completedAlertTitle}>Order Completed & Collected</Text>
-              <Text style={styles.completedAlertSub}>Hope you enjoyed your campus meal!</Text>
-            </View>
-          </View>
-        )}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Main Delivery Progress Column */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Status Timeline Card */}
+            <div className="bg-stone-900/90 border border-stone-800 rounded-3xl p-6 sm:p-8 space-y-8 shadow-xl">
+              <div className="flex items-center justify-between">
+                <div>
+                  <span className="text-xs text-stone-400 block">Current Status</span>
+                  <span className="text-xl font-bold font-serif text-amber-400 flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-amber-500" />
+                    {currentOrder.status.toUpperCase()}
+                  </span>
+                </div>
 
-        {/* Big Pickup Token Card */}
-        <View style={styles.tokenCard}>
-          <Text style={styles.tokenLabel}>CANTEEN TICKET NUMBER</Text>
-          <Text style={styles.tokenNumber}>{order.orderNumber}</Text>
-          <View style={styles.statusBadgeWrapper}>
-            <StatusBadge status={order.status} size="large" />
-          </View>
-        </View>
+                <div className="text-right">
+                  <span className="text-xs text-stone-400 block">Pickup / Verification Code</span>
+                  <span className="text-2xl font-mono font-black text-amber-300 bg-stone-950 px-3 py-1 rounded-xl border border-stone-800 inline-block">
+                    {currentOrder.pickupOtp || '8942'}
+                  </span>
+                </div>
+              </div>
 
-        {/* Anti-Theft 4-Digit Pickup OTP Card */}
-        <View style={styles.otpCard}>
-          <View style={styles.otpHeaderBadge}>
-            <Text style={styles.otpHeaderBadgeText}>SHOW AT CANTEEN COUNTER</Text>
-          </View>
-          <Text style={styles.otpTitle}>YOUR 4-DIGIT PICKUP OTP</Text>
-          <View style={styles.otpDigitsRow}>
-            {(order.pickupOtp || order.orderNumber.replace('KJ-', '')).split('').map((digit, idx) => (
-              <View key={idx} style={styles.otpDigitBox}>
-                <Text style={styles.otpDigitText}>{digit}</Text>
-              </View>
-            ))}
-          </View>
-          <Text style={styles.otpSubtext}>
-            Kitchen staff will verify this PIN before handing over your food tray.
-          </Text>
-        </View>
+              {/* Progress Bar Timeline */}
+              <div className="relative py-4">
+                <div className="overflow-hidden h-2 mb-8 text-xs flex rounded bg-stone-950 border border-stone-800">
+                  <div
+                    style={{ width: `${((currentStepIdx + 1) / 4) * 100}%` }}
+                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-gradient-to-r from-amber-600 to-yellow-500 transition-all duration-500"
+                  />
+                </div>
 
-        {/* 4-Step Visual Tracker */}
-        <View style={styles.trackerCard}>
-          <Text style={styles.trackerTitle}>Kitchen Status Progression</Text>
-          <OrderProgressTracker status={order.status} />
+                <div className="grid grid-cols-4 gap-2 text-center">
+                  {statusSteps.map((step, idx) => {
+                    const isPassed = idx <= currentStepIdx;
+                    const isCurrent = idx === currentStepIdx;
 
-          <View style={styles.statusDescriptionBox}>
-            <Text style={styles.statusDescText}>
-              {order.status === 'Placed' &&
-                'Your order has been received by the canteen staff and is queued for preparation.'}
-              {order.status === 'Preparing' &&
-                'Chefs are currently preparing and cooking your fresh food in the kitchen.'}
-              {order.status === 'Ready' &&
-                'Your meal is packed and waiting at the counter. Pick it up with your token!'}
-              {order.status === 'Completed' &&
-                'Order has been successfully handed over.'}
-            </Text>
-          </View>
-        </View>
+                    return (
+                      <div key={step.status} className="flex flex-col items-center space-y-2">
+                        <div
+                          className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all ${
+                            isPassed
+                              ? 'bg-amber-600 border-amber-400 text-stone-950 shadow-lg'
+                              : 'bg-stone-950 border-stone-800 text-stone-600'
+                          }`}
+                        >
+                          {step.icon}
+                        </div>
+                        <div>
+                          <span
+                            className={`text-xs font-bold block ${
+                              isCurrent ? 'text-amber-300' : isPassed ? 'text-stone-200' : 'text-stone-500'
+                            }`}
+                          >
+                            {step.label}
+                          </span>
+                          <span className="text-[10px] text-stone-500 hidden sm:block">
+                            {step.desc}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
 
-        {/* Order Details */}
-        <View style={styles.detailsCard}>
-          <Text style={styles.detailsTitle}>Order Summary</Text>
+              {/* Shipping Address & Dispatch Note */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-stone-800 text-xs">
+                <div className="flex items-start gap-2 bg-stone-950/80 p-3 rounded-2xl border border-stone-800">
+                  <MapPin className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="text-stone-400 block font-semibold">Delivery Address</span>
+                    <span className="text-stone-200">
+                      {currentOrder.shippingAddress || '402 Vile Parle West, Juhu Scheme, Mumbai 400056'}
+                    </span>
+                  </div>
+                </div>
 
-          {order.items.map(({ menuItem, quantity }, idx) => (
-            <View key={idx} style={styles.summaryItemRow}>
-              <Text style={styles.summaryQty}>{quantity}x</Text>
-              <Text style={styles.summaryName}>{menuItem.name}</Text>
-              <Text style={styles.summaryPrice}>₹{getItemPriceINR(menuItem) * quantity}</Text>
-            </View>
-          ))}
+                <div className="flex items-start gap-2 bg-stone-950/80 p-3 rounded-2xl border border-stone-800">
+                  <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="text-stone-400 block font-semibold">Quality & Payment Verification</span>
+                    <span className="text-stone-200">
+                      Payment Status: <strong className="text-emerald-400">{currentOrder.paymentStatus || 'PAID'}</strong> | Direct-from-factory warranty applied.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-          {order.specialInstructions ? (
-            <View style={styles.noteBox}>
-              <Text style={styles.noteLabel}>Instructions:</Text>
-              <Text style={styles.noteText}>"{order.specialInstructions}"</Text>
-            </View>
-          ) : null}
+            {/* Order Items Listing */}
+            <div className="bg-stone-900/90 border border-stone-800 rounded-3xl p-6 space-y-4 shadow-xl">
+              <h3 className="font-serif font-bold text-amber-200 text-sm border-b border-stone-800 pb-3">
+                Order Items ({currentOrder.items.length})
+              </h3>
+              <div className="divide-y divide-stone-800">
+                {currentOrder.items.map((item, idx) => (
+                  <div key={idx} className="py-3 flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={item.menuItem.imageUrl}
+                        alt={item.menuItem.name}
+                        className="w-12 h-12 rounded-xl object-cover border border-stone-800"
+                      />
+                      <div>
+                        <h4 className="text-xs font-bold text-stone-100">{item.menuItem.name}</h4>
+                        <p className="text-[11px] text-stone-400 font-mono">
+                          Qty: {item.quantity} | {item.menuItem.metalWeightGrams ? `${item.menuItem.metalWeightGrams}g` : ''}{' '}
+                          {item.menuItem.dimensionsInches || ''}
+                        </p>
+                      </div>
+                    </div>
+                    <span className="text-xs font-mono font-bold text-amber-400">
+                      ₹{item.menuItem.price * item.quantity}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
 
-          <View style={styles.divider} />
+          {/* Right Sidebar: Order History List */}
+          <div className="space-y-4">
+            <h3 className="font-serif font-bold text-stone-200 text-sm">Past Order History</h3>
+            <div className="space-y-3">
+              {orders.map((ord) => (
+                <div
+                  key={ord.id}
+                  onClick={() => setSelectedOrder(ord)}
+                  className={`p-4 rounded-2xl border cursor-pointer transition-all ${
+                    currentOrder.id === ord.id
+                      ? 'bg-amber-950/40 border-amber-600/60 shadow-lg'
+                      : 'bg-stone-900/80 border-stone-800 hover:border-stone-700'
+                  }`}
+                >
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="font-mono font-bold text-amber-300">{ord.orderNumber}</span>
+                    <span className="text-[10px] text-stone-400">
+                      {new Date(ord.createdAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs mt-2">
+                    <span className="text-stone-300 font-medium">₹{ord.total}</span>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-stone-950 text-amber-400 border border-stone-800">
+                      {ord.status}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
 
-          <View style={styles.totalRow}>
-            <Text style={styles.totalLabel}>Total Paid</Text>
-            <Text style={styles.totalPrice}>₹{order.total}</Text>
-          </View>
-        </View>
-
-        <TouchableOpacity style={styles.anotherOrderBtn} onPress={onBackToMenu}>
-          <Text style={styles.anotherOrderText}>Order Another Meal 🍱</Text>
-        </TouchableOpacity>
-      </ScrollView>
-    </SafeAreaView>
+      {/* Invoice Generator Modal */}
+      <InvoiceModal
+        isOpen={invoiceModalOpen}
+        onClose={() => setInvoiceModalOpen(false)}
+        order={currentOrder}
+      />
+    </div>
   );
 };
-
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: '#F9FAFB'
-  },
-  centerContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 24
-  },
-  loadingText: {
-    marginTop: 14,
-    fontSize: 15,
-    color: '#6B7280',
-    fontWeight: '600'
-  },
-  errorEmoji: {
-    fontSize: 50,
-    marginBottom: 10
-  },
-  errorTitle: {
-    fontSize: 20,
-    fontWeight: '800',
-    color: '#111827',
-    marginBottom: 20
-  },
-  primaryBtn: {
-    backgroundColor: '#FF6B00',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 12
-  },
-  primaryBtnText: {
-    color: '#FFFFFF',
-    fontWeight: '700',
-    fontSize: 15
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    backgroundColor: '#FFFFFF',
-    borderBottomWidth: 1,
-    borderBottomColor: '#F3F4F6'
-  },
-  backBtn: {
-    paddingVertical: 6,
-    paddingHorizontal: 8
-  },
-  backBtnText: {
-    fontSize: 15,
-    fontWeight: '700',
-    color: '#FF6B00'
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: '800',
-    color: '#111827'
-  },
-  scrollContent: {
-    padding: 16,
-    paddingBottom: 40
-  },
-  readyAlertBox: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#ECFDF5',
-    borderWidth: 2,
-    borderColor: '#10B981',
-    borderRadius: 16,
-    padding: 14,
-    marginBottom: 16,
-    gap: 12
-  },
-  readyAlertIcon: {
-    fontSize: 28
-  },
-  readyAlertTitle: {
-    color: '#065F46',
-    fontWeight: '900',
-    fontSize: 14,
-    letterSpacing: 0.5
-  },
-  readyAlertSub: {
-    color: '#047857',
-    fontSize: 12,
-    marginTop: 2,
-    fontWeight: '600'
-  },
-  completedAlertBox: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#F3F4F6',
-    borderRadius: 16,
-    padding: 14,
-    marginBottom: 16,
-    gap: 12
-  },
-  completedAlertTitle: {
-    color: '#374151',
-    fontWeight: '800',
-    fontSize: 14
-  },
-  completedAlertSub: {
-    color: '#6B7280',
-    fontSize: 12,
-    marginTop: 2
-  },
-  tokenCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 20,
-    padding: 22,
-    alignItems: 'center',
-    marginBottom: 16,
-    borderWidth: 1,
-    borderColor: '#E5E7EB',
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.08,
-    shadowRadius: 10,
-    elevation: 3
-  },
-  tokenLabel: {
-    fontSize: 12,
-    fontWeight: '800',
-    color: '#6B7280',
-    letterSpacing: 1.5
-  },
-  tokenNumber: {
-    fontSize: 44,
-    fontWeight: '900',
-    color: '#111827',
-    letterSpacing: 2,
-    marginVertical: 8
-  },
-  statusBadgeWrapper: {
-    marginTop: 4
-  },
-  otpCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 20,
-    padding: 20,
-    alignItems: 'center',
-    marginBottom: 16,
-    borderWidth: 2,
-    borderColor: '#111827',
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    elevation: 4
-  },
-  otpHeaderBadge: {
-    backgroundColor: '#BA2424',
-    paddingHorizontal: 12,
-    paddingVertical: 4,
-    borderRadius: 20,
-    marginBottom: 8
-  },
-  otpHeaderBadgeText: {
-    color: '#FFFFFF',
-    fontSize: 10,
-    fontWeight: '900',
-    letterSpacing: 1
-  },
-  otpTitle: {
-    fontSize: 12,
-    fontWeight: '800',
-    color: '#4B5563',
-    letterSpacing: 1,
-    marginBottom: 8
-  },
-  otpDigitsRow: {
-    flexDirection: 'row',
-    gap: 10,
-    marginVertical: 6
-  },
-  otpDigitBox: {
-    width: 52,
-    height: 60,
-    backgroundColor: '#FED97C',
-    borderRadius: 14,
-    borderWidth: 2.5,
-    borderColor: '#111827',
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#000000',
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    elevation: 2
-  },
-  otpDigitText: {
-    fontSize: 28,
-    fontWeight: '900',
-    color: '#111827'
-  },
-  otpSubtext: {
-    fontSize: 11,
-    color: '#6B7280',
-    textAlign: 'center',
-    marginTop: 8,
-    fontWeight: '600',
-    paddingHorizontal: 10
-  },
-  trackerCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 20,
-    padding: 18,
-    marginBottom: 16,
-    borderWidth: 1,
-    borderColor: '#E5E7EB'
-  },
-  trackerTitle: {
-    fontSize: 15,
-    fontWeight: '800',
-    color: '#111827',
-    marginBottom: 12
-  },
-  statusDescriptionBox: {
-    marginTop: 14,
-    backgroundColor: '#FFF7ED',
-    padding: 12,
-    borderRadius: 12,
-    borderLeftWidth: 4,
-    borderLeftColor: '#FF6B00'
-  },
-  statusDescText: {
-    fontSize: 13,
-    color: '#C2410C',
-    fontWeight: '600',
-    lineHeight: 18
-  },
-  detailsCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 20,
-    padding: 18,
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: '#E5E7EB'
-  },
-  detailsTitle: {
-    fontSize: 16,
-    fontWeight: '800',
-    color: '#111827',
-    marginBottom: 12
-  },
-  summaryItemRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 6
-  },
-  summaryQty: {
-    fontSize: 14,
-    fontWeight: '800',
-    color: '#FF6B00',
-    width: 32
-  },
-  summaryName: {
-    fontSize: 14,
-    color: '#374151',
-    flex: 1,
-    fontWeight: '500'
-  },
-  summaryPrice: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: '#111827'
-  },
-  noteBox: {
-    backgroundColor: '#F9FAFB',
-    padding: 10,
-    borderRadius: 8,
-    marginTop: 10
-  },
-  noteLabel: {
-    fontSize: 11,
-    fontWeight: '700',
-    color: '#6B7280'
-  },
-  noteText: {
-    fontSize: 13,
-    color: '#374151',
-    fontStyle: 'italic',
-    marginTop: 2
-  },
-  divider: {
-    height: 1,
-    backgroundColor: '#F3F4F6',
-    marginVertical: 12
-  },
-  totalRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  totalLabel: {
-    fontSize: 15,
-    fontWeight: '700',
-    color: '#4B5563'
-  },
-  totalPrice: {
-    fontSize: 20,
-    fontWeight: '900',
-    color: '#111827'
-  },
-  anotherOrderBtn: {
-    backgroundColor: '#111827',
-    paddingVertical: 15,
-    borderRadius: 14,
-    alignItems: 'center'
-  },
-  anotherOrderText: {
-    color: '#FFFFFF',
-    fontSize: 15,
-    fontWeight: '800'
-  }
-});

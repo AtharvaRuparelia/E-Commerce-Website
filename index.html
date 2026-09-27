@@ -1,10 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <script>
+      // Clear service workers and browser caches to prevent stale site rendering
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for (let r of registrations) r.unregister();
+        });
+      }
+      if ('caches' in window) {
+        caches.keys().then(function(names) {
+          for (let name of names) caches.delete(name);
+        });
+      }
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>काय Jevnar? - Savor Every Delicious Bite • 100% Pure Veg Canteen</title>
-    <meta content="काय Jevnar? Instant campus canteen pre-ordering with live Kitchen Display System (KDS), real-time ticket queue, and anti-theft 4-digit pickup OTP verification." name="description" />
+    <title>Bhavna Pooja Center | Authentic Sacred Copper Yantras & Pooja Essentials</title>
+    <meta content="Bhavna Pooja Center - Authentic sacred copper Yantras, Pooja thalis, and ritual essentials directly from our manufacturing workshop with real-time inventory tracking." name="description" />
     <link rel="icon" type="image/png" href="/logo.png" />
     
     <!-- Google Fonts: Bebas Neue, Plus Jakarta Sans, Fredoka One -->

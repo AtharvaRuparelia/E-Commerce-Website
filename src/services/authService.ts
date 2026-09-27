@@ -1,96 +1,145 @@
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signInAnonymously,
-  signOut,
-  onAuthStateChanged,
-  User
-} from 'firebase/auth';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
-import { auth, db } from '../config/firebase';
 import { UserProfile, UserRole } from '../types';
 
-export const signInAsGuest = async (studentName: string = 'Campus Student'): Promise<UserProfile> => {
-  const cred = await signInAnonymously(auth);
-  const user = cred.user;
-  const profile: UserProfile = {
-    id: user.uid,
-    name: studentName.trim() || 'Campus Student',
-    email: `student_${user.uid.slice(0, 5)}@campus.edu`,
-    role: 'student',
-    rollNumber: `PUNE-${Math.floor(1000 + Math.random() * 9000)}`,
-    createdAt: Date.now()
-  };
-  await setDoc(doc(db, 'users', user.uid), profile);
-  return profile;
-};
+const AUTH_USER_KEY = 'bhavna_auth_session_v2';
+const REGISTERED_USERS_KEY = 'bhavna_registered_users_v2';
+
+export interface RegisteredAccount {
+  id: string;
+  name: string;
+  email: string;
+  pass: string;
+  role: UserRole;
+  phone?: string;
+  createdAt: number;
+}
+
+// Pre-seeded default valid accounts for testing
+const INITIAL_ACCOUNTS: RegisteredAccount[] = [
+  {
+    id: 'usr-customer-01',
+    name: 'Atharva Ruparelia',
+    email: 'customer@bhavnapooja.com',
+    pass: 'Customer@123',
+    role: 'customer',
+    phone: '9876543210',
+    createdAt: Date.now() - 3600000 * 24
+  },
+  {
+    id: 'usr-admin-01',
+    name: 'Bhavna Shop Admin',
+    email: 'admin@bhavnapooja.com',
+    pass: 'Admin@123',
+    role: 'admin',
+    phone: '9876543211',
+    createdAt: Date.now() - 3600000 * 48
+  }
+];
+
+export function getRegisteredAccounts(): RegisteredAccount[] {
+  try {
+    const data = localStorage.getItem(REGISTERED_USERS_KEY);
+    if (data) {
+      return JSON.parse(data);
+    }
+  } catch (e) {
+    console.error('LocalStorage registered users error:', e);
+  }
+  localStorage.setItem(REGISTERED_USERS_KEY, JSON.stringify(INITIAL_ACCOUNTS));
+  return INITIAL_ACCOUNTS;
+}
+
+export function saveRegisteredAccounts(accounts: RegisteredAccount[]): void {
+  try {
+    localStorage.setItem(REGISTERED_USERS_KEY, JSON.stringify(accounts));
+  } catch (e) {
+    console.error('Save registered users error:', e);
+  }
+}
 
 export const registerUser = async (
   name: string,
   email: string,
   pass: string,
-  role: UserRole = 'student',
+  role: UserRole = 'customer',
   rollNumber?: string,
   phone?: string
 ): Promise<UserProfile> => {
-  const cred = await createUserWithEmailAndPassword(auth, email.trim(), pass);
-  const user = cred.user;
+  const cleanEmail = email.trim().toLowerCase();
+  const accounts = getRegisteredAccounts();
 
-  const profileData: Record<string, any> = {
-    id: user.uid,
-    name: name.trim(),
-    email: email.trim().toLowerCase(),
-    role,
+  const existing = accounts.find((a) => a.email.toLowerCase() === cleanEmail);
+  if (existing) {
+    throw new Error('An account with this email address already exists. Please sign in instead.');
+  }
+
+  if (pass.length < 4) {
+    throw new Error('Password must be at least 4 characters long.');
+  }
+
+  const newAcc: RegisteredAccount = {
+    id: `usr-${Date.now()}`,
+    name: name.trim() || 'Valued Customer',
+    email: cleanEmail,
+    pass: pass.trim(),
+    role: role || 'customer',
+    phone: phone?.trim() || '9876543210',
     createdAt: Date.now()
   };
 
-  if (rollNumber?.trim()) profileData.rollNumber = rollNumber.trim();
-  if (phone?.trim()) profileData.phone = phone.trim();
+  saveRegisteredAccounts([...accounts, newAcc]);
 
-  await setDoc(doc(db, 'users', user.uid), profileData);
-  return profileData as UserProfile;
+  const profile: UserProfile = {
+    id: newAcc.id,
+    name: newAcc.name,
+    email: newAcc.email,
+    role: newAcc.role,
+    phone: newAcc.phone,
+    createdAt: newAcc.createdAt
+  };
+
+  localStorage.setItem(AUTH_USER_KEY, JSON.stringify(profile));
+  window.dispatchEvent(new Event('trustforge_auth_changed'));
+  return profile;
 };
 
 export const loginUser = async (email: string, pass: string): Promise<UserProfile> => {
-  const cred = await signInWithEmailAndPassword(auth, email.trim(), pass);
-  const user = cred.user;
-  const userDoc = await getDoc(doc(db, 'users', user.uid));
+  const cleanEmail = email.trim().toLowerCase();
+  const cleanPass = pass.trim();
 
-  if (!userDoc.exists()) {
-    // Fallback if registered without doc
-    const defaultProfile: UserProfile = {
-      id: user.uid,
-      name: email.split('@')[0],
-      email: email.toLowerCase(),
-      role: email.toLowerCase().includes('admin') ? 'admin' : 'student',
-      createdAt: Date.now()
-    };
-    await setDoc(doc(db, 'users', user.uid), defaultProfile);
-    return defaultProfile;
+  const accounts = getRegisteredAccounts();
+  const match = accounts.find(
+    (a) => a.email.toLowerCase() === cleanEmail && a.pass === cleanPass
+  );
+
+  if (!match) {
+    throw new Error('Invalid email or password. Please check your credentials or register a new account.');
   }
 
-  return userDoc.data() as UserProfile;
+  const profile: UserProfile = {
+    id: match.id,
+    name: match.name,
+    email: match.email,
+    role: match.role,
+    phone: match.phone,
+    createdAt: match.createdAt
+  };
+
+  localStorage.setItem(AUTH_USER_KEY, JSON.stringify(profile));
+  window.dispatchEvent(new Event('trustforge_auth_changed'));
+  return profile;
 };
 
 export const logoutUser = async (): Promise<void> => {
-  await signOut(auth);
+  localStorage.removeItem(AUTH_USER_KEY);
+  window.dispatchEvent(new Event('trustforge_auth_changed'));
 };
 
-export const getUserProfile = async (uid: string): Promise<UserProfile | null> => {
-  const userDoc = await getDoc(doc(db, 'users', uid));
-  if (!userDoc.exists()) return null;
-  return userDoc.data() as UserProfile;
-};
-
-export const subscribeToAuthState = (
-  callback: (user: User | null, profile: UserProfile | null) => void
-) => {
-  return onAuthStateChanged(auth, async (user) => {
-    if (!user) {
-      callback(null, null);
-    } else {
-      const profile = await getUserProfile(user.uid);
-      callback(user, profile);
-    }
-  });
+export const getCurrentLocalProfile = (): UserProfile | null => {
+  try {
+    const data = localStorage.getItem(AUTH_USER_KEY);
+    if (data) return JSON.parse(data);
+  } catch (e) {
+    console.error('Local auth error:', e);
+  }
+  return null;
 };
