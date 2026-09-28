@@ -1025,9 +1025,19 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
 
               {/* Embedded Google Map (7 cols) */}
               <div className="lg:col-span-7 bg-white dark:bg-stone-900 border border-amber-200 dark:border-stone-800 rounded-3xl overflow-hidden shadow-xl h-80 lg:h-auto min-h-[320px] relative">
+                {/* Red Google Maps Pin Overlay Label */}
+                <div className="absolute top-4 left-4 bg-white/95 dark:bg-stone-900/95 backdrop-blur border border-red-500/40 px-3.5 py-2 rounded-2xl shadow-xl flex items-center gap-2 z-10">
+                  <div className="w-5 h-5 bg-red-600 rounded-full flex items-center justify-center text-white shadow-sm shrink-0">
+                    <MapPin className="w-3.5 h-3.5 fill-white text-red-600" />
+                  </div>
+                  <span className="font-bold text-xs text-red-600 dark:text-red-400 font-serif tracking-wide">
+                    Bhavna Pooja Centre
+                  </span>
+                </div>
+
                 <iframe
                   title="Bhavna Pooja Centre Google Maps Location"
-                  src="https://maps.google.com/maps?q=18.955853,72.8274435&hl=en&z=17&output=embed"
+                  src="https://maps.google.com/maps?q=Bhavna+Pooja+Centre,+Madhav+Bagh+Compound,+Cawasji+Patel+Tank+Rd,+Marine+Lines+East,+Gulal+Wadi,+Bhuleshwar,+Mumbai,+Maharashtra+400004&hl=en&z=17&output=embed"
                   className="w-full h-full border-0 min-h-[320px]"
                   loading="lazy"
                   allowFullScreen
