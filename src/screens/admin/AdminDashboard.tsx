@@ -22,7 +22,11 @@ import { listenToAllOrders, updateOrderStatus } from '../../services/orderServic
 import { listenToFactoryBatches } from '../../services/factoryService';
 import { InvoiceModal } from '../../components/InvoiceModal';
 
-export const AdminDashboard: React.FC = () => {
+interface AdminDashboardProps {
+  isDarkMode?: boolean;
+}
+
+export const AdminDashboard: React.FC<AdminDashboardProps> = ({ isDarkMode = true }) => {
   const [activeTab, setActiveTab] = useState<'analytics' | 'orders' | 'inventory' | 'batches'>('analytics');
   const [products, setProducts] = useState<MenuItem[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
@@ -106,30 +110,44 @@ export const AdminDashboard: React.FC = () => {
   };
 
   return (
-    <div className="w-full min-h-screen pb-16 pt-6 transition-colors duration-300 bg-amber-50/60 text-stone-900 dark:bg-[#120F0D] dark:text-stone-100">
+    <div className={`w-full min-h-screen pb-16 pt-6 transition-colors duration-300 ${
+      isDarkMode ? 'bg-[#120F0D] text-stone-100' : 'bg-[#FAF7F2] text-stone-900'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         {/* Top Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-amber-200 dark:border-stone-800 pb-4">
+        <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b pb-4 ${
+          isDarkMode ? 'border-stone-800' : 'border-amber-200'
+        }`}>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs bg-amber-100 text-amber-900 border border-amber-300 dark:bg-amber-950 dark:text-amber-300 dark:border-amber-800 font-mono px-2 py-0.5 rounded font-bold">
+              <span className={`text-xs font-mono px-2 py-0.5 rounded font-bold border ${
+                isDarkMode 
+                  ? 'bg-amber-950 text-amber-300 border-amber-800' 
+                  : 'bg-amber-100 text-amber-900 border-amber-300'
+              }`}>
                 ADMINISTRATION & ANALYTICS
               </span>
-              <span className="text-xs text-stone-500 dark:text-stone-400 font-mono">Bhavna Pooja Center</span>
+              <span className={`text-xs font-mono ${isDarkMode ? 'text-stone-400' : 'text-stone-500'}`}>
+                Bhavna Pooja Center
+              </span>
             </div>
-            <h1 className="text-2xl font-serif font-bold text-stone-900 dark:text-amber-200 mt-1">
+            <h1 className={`text-2xl font-serif font-bold mt-1 ${
+              isDarkMode ? 'text-amber-200' : 'text-stone-900'
+            }`}>
               Central Admin Control Panel
             </h1>
           </div>
 
           {/* Navigation Tabs */}
-          <div className="flex items-center gap-2 bg-white dark:bg-stone-900 p-1.5 rounded-2xl border border-amber-200 dark:border-stone-800 shadow-sm">
+          <div className={`flex items-center gap-2 p-1.5 rounded-2xl border ${
+            isDarkMode ? 'bg-stone-900 border-stone-800' : 'bg-white border-amber-200 shadow-sm'
+          }`}>
             <button
               onClick={() => setActiveTab('analytics')}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                 activeTab === 'analytics'
                   ? 'bg-amber-600 text-white dark:text-stone-950 shadow'
-                  : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-200'
+                  : isDarkMode ? 'text-stone-400 hover:text-stone-200' : 'text-stone-600 hover:text-stone-900'
               }`}
             >
               Sales Analytics
@@ -139,7 +157,7 @@ export const AdminDashboard: React.FC = () => {
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                 activeTab === 'orders'
                   ? 'bg-amber-600 text-white dark:text-stone-950 shadow'
-                  : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-200'
+                  : isDarkMode ? 'text-stone-400 hover:text-stone-200' : 'text-stone-600 hover:text-stone-900'
               }`}
             >
               Order Dispatch ({orders.length})
@@ -149,7 +167,7 @@ export const AdminDashboard: React.FC = () => {
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                 activeTab === 'inventory'
                   ? 'bg-amber-600 text-white dark:text-stone-950 shadow'
-                  : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-200'
+                  : isDarkMode ? 'text-stone-400 hover:text-stone-200' : 'text-stone-600 hover:text-stone-900'
               }`}
             >
               Yantra Catalog ({products.length})
@@ -162,49 +180,65 @@ export const AdminDashboard: React.FC = () => {
           <div className="space-y-8">
             {/* KPI Metric Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-white/95 dark:bg-stone-900/90 border border-amber-200 dark:border-stone-800 rounded-3xl p-6 space-y-2 shadow-xl">
-                <span className="text-xs text-stone-500 dark:text-stone-400 font-semibold block">Total Revenue</span>
+              <div className={`border rounded-3xl p-6 space-y-2 shadow-xl ${
+                isDarkMode ? 'bg-stone-900/90 border-stone-800 text-stone-100' : 'bg-white border-amber-200 text-stone-900'
+              }`}>
+                <span className={`text-xs font-semibold block ${isDarkMode ? 'text-stone-400' : 'text-stone-500'}`}>Total Revenue</span>
                 <div className="flex items-center justify-between">
-                  <span className="text-2xl font-mono font-black text-amber-700 dark:text-amber-400">
+                  <span className={`text-2xl font-mono font-black ${isDarkMode ? 'text-amber-400' : 'text-amber-700'}`}>
                     ₹{totalRevenue.toLocaleString()}
                   </span>
-                  <div className="p-3 bg-amber-100 dark:bg-amber-950/80 border border-amber-300 dark:border-amber-700/50 rounded-2xl text-amber-800 dark:text-amber-400">
+                  <div className={`p-3 rounded-2xl border ${
+                    isDarkMode ? 'bg-amber-950/80 border-amber-700/50 text-amber-400' : 'bg-amber-100 border-amber-300 text-amber-800'
+                  }`}>
                     <DollarSign className="w-5 h-5" />
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white/95 dark:bg-stone-900/90 border border-amber-200 dark:border-stone-800 rounded-3xl p-6 space-y-2 shadow-xl">
-                <span className="text-xs text-stone-500 dark:text-stone-400 font-semibold block">Total Orders Processed</span>
+              <div className={`border rounded-3xl p-6 space-y-2 shadow-xl ${
+                isDarkMode ? 'bg-stone-900/90 border-stone-800 text-stone-100' : 'bg-white border-amber-200 text-stone-900'
+              }`}>
+                <span className={`text-xs font-semibold block ${isDarkMode ? 'text-stone-400' : 'text-stone-500'}`}>Total Orders Processed</span>
                 <div className="flex items-center justify-between">
-                  <span className="text-2xl font-mono font-black text-emerald-600 dark:text-emerald-400">
+                  <span className={`text-2xl font-mono font-black ${isDarkMode ? 'text-emerald-400' : 'text-emerald-700'}`}>
                     {totalOrdersCount}
                   </span>
-                  <div className="p-3 bg-emerald-100 dark:bg-emerald-950/80 border border-emerald-300 dark:border-emerald-700/50 rounded-2xl text-emerald-800 dark:text-emerald-400">
+                  <div className={`p-3 rounded-2xl border ${
+                    isDarkMode ? 'bg-emerald-950/80 border-emerald-700/50 text-emerald-400' : 'bg-emerald-100 border-emerald-300 text-emerald-800'
+                  }`}>
                     <Package className="w-5 h-5" />
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white/95 dark:bg-stone-900/90 border border-amber-200 dark:border-stone-800 rounded-3xl p-6 space-y-2 shadow-xl">
-                <span className="text-xs text-stone-500 dark:text-stone-400 font-semibold block">Warehouse Stock Count</span>
+              <div className={`border rounded-3xl p-6 space-y-2 shadow-xl ${
+                isDarkMode ? 'bg-stone-900/90 border-stone-800 text-stone-100' : 'bg-white border-amber-200 text-stone-900'
+              }`}>
+                <span className={`text-xs font-semibold block ${isDarkMode ? 'text-stone-400' : 'text-stone-500'}`}>Warehouse Stock Count</span>
                 <div className="flex items-center justify-between">
-                  <span className="text-2xl font-mono font-black text-amber-800 dark:text-amber-300">
+                  <span className={`text-2xl font-mono font-black ${isDarkMode ? 'text-amber-300' : 'text-amber-800'}`}>
                     {totalStockCount} Units
                   </span>
-                  <div className="p-3 bg-amber-50 dark:bg-stone-950 border border-amber-200 dark:border-stone-800 rounded-2xl text-amber-700 dark:text-amber-400">
+                  <div className={`p-3 rounded-2xl border ${
+                    isDarkMode ? 'bg-stone-950 border-stone-800 text-amber-400' : 'bg-amber-50 border-amber-200 text-amber-700'
+                  }`}>
                     <Factory className="w-5 h-5" />
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white/95 dark:bg-stone-900/90 border border-amber-200 dark:border-stone-800 rounded-3xl p-6 space-y-2 shadow-xl">
-                <span className="text-xs text-stone-500 dark:text-stone-400 font-semibold block">Low-Stock Warnings</span>
+              <div className={`border rounded-3xl p-6 space-y-2 shadow-xl ${
+                isDarkMode ? 'bg-stone-900/90 border-stone-800 text-stone-100' : 'bg-white border-amber-200 text-stone-900'
+              }`}>
+                <span className={`text-xs font-semibold block ${isDarkMode ? 'text-stone-400' : 'text-stone-500'}`}>Low-Stock Warnings</span>
                 <div className="flex items-center justify-between">
-                  <span className="text-2xl font-mono font-black text-rose-600 dark:text-rose-400">
+                  <span className={`text-2xl font-mono font-black ${isDarkMode ? 'text-rose-400' : 'text-rose-600'}`}>
                     {lowStockItems.length} Items
                   </span>
-                  <div className="p-3 bg-rose-100 dark:bg-rose-950/80 border border-rose-300 dark:border-rose-800 rounded-2xl text-rose-700 dark:text-rose-400">
+                  <div className={`p-3 rounded-2xl border ${
+                    isDarkMode ? 'bg-rose-950/80 border-rose-800 text-rose-400' : 'bg-rose-100 border-rose-300 text-rose-700'
+                  }`}>
                     <AlertTriangle className="w-5 h-5" />
                   </div>
                 </div>
@@ -213,14 +247,16 @@ export const AdminDashboard: React.FC = () => {
 
             {/* Low-Stock Alert Warning Banner */}
             {lowStockItems.length > 0 && (
-              <div className="bg-amber-100/80 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-600/60 rounded-3xl p-6 space-y-4">
+              <div className={`border rounded-3xl p-6 space-y-4 ${
+                isDarkMode ? 'bg-amber-950/40 border-amber-600/60' : 'bg-amber-100/90 border-amber-300'
+              }`}>
                 <div className="flex items-center gap-3">
-                  <AlertTriangle className="w-6 h-6 text-amber-600 dark:text-amber-400 animate-pulse" />
+                  <AlertTriangle className={`w-6 h-6 animate-pulse ${isDarkMode ? 'text-amber-400' : 'text-amber-700'}`} />
                   <div>
-                    <h3 className="font-serif font-bold text-amber-950 dark:text-amber-200 text-sm">
+                    <h3 className={`font-serif font-bold text-sm ${isDarkMode ? 'text-amber-200' : 'text-amber-950'}`}>
                       Automated Low-Stock Safety Threshold Alert (FR-12)
                     </h3>
-                    <p className="text-xs text-stone-600 dark:text-stone-400">
+                    <p className={`text-xs ${isDarkMode ? 'text-stone-400' : 'text-stone-600'}`}>
                       The following products have fallen below minimum safety inventory thresholds. Log a factory batch to restock.
                     </p>
                   </div>
@@ -230,15 +266,19 @@ export const AdminDashboard: React.FC = () => {
                   {lowStockItems.map((item) => (
                     <div
                       key={item.id}
-                      className="bg-white dark:bg-stone-950/90 p-4 rounded-2xl border border-amber-200 dark:border-stone-800 flex items-center justify-between text-xs shadow-sm"
+                      className={`p-4 rounded-2xl border flex items-center justify-between text-xs shadow-sm ${
+                        isDarkMode ? 'bg-stone-950/90 border-stone-800 text-stone-200' : 'bg-white border-amber-200 text-stone-900'
+                      }`}
                     >
                       <div>
-                        <span className="font-bold text-stone-900 dark:text-stone-200 block">{item.name}</span>
-                        <span className="text-stone-500 dark:text-stone-400 text-[10px]">
+                        <span className="font-bold block">{item.name}</span>
+                        <span className={`text-[10px] ${isDarkMode ? 'text-stone-400' : 'text-stone-500'}`}>
                           Min Safety Threshold: {item.minSafetyLimit || 5}
                         </span>
                       </div>
-                      <span className="bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 font-mono font-bold px-2.5 py-1 rounded border border-rose-300 dark:border-rose-800">
+                      <span className={`font-mono font-bold px-2.5 py-1 rounded border ${
+                        isDarkMode ? 'bg-rose-950 text-rose-300 border-rose-800' : 'bg-rose-100 text-rose-700 border-rose-300'
+                      }`}>
                         {item.stockCountRemaining ?? 0} Left
                       </span>
                     </div>
@@ -252,10 +292,16 @@ export const AdminDashboard: React.FC = () => {
         {/* TAB 2: ORDER DISPATCH CONTROL */}
         {activeTab === 'orders' && (
           <div className="space-y-4">
-            <h3 className="font-serif font-bold text-stone-900 dark:text-amber-200 text-base">Incoming Customer Orders</h3>
-            <div className="bg-white/95 dark:bg-stone-900/90 border border-amber-200 dark:border-stone-800 rounded-3xl p-6 overflow-x-auto shadow-xl">
+            <h3 className={`font-serif font-bold text-base ${isDarkMode ? 'text-amber-200' : 'text-stone-900'}`}>
+              Incoming Customer Orders
+            </h3>
+            <div className={`border rounded-3xl p-6 overflow-x-auto shadow-xl ${
+              isDarkMode ? 'bg-stone-900/90 border-stone-800' : 'bg-white border-amber-200'
+            }`}>
               <table className="w-full text-left text-xs">
-                <thead className="bg-amber-50 dark:bg-stone-950 text-stone-600 dark:text-stone-400 border-b border-amber-200 dark:border-stone-800">
+                <thead className={`border-b ${
+                  isDarkMode ? 'bg-stone-950 text-stone-400 border-stone-800' : 'bg-amber-50 text-stone-600 border-amber-200'
+                }`}>
                   <tr>
                     <th className="p-3">Order Code</th>
                     <th className="p-3">Customer</th>
@@ -265,21 +311,29 @@ export const AdminDashboard: React.FC = () => {
                     <th className="p-3 text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-amber-200 dark:divide-stone-800 text-stone-900 dark:text-stone-200 font-medium">
+                <tbody className={`divide-y font-medium ${
+                  isDarkMode ? 'divide-stone-800 text-stone-200' : 'divide-amber-200 text-stone-900'
+                }`}>
                   {orders.map((ord) => (
-                    <tr key={ord.id} className="hover:bg-amber-50/50 dark:hover:bg-stone-800/40 transition-colors">
-                      <td className="p-3 font-mono font-bold text-amber-800 dark:text-amber-400">{ord.orderNumber}</td>
+                    <tr key={ord.id} className={`transition-colors ${
+                      isDarkMode ? 'hover:bg-stone-800/40' : 'hover:bg-amber-50/60'
+                    }`}>
+                      <td className={`p-3 font-mono font-bold ${isDarkMode ? 'text-amber-400' : 'text-amber-800'}`}>
+                        {ord.orderNumber}
+                      </td>
                       <td className="p-3">
                         <span className="font-semibold block">{ord.userName || ord.studentName}</span>
-                        <span className="text-[10px] text-stone-500 dark:text-stone-400">{ord.userEmail}</span>
+                        <span className={`text-[10px] ${isDarkMode ? 'text-stone-400' : 'text-stone-500'}`}>{ord.userEmail}</span>
                       </td>
                       <td className="p-3 text-center font-bold">{ord.items.length}</td>
-                      <td className="p-3 text-right font-mono font-bold text-amber-900 dark:text-amber-300">₹{ord.total}</td>
+                      <td className={`p-3 text-right font-mono font-bold ${isDarkMode ? 'text-amber-300' : 'text-amber-900'}`}>₹{ord.total}</td>
                       <td className="p-3 text-center">
                         <select
                           value={ord.status}
                           onChange={(e: any) => updateOrderStatus(ord.id, e.target.value as OrderStatus)}
-                          className="bg-white dark:bg-stone-950 border border-amber-300 dark:border-stone-800 text-amber-900 dark:text-amber-300 rounded-lg px-2 py-1 text-xs font-bold focus:outline-none"
+                          className={`border rounded-lg px-2 py-1 text-xs font-bold focus:outline-none ${
+                            isDarkMode ? 'bg-stone-950 border-stone-800 text-amber-300' : 'bg-amber-50 border-amber-300 text-amber-900'
+                          }`}
                         >
                           <option value="Placed">Placed</option>
                           <option value="Packed">Packed</option>
@@ -290,7 +344,11 @@ export const AdminDashboard: React.FC = () => {
                       <td className="p-3 text-right">
                         <button
                           onClick={() => setSelectedInvoiceOrder(ord)}
-                          className="px-3 py-1.5 bg-amber-100 dark:bg-stone-800 hover:bg-amber-200 dark:hover:bg-stone-700 text-amber-900 dark:text-amber-300 rounded-lg text-xs font-bold flex items-center gap-1.5 ml-auto border border-amber-300 dark:border-stone-700"
+                          className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 ml-auto border ${
+                            isDarkMode 
+                              ? 'bg-stone-800 hover:bg-stone-700 text-amber-300 border-stone-700' 
+                              : 'bg-amber-100 hover:bg-amber-200 text-amber-900 border-amber-300'
+                          }`}
                         >
                           <Printer className="w-3.5 h-3.5" />
                           <span>Invoice</span>
@@ -308,7 +366,9 @@ export const AdminDashboard: React.FC = () => {
         {activeTab === 'inventory' && (
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="font-serif font-bold text-stone-900 dark:text-amber-200 text-base">Product Catalog Listings</h3>
+              <h3 className={`font-serif font-bold text-base ${isDarkMode ? 'text-amber-200' : 'text-stone-900'}`}>
+                Product Catalog Listings
+              </h3>
               <button
                 onClick={() => {
                   setEditingItem({
@@ -336,73 +396,97 @@ export const AdminDashboard: React.FC = () => {
               {products.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-white/95 dark:bg-stone-900/90 border border-amber-200 dark:border-stone-800 rounded-3xl p-5 space-y-4 flex flex-col justify-between shadow-xl"
+                  className={`border rounded-3xl p-5 space-y-4 flex flex-col justify-between shadow-xl ${
+                    isDarkMode ? 'bg-stone-900/90 border-stone-800 text-stone-100' : 'bg-white border-amber-200 text-stone-900'
+                  }`}
                 >
                   <div className="flex items-start gap-3">
                     <img
                       src={item.imageUrl}
                       alt={item.name}
-                      className="w-16 h-16 rounded-2xl object-cover border border-amber-200 dark:border-stone-800"
+                      className={`w-16 h-16 rounded-2xl object-cover border ${
+                        isDarkMode ? 'border-stone-800' : 'border-amber-200'
+                      }`}
                     />
                     <div>
-                      <h4 className="font-bold text-stone-900 dark:text-stone-100 text-xs">{item.name}</h4>
-                      <span className="text-[10px] text-amber-700 dark:text-amber-400 font-mono block">{item.category}</span>
-                      <span className="text-sm font-mono font-bold text-amber-800 dark:text-amber-300">₹{item.price}</span>
+                      <h4 className="font-bold text-xs">{item.name}</h4>
+                      <span className={`text-[10px] font-mono block ${isDarkMode ? 'text-amber-400' : 'text-amber-800'}`}>
+                        {item.category}
+                      </span>
+                      <span className={`text-sm font-mono font-bold ${isDarkMode ? 'text-amber-300' : 'text-amber-700'}`}>
+                        ₹{item.price}
+                      </span>
                     </div>
                   </div>
 
-                  <div className="bg-amber-50/80 dark:bg-stone-950 p-3 rounded-2xl border border-amber-200 dark:border-stone-800/80 text-[11px] grid grid-cols-2 gap-2 text-stone-700 dark:text-stone-300">
+                  <div className={`p-3 rounded-2xl border text-[11px] grid grid-cols-2 gap-2 ${
+                    isDarkMode ? 'bg-stone-950 border-stone-800/80 text-stone-300' : 'bg-amber-50/80 border-amber-200 text-stone-700'
+                  }`}>
                     <div>
                       <span className="text-stone-500 block">Warehouse Stock:</span>
-                      <span className={`font-bold ${(item.stockCountRemaining ?? 0) > 0 && item.isAvailable !== false ? 'text-emerald-700 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
+                      <span className={`font-bold ${(item.stockCountRemaining ?? 0) > 0 && item.isAvailable !== false ? (isDarkMode ? 'text-emerald-400' : 'text-emerald-700') : (isDarkMode ? 'text-rose-400' : 'text-rose-600')}`}>
                         {(item.stockCountRemaining ?? 0) > 0 && item.isAvailable !== false ? `${item.stockCountRemaining} Units` : 'Out of Stock'}
                       </span>
                     </div>
                     <div>
                       <span className="text-stone-500 block">Min Threshold:</span>
-                      <span className="font-bold text-amber-800 dark:text-amber-300">{item.minSafetyLimit || 5} Units</span>
+                      <span className={`font-bold ${isDarkMode ? 'text-amber-300' : 'text-amber-800'}`}>
+                        {item.minSafetyLimit || 5} Units
+                      </span>
                     </div>
                   </div>
 
                   {/* Stock Availability Toggle Switch */}
-                  <div className="flex items-center justify-between bg-amber-50/50 dark:bg-stone-950/80 p-2.5 rounded-2xl border border-amber-200 dark:border-stone-800 text-xs">
-                    <span className="font-semibold text-stone-700 dark:text-stone-300">Status Control:</span>
+                  <div className={`flex items-center justify-between p-2.5 rounded-2xl border text-xs ${
+                    isDarkMode ? 'bg-stone-950/80 border-stone-800' : 'bg-amber-50/50 border-amber-200'
+                  }`}>
+                    <span className="font-semibold">Status Control:</span>
                     <button
                       onClick={() => handleToggleStock(item)}
                       className={`px-3 py-1.5 rounded-xl text-[11px] font-bold flex items-center gap-1.5 transition-all shadow ${
                         (item.stockCountRemaining ?? 0) > 0 && item.isAvailable !== false
-                          ? 'bg-emerald-100 dark:bg-emerald-950/90 border border-emerald-300 dark:border-emerald-600/80 text-emerald-800 dark:text-emerald-300 hover:bg-emerald-200 dark:hover:bg-emerald-900'
-                          : 'bg-rose-100 dark:bg-rose-950/90 border border-rose-300 dark:border-rose-600/80 text-rose-800 dark:text-rose-300 hover:bg-rose-200 dark:hover:bg-rose-900'
+                          ? isDarkMode ? 'bg-emerald-950/90 border border-emerald-600/80 text-emerald-300 hover:bg-emerald-900' : 'bg-emerald-100 border border-emerald-300 text-emerald-800 hover:bg-emerald-200'
+                          : isDarkMode ? 'bg-rose-950/90 border border-rose-600/80 text-rose-300 hover:bg-rose-900' : 'bg-rose-100 border border-rose-300 text-rose-800 hover:bg-rose-200'
                       }`}
                     >
                       {(item.stockCountRemaining ?? 0) > 0 && item.isAvailable !== false ? (
                         <>
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                          <CheckCircle2 className="w-3.5 h-3.5" />
                           <span>IN STOCK (ON)</span>
                         </>
                       ) : (
                         <>
-                          <AlertTriangle className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" />
+                          <AlertTriangle className="w-3.5 h-3.5" />
                           <span>OUT OF STOCK (OFF)</span>
                         </>
                       )}
                     </button>
                   </div>
 
-                  <div className="flex items-center justify-end gap-2 pt-2 border-t border-amber-200 dark:border-stone-800">
+                  <div className={`flex items-center justify-end gap-2 pt-2 border-t ${
+                    isDarkMode ? 'border-stone-800' : 'border-amber-200'
+                  }`}>
                     <button
                       onClick={() => {
                         setEditingItem(item);
                         setEditProductModalOpen(true);
                       }}
-                      className="px-3 py-1.5 bg-amber-100 dark:bg-stone-800 hover:bg-amber-200 dark:hover:bg-stone-700 text-amber-900 dark:text-amber-300 text-xs font-bold rounded-xl flex items-center gap-1 border border-amber-300 dark:border-stone-700"
+                      className={`px-3 py-1.5 text-xs font-bold rounded-xl flex items-center gap-1 border ${
+                        isDarkMode 
+                          ? 'bg-stone-800 hover:bg-stone-700 text-amber-300 border-stone-700' 
+                          : 'bg-amber-100 hover:bg-amber-200 text-amber-900 border-amber-300'
+                      }`}
                     >
                       <Edit className="w-3.5 h-3.5" />
                       <span>Edit</span>
                     </button>
                     <button
                       onClick={() => handleDeleteProduct(item.id)}
-                      className="px-3 py-1.5 bg-rose-100 dark:bg-rose-950 hover:bg-rose-200 dark:hover:bg-rose-900 text-rose-800 dark:text-rose-300 text-xs font-bold rounded-xl flex items-center gap-1 border border-rose-300 dark:border-rose-800"
+                      className={`px-3 py-1.5 text-xs font-bold rounded-xl flex items-center gap-1 border ${
+                        isDarkMode 
+                          ? 'bg-rose-950 hover:bg-rose-900 text-rose-300 border-rose-800' 
+                          : 'bg-rose-100 hover:bg-rose-200 text-rose-800 border-rose-300'
+                      }`}
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                       <span>Delete</span>
@@ -418,8 +502,10 @@ export const AdminDashboard: React.FC = () => {
       {/* Edit / New Product Modal */}
       {editProductModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-stone-900 border border-amber-300 dark:border-stone-800 text-stone-900 dark:text-stone-100 rounded-3xl p-6 max-w-lg w-full space-y-4 shadow-2xl">
-            <h3 className="font-serif font-bold text-amber-900 dark:text-amber-200 text-lg">
+          <div className={`border rounded-3xl p-6 max-w-lg w-full space-y-4 shadow-2xl ${
+            isDarkMode ? 'bg-stone-900 border-stone-800 text-stone-100' : 'bg-white border-amber-300 text-stone-900'
+          }`}>
+            <h3 className={`font-serif font-bold text-lg ${isDarkMode ? 'text-amber-200' : 'text-amber-900'}`}>
               {editingItem.id ? 'Edit Product Listing' : 'Add New Yantra Listing'}
             </h3>
 
@@ -429,7 +515,9 @@ export const AdminDashboard: React.FC = () => {
                 placeholder="Product Name"
                 value={editingItem.name || ''}
                 onChange={(e) => setEditingItem({ ...editingItem, name: e.target.value })}
-                className="w-full bg-amber-50/50 dark:bg-stone-950 border border-amber-300 dark:border-stone-800 rounded-xl p-3 text-stone-900 dark:text-stone-200 focus:outline-none focus:border-amber-500"
+                className={`w-full border rounded-xl p-3 focus:outline-none focus:border-amber-500 ${
+                  isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200' : 'bg-amber-50/50 border-amber-300 text-stone-900'
+                }`}
                 required
               />
               <div className="grid grid-cols-2 gap-3">
@@ -438,7 +526,9 @@ export const AdminDashboard: React.FC = () => {
                   placeholder="Price (₹)"
                   value={editingItem.price || ''}
                   onChange={(e) => setEditingItem({ ...editingItem, price: Number(e.target.value) })}
-                  className="w-full bg-amber-50/50 dark:bg-stone-950 border border-amber-300 dark:border-stone-800 rounded-xl p-3 text-stone-900 dark:text-stone-200 focus:outline-none focus:border-amber-500"
+                  className={`w-full border rounded-xl p-3 focus:outline-none focus:border-amber-500 ${
+                    isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200' : 'bg-amber-50/50 border-amber-300 text-stone-900'
+                  }`}
                   required
                 />
                 <input
@@ -446,7 +536,9 @@ export const AdminDashboard: React.FC = () => {
                   placeholder="Stock Quantity"
                   value={editingItem.stockCountRemaining || ''}
                   onChange={(e) => setEditingItem({ ...editingItem, stockCountRemaining: Number(e.target.value) })}
-                  className="w-full bg-amber-50/50 dark:bg-stone-950 border border-amber-300 dark:border-stone-800 rounded-xl p-3 text-stone-900 dark:text-stone-200 focus:outline-none focus:border-amber-500"
+                  className={`w-full border rounded-xl p-3 focus:outline-none focus:border-amber-500 ${
+                    isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200' : 'bg-amber-50/50 border-amber-300 text-stone-900'
+                  }`}
                   required
                 />
               </div>
@@ -457,14 +549,18 @@ export const AdminDashboard: React.FC = () => {
                   placeholder="Metal Weight (Grams)"
                   value={editingItem.metalWeightGrams || ''}
                   onChange={(e) => setEditingItem({ ...editingItem, metalWeightGrams: Number(e.target.value) })}
-                  className="w-full bg-amber-50/50 dark:bg-stone-950 border border-amber-300 dark:border-stone-800 rounded-xl p-3 text-stone-900 dark:text-stone-200 focus:outline-none focus:border-amber-500"
+                  className={`w-full border rounded-xl p-3 focus:outline-none focus:border-amber-500 ${
+                    isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200' : 'bg-amber-50/50 border-amber-300 text-stone-900'
+                  }`}
                 />
                 <input
                   type="text"
                   placeholder="Dimensions (e.g. 6x6 in)"
                   value={editingItem.dimensionsInches || ''}
                   onChange={(e) => setEditingItem({ ...editingItem, dimensionsInches: e.target.value })}
-                  className="w-full bg-amber-50/50 dark:bg-stone-950 border border-amber-300 dark:border-stone-800 rounded-xl p-3 text-stone-900 dark:text-stone-200 focus:outline-none focus:border-amber-500"
+                  className={`w-full border rounded-xl p-3 focus:outline-none focus:border-amber-500 ${
+                    isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200' : 'bg-amber-50/50 border-amber-300 text-stone-900'
+                  }`}
                 />
               </div>
 
@@ -473,14 +569,18 @@ export const AdminDashboard: React.FC = () => {
                 placeholder="Description"
                 value={editingItem.description || ''}
                 onChange={(e) => setEditingItem({ ...editingItem, description: e.target.value })}
-                className="w-full bg-amber-50/50 dark:bg-stone-950 border border-amber-300 dark:border-stone-800 rounded-xl p-3 text-stone-900 dark:text-stone-200 focus:outline-none focus:border-amber-500"
+                className={`w-full border rounded-xl p-3 focus:outline-none focus:border-amber-500 ${
+                  isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200' : 'bg-amber-50/50 border-amber-300 text-stone-900'
+                }`}
               />
 
               <div className="flex justify-end gap-3 pt-2">
                 <button
                   type="button"
                   onClick={() => setEditProductModalOpen(false)}
-                  className="px-4 py-2 bg-stone-200 dark:bg-stone-800 text-stone-800 dark:text-stone-300 rounded-xl font-bold hover:bg-stone-300 dark:hover:bg-stone-700"
+                  className={`px-4 py-2 rounded-xl font-bold ${
+                    isDarkMode ? 'bg-stone-800 text-stone-300 hover:bg-stone-700' : 'bg-stone-200 text-stone-800 hover:bg-stone-300'
+                  }`}
                 >
                   Cancel
                 </button>
@@ -501,6 +601,7 @@ export const AdminDashboard: React.FC = () => {
         isOpen={Boolean(selectedInvoiceOrder)}
         onClose={() => setSelectedInvoiceOrder(null)}
         order={selectedInvoiceOrder}
+        isDarkMode={isDarkMode}
       />
     </div>
   );

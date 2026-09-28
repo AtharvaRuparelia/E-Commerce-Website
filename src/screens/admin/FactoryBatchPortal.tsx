@@ -16,7 +16,11 @@ import { getLocalItems, listenToMenuItems } from '../../services/menuService';
 import { logFactoryBatchEntry, listenToFactoryBatches } from '../../services/factoryService';
 import { useAuth } from '../../context/AuthContext';
 
-export const FactoryBatchPortal: React.FC = () => {
+interface FactoryBatchPortalProps {
+  isDarkMode?: boolean;
+}
+
+export const FactoryBatchPortal: React.FC<FactoryBatchPortalProps> = ({ isDarkMode = true }) => {
   const { profile } = useAuth();
   const [products, setProducts] = useState<MenuItem[]>([]);
   const [batches, setBatches] = useState<FactoryBatch[]>([]);
@@ -87,33 +91,45 @@ export const FactoryBatchPortal: React.FC = () => {
   const selectedProduct = products.find((p) => p.id === selectedProductId);
 
   return (
-    <div className="w-full min-h-screen pb-16 pt-6 transition-colors duration-300 bg-amber-50/60 text-stone-900 dark:bg-[#120F0D] dark:text-stone-100">
+    <div className={`w-full min-h-screen pb-16 pt-6 transition-colors duration-300 ${
+      isDarkMode ? 'bg-[#120F0D] text-stone-100' : 'bg-[#FAF7F2] text-stone-900'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         {/* Top Header Banner */}
-        <div className="bg-gradient-to-r from-amber-100 via-amber-50 to-amber-100 dark:from-amber-950 dark:via-stone-900 dark:to-amber-950 border border-amber-300 dark:border-amber-600/40 rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl">
+        <div className={`border rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl ${
+          isDarkMode 
+            ? 'bg-gradient-to-r from-amber-950 via-stone-900 to-amber-950 border-amber-600/40 text-stone-100' 
+            : 'bg-gradient-to-r from-amber-100 via-amber-50 to-amber-100 border-amber-300 text-stone-900'
+        }`}>
           <div className="space-y-2 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 bg-amber-200/80 dark:bg-amber-900/60 border border-amber-300 dark:border-amber-600/40 text-amber-950 dark:text-amber-300 text-xs font-semibold px-3 py-1 rounded-full">
+            <div className={`inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full border ${
+              isDarkMode 
+                ? 'bg-amber-900/60 border-amber-600/40 text-amber-300' 
+                : 'bg-amber-200/80 border-amber-300 text-amber-950'
+            }`}>
               <Factory className="w-3.5 h-3.5" />
               <span>Shop Production & Live Inventory Synchronization</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold font-serif text-stone-900 dark:text-amber-200">
+            <h1 className={`text-2xl sm:text-3xl font-bold font-serif ${isDarkMode ? 'text-amber-200' : 'text-stone-900'}`}>
               Factory Batch Production Portal
             </h1>
-            <p className="text-xs text-stone-600 dark:text-stone-400 max-w-xl">
+            <p className={`text-xs max-w-xl ${isDarkMode ? 'text-stone-400' : 'text-stone-600'}`}>
               Dedicated portal for manufacturing personnel to enter finished copper Yantra production batches, instantly updating central warehouse inventory in real time.
             </p>
           </div>
 
-          <div className="flex items-center gap-4 bg-white/90 dark:bg-stone-950/80 p-4 rounded-2xl border border-amber-200 dark:border-stone-800 shadow-sm">
-            <div className="text-center px-3 border-r border-amber-200 dark:border-stone-800">
-              <span className="block text-2xl font-black text-amber-700 dark:text-amber-400">{batches.length}</span>
-              <span className="text-[10px] text-stone-500 dark:text-stone-400 uppercase tracking-wider font-semibold">Logged Batches</span>
+          <div className={`flex items-center gap-4 p-4 rounded-2xl border ${
+            isDarkMode ? 'bg-stone-950/80 border-stone-800' : 'bg-white/90 border-amber-200 shadow-sm'
+          }`}>
+            <div className={`text-center px-3 border-r ${isDarkMode ? 'border-stone-800' : 'border-amber-200'}`}>
+              <span className={`block text-2xl font-black ${isDarkMode ? 'text-amber-400' : 'text-amber-700'}`}>{batches.length}</span>
+              <span className={`text-[10px] uppercase tracking-wider font-semibold ${isDarkMode ? 'text-stone-400' : 'text-stone-500'}`}>Logged Batches</span>
             </div>
             <div className="text-center px-3">
-              <span className="block text-2xl font-black text-emerald-600 dark:text-emerald-400">
+              <span className={`block text-2xl font-black ${isDarkMode ? 'text-emerald-400' : 'text-emerald-600'}`}>
                 {products.reduce((acc, curr) => acc + (curr.stockCountRemaining || 0), 0)}
               </span>
-              <span className="text-[10px] text-stone-500 dark:text-stone-400 uppercase tracking-wider font-semibold">Total Stock</span>
+              <span className={`text-[10px] uppercase tracking-wider font-semibold ${isDarkMode ? 'text-stone-400' : 'text-stone-500'}`}>Total Stock</span>
             </div>
           </div>
         </div>
@@ -121,22 +137,34 @@ export const FactoryBatchPortal: React.FC = () => {
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column: Log Batch Entry Form */}
-          <div className="lg:col-span-1 bg-white/95 dark:bg-stone-900/90 border border-amber-200 dark:border-stone-800 rounded-3xl p-6 space-y-6 shadow-xl">
-            <div className="border-b border-amber-200 dark:border-stone-800 pb-3 flex items-center gap-2 text-amber-900 dark:text-amber-300 font-serif font-bold text-base">
-              <PlusCircle className="w-5 h-5 text-amber-600 dark:text-amber-500" />
+          <div className={`lg:col-span-1 border rounded-3xl p-6 space-y-6 shadow-xl ${
+            isDarkMode ? 'bg-stone-900/90 border-stone-800 text-stone-100' : 'bg-white border-amber-200 text-stone-900'
+          }`}>
+            <div className={`border-b pb-3 flex items-center gap-2 font-serif font-bold text-base ${
+              isDarkMode ? 'border-stone-800 text-amber-300' : 'border-amber-200 text-amber-900'
+            }`}>
+              <PlusCircle className={`w-5 h-5 ${isDarkMode ? 'text-amber-500' : 'text-amber-600'}`} />
               <span>Log New Manufacturing Batch</span>
             </div>
 
             {successMessage && (
-              <div className="bg-emerald-50 dark:bg-emerald-950/80 border border-emerald-300 dark:border-emerald-700 text-emerald-900 dark:text-emerald-200 p-4 rounded-2xl text-xs flex items-start gap-2 animate-fadeIn">
-                <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+              <div className={`p-4 rounded-2xl text-xs flex items-start gap-2 animate-fadeIn border ${
+                isDarkMode 
+                  ? 'bg-emerald-950/80 border-emerald-700 text-emerald-200' 
+                  : 'bg-emerald-50 border-emerald-300 text-emerald-900'
+              }`}>
+                <CheckCircle2 className={`w-5 h-5 shrink-0 ${isDarkMode ? 'text-emerald-400' : 'text-emerald-600'}`} />
                 <span>{successMessage}</span>
               </div>
             )}
 
             {errorMessage && (
-              <div className="bg-rose-50 dark:bg-rose-950/80 border border-rose-300 dark:border-rose-800 text-rose-900 dark:text-rose-200 p-4 rounded-2xl text-xs flex items-start gap-2">
-                <AlertTriangle className="w-5 h-5 text-rose-600 dark:text-rose-400 shrink-0" />
+              <div className={`p-4 rounded-2xl text-xs flex items-start gap-2 border ${
+                isDarkMode 
+                  ? 'bg-rose-950/80 border-rose-800 text-rose-200' 
+                  : 'bg-rose-50 border-rose-300 text-rose-900'
+              }`}>
+                <AlertTriangle className={`w-5 h-5 shrink-0 ${isDarkMode ? 'text-rose-400' : 'text-rose-600'}`} />
                 <span>{errorMessage}</span>
               </div>
             )}
@@ -144,11 +172,13 @@ export const FactoryBatchPortal: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-4 text-xs">
               {/* Product Selection */}
               <div className="space-y-1.5">
-                <label className="font-semibold text-stone-700 dark:text-stone-300">Select Copper Yantra Item</label>
+                <label className={`font-semibold ${isDarkMode ? 'text-stone-300' : 'text-stone-700'}`}>Select Copper Yantra Item</label>
                 <select
                   value={selectedProductId}
                   onChange={(e) => setSelectedProductId(e.target.value)}
-                  className="w-full bg-amber-50/50 dark:bg-stone-950 border border-amber-300 dark:border-stone-800 rounded-xl px-3 py-2 text-stone-900 dark:text-stone-200 focus:outline-none focus:border-amber-500 font-medium"
+                  className={`w-full border rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500 font-medium ${
+                    isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200' : 'bg-amber-50/50 border-amber-300 text-stone-900'
+                  }`}
                 >
                   {products.map((p) => (
                     <option key={p.id} value={p.id}>
@@ -159,17 +189,19 @@ export const FactoryBatchPortal: React.FC = () => {
               </div>
 
               {selectedProduct && (
-                <div className="bg-amber-50/80 dark:bg-stone-950/80 p-3 rounded-2xl border border-amber-200 dark:border-stone-800/80 space-y-1">
+                <div className={`p-3 rounded-2xl border space-y-1 ${
+                  isDarkMode ? 'bg-stone-950/80 border-stone-800/80' : 'bg-amber-50/80 border-amber-200'
+                }`}>
                   <div className="flex justify-between text-[11px]">
-                    <span className="text-stone-500 dark:text-stone-400">Metal Specifications:</span>
-                    <span className="font-semibold text-amber-900 dark:text-amber-300">
+                    <span className={isDarkMode ? 'text-stone-400' : 'text-stone-500'}>Metal Specifications:</span>
+                    <span className={`font-semibold ${isDarkMode ? 'text-amber-300' : 'text-amber-900'}`}>
                       {selectedProduct.metalWeightGrams ? `${selectedProduct.metalWeightGrams}g` : ''}{' '}
                       {selectedProduct.dimensionsInches || ''}
                     </span>
                   </div>
                   <div className="flex justify-between text-[11px]">
-                    <span className="text-stone-500 dark:text-stone-400">Current Warehouse Stock:</span>
-                    <span className="font-bold text-emerald-600 dark:text-emerald-400">
+                    <span className={isDarkMode ? 'text-stone-400' : 'text-stone-500'}>Current Warehouse Stock:</span>
+                    <span className={`font-bold ${isDarkMode ? 'text-emerald-400' : 'text-emerald-600'}`}>
                       {selectedProduct.stockCountRemaining ?? 0} Units
                     </span>
                   </div>
@@ -178,38 +210,44 @@ export const FactoryBatchPortal: React.FC = () => {
 
               {/* Quantity Produced */}
               <div className="space-y-1.5">
-                <label className="font-semibold text-stone-700 dark:text-stone-300">Finished Batch Quantity (Units)</label>
+                <label className={`font-semibold ${isDarkMode ? 'text-stone-300' : 'text-stone-700'}`}>Finished Batch Quantity (Units)</label>
                 <input
                   type="number"
                   min={1}
                   max={500}
                   value={quantity}
                   onChange={(e) => setQuantity(Number(e.target.value))}
-                  className="w-full bg-amber-50/50 dark:bg-stone-950 border border-amber-300 dark:border-stone-800 rounded-xl px-3 py-2 text-stone-900 dark:text-stone-200 font-mono font-bold focus:outline-none focus:border-amber-500"
+                  className={`w-full border rounded-xl px-3 py-2 font-mono font-bold focus:outline-none focus:border-amber-500 ${
+                    isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200' : 'bg-amber-50/50 border-amber-300 text-stone-900'
+                  }`}
                 />
               </div>
 
               {/* Supervisor Name / ID */}
               <div className="space-y-1.5">
-                <label className="font-semibold text-stone-700 dark:text-stone-300">Supervisor / Artisan Lead</label>
+                <label className={`font-semibold ${isDarkMode ? 'text-stone-300' : 'text-stone-700'}`}>Supervisor / Artisan Lead</label>
                 <input
                   type="text"
                   value={supervisorName}
                   onChange={(e) => setSupervisorName(e.target.value)}
                   placeholder="Supervisor Name or SAP ID"
-                  className="w-full bg-amber-50/50 dark:bg-stone-950 border border-amber-300 dark:border-stone-800 rounded-xl px-3 py-2 text-stone-900 dark:text-stone-200 focus:outline-none focus:border-amber-500"
+                  className={`w-full border rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500 ${
+                    isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200' : 'bg-amber-50/50 border-amber-300 text-stone-900'
+                  }`}
                 />
               </div>
 
               {/* Notes */}
               <div className="space-y-1.5">
-                <label className="font-semibold text-stone-700 dark:text-stone-300">Batch Etching & Polish Notes (Optional)</label>
+                <label className={`font-semibold ${isDarkMode ? 'text-stone-300' : 'text-stone-700'}`}>Batch Etching & Polish Notes (Optional)</label>
                 <textarea
                   rows={3}
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder="e.g. 0.8mm Acid Etching complete, protective lacquer coating applied."
-                  className="w-full bg-amber-50/50 dark:bg-stone-950 border border-amber-300 dark:border-stone-800 rounded-xl px-3 py-2 text-stone-900 dark:text-stone-200 focus:outline-none focus:border-amber-500"
+                  className={`w-full border rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500 ${
+                    isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200' : 'bg-amber-50/50 border-amber-300 text-stone-900'
+                  }`}
                 />
               </div>
 
@@ -225,13 +263,19 @@ export const FactoryBatchPortal: React.FC = () => {
           </div>
 
           {/* Right Column: Recent Factory Production Batches */}
-          <div className="lg:col-span-2 bg-white/95 dark:bg-stone-900/90 border border-amber-200 dark:border-stone-800 rounded-3xl p-6 space-y-6 shadow-xl">
-            <div className="border-b border-amber-200 dark:border-stone-800 pb-3 flex items-center justify-between">
-              <div className="flex items-center gap-2 text-stone-900 dark:text-amber-200 font-serif font-bold text-base">
-                <ClipboardList className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+          <div className={`lg:col-span-2 border rounded-3xl p-6 space-y-6 shadow-xl ${
+            isDarkMode ? 'bg-stone-900/90 border-stone-800 text-stone-100' : 'bg-white border-amber-200 text-stone-900'
+          }`}>
+            <div className={`border-b pb-3 flex items-center justify-between ${
+              isDarkMode ? 'border-stone-800' : 'border-amber-200'
+            }`}>
+              <div className={`flex items-center gap-2 font-serif font-bold text-base ${
+                isDarkMode ? 'text-amber-200' : 'text-stone-900'
+              }`}>
+                <ClipboardList className={`w-5 h-5 ${isDarkMode ? 'text-amber-400' : 'text-amber-600'}`} />
                 <span>Recent Production Logs</span>
               </div>
-              <span className="text-xs text-stone-500 dark:text-stone-400 font-mono">Real-time Factory Ledger</span>
+              <span className={`text-xs font-mono ${isDarkMode ? 'text-stone-400' : 'text-stone-500'}`}>Real-time Factory Ledger</span>
             </div>
 
             <div className="space-y-4">
@@ -240,36 +284,46 @@ export const FactoryBatchPortal: React.FC = () => {
                 return (
                   <div
                     key={batch.id}
-                    className="bg-amber-50/60 dark:bg-stone-950/90 border border-amber-200 dark:border-stone-800 rounded-2xl p-4 space-y-3 shadow-md dark:shadow"
+                    className={`border rounded-2xl p-4 space-y-3 shadow-md ${
+                      isDarkMode ? 'bg-stone-950/90 border-stone-800' : 'bg-amber-50/60 border-amber-200'
+                    }`}
                   >
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-amber-200/80 dark:border-stone-800/80 pb-2">
+                    <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b pb-2 ${
+                      isDarkMode ? 'border-stone-800/80' : 'border-amber-200/80'
+                    }`}>
                       <div>
-                        <span className="font-mono font-black text-amber-800 dark:text-amber-400 text-sm">{batch.batchCode}</span>
-                        <h4 className="font-bold text-stone-900 dark:text-stone-100 text-xs">
+                        <span className={`font-mono font-black text-sm ${isDarkMode ? 'text-amber-400' : 'text-amber-800'}`}>{batch.batchCode}</span>
+                        <h4 className="font-bold text-xs">
                           {product ? product.name : batch.menuItemId}
                         </h4>
                       </div>
 
                       <div className="flex items-center gap-2">
-                        <span className="bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 font-mono font-black px-3 py-1 rounded-xl text-xs">
+                        <span className={`font-mono font-black px-3 py-1 rounded-xl text-xs border ${
+                          isDarkMode ? 'bg-emerald-950 text-emerald-300 border-emerald-800' : 'bg-emerald-100 text-emerald-800 border-emerald-300'
+                        }`}>
                           +{batch.quantityProduced} Units Added
                         </span>
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-stone-600 dark:text-stone-400">
+                    <div className={`grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] ${
+                      isDarkMode ? 'text-stone-400' : 'text-stone-600'
+                    }`}>
                       <div className="flex items-center gap-1.5">
-                        <UserCheck className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
-                        <span>Supervisor: <strong className="text-stone-900 dark:text-stone-200">{batch.supervisorName}</strong></span>
+                        <UserCheck className={`w-3.5 h-3.5 shrink-0 ${isDarkMode ? 'text-amber-400' : 'text-amber-600'}`} />
+                        <span>Supervisor: <strong className={isDarkMode ? 'text-stone-200' : 'text-stone-900'}>{batch.supervisorName}</strong></span>
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <Calendar className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
-                        <span>Logged At: <strong className="text-stone-900 dark:text-stone-200 font-mono">{new Date(batch.createdAt).toLocaleString()}</strong></span>
+                        <Calendar className={`w-3.5 h-3.5 shrink-0 ${isDarkMode ? 'text-amber-400' : 'text-amber-600'}`} />
+                        <span>Logged At: <strong className={`font-mono ${isDarkMode ? 'text-stone-200' : 'text-stone-900'}`}>{new Date(batch.createdAt).toLocaleString()}</strong></span>
                       </div>
                     </div>
 
                     {batch.notes && (
-                      <p className="text-[11px] italic text-stone-600 dark:text-stone-400 bg-white/80 dark:bg-stone-900 p-2 rounded-xl border border-amber-200 dark:border-stone-800">
+                      <p className={`text-[11px] italic p-2 rounded-xl border ${
+                        isDarkMode ? 'bg-stone-900 text-stone-400 border-stone-800' : 'bg-white text-stone-600 border-amber-200'
+                      }`}>
                         "{batch.notes}"
                       </p>
                     )}

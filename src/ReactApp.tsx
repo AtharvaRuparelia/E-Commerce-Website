@@ -172,9 +172,9 @@ export const ReactApp: React.FC = () => {
           />
         )}
 
-        {currentView === 'factory-batch' && <FactoryBatchPortal />}
+        {currentView === 'factory-batch' && <FactoryBatchPortal isDarkMode={isDarkMode} />}
 
-        {currentView === 'admin' && <AdminDashboard />}
+        {currentView === 'admin' && <AdminDashboard isDarkMode={isDarkMode} />}
       </main>
 
       {/* Floating Action Buttons (AI Advisor + WhatsApp below) */}
