@@ -35,6 +35,32 @@ export const ReactApp: React.FC = () => {
   const [studentOrders, setStudentOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Dark / Light Mode Theme State
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
+    return localStorage.getItem('bpc_theme') !== 'light';
+  });
+
+  const toggleDarkMode = () => {
+    setIsDarkMode((prev) => {
+      const next = !prev;
+      localStorage.setItem('bpc_theme', next ? 'dark' : 'light');
+      if (next) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      return next;
+    });
+  };
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDarkMode]);
+
   // Seed initial Yantra products if empty and listen to catalog updates
   useEffect(() => {
     seedInitialMenuIfEmpty().catch(() => {});
@@ -78,7 +104,9 @@ export const ReactApp: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#120F0D] text-stone-100 font-sans flex flex-col selection:bg-amber-500 selection:text-stone-950">
+    <div className={`min-h-screen font-sans flex flex-col selection:bg-amber-500 selection:text-stone-950 transition-colors duration-300 ${
+      isDarkMode ? 'bg-[#120F0D] text-stone-100' : 'bg-amber-50/60 text-stone-900'
+    }`}>
       {/* Top Application Header */}
       <CopperHeader
         activeView={currentView}
@@ -101,6 +129,8 @@ export const ReactApp: React.FC = () => {
         onOpenCart={() => setCartOpen(true)}
         onOpenAuth={() => setAuthOpen(true)}
         hasActiveOrder={Boolean(activeTrackingId)}
+        isDarkMode={isDarkMode}
+        onToggleDarkMode={toggleDarkMode}
       />
 
       {/* Main View Router Container */}
