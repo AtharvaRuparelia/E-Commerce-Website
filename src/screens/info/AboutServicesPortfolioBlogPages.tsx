@@ -896,47 +896,143 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
   // ABOUT US PAGE (4.4.5.2)
   if (currentView === 'about') {
     return (
-      <div className="w-full bg-[#120F0D] text-stone-100 min-h-screen pb-16 pt-8">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      <div className="w-full min-h-screen pb-16 pt-8 transition-colors duration-300 bg-amber-50/60 text-stone-900 dark:bg-[#120F0D] dark:text-stone-100">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           <div className="text-center space-y-3">
-            <span className="text-xs font-mono bg-amber-950 text-amber-300 px-3 py-1 rounded-full border border-amber-800">
-              OUR SHOP STORY
+            <span className="text-xs font-mono bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-300 px-3.5 py-1 rounded-full border border-amber-300 dark:border-amber-800 font-bold uppercase tracking-wider">
+              OUR SHOP STORY & LOCATION
             </span>
-            <h1 className="text-3xl sm:text-4xl font-serif font-bold text-amber-200">
+            <h1 className="text-3xl sm:text-4xl font-serif font-bold text-stone-900 dark:text-amber-200">
               About Bhavna Pooja Center
             </h1>
-            <p className="text-sm text-stone-400 max-w-2xl mx-auto">
+            <p className="text-sm text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">
               Bridging traditional sacred metal crafting with modern digital inventory reconciliation.
             </p>
           </div>
 
-          <div className="bg-stone-900/90 border border-stone-800 rounded-3xl p-6 sm:p-8 space-y-6 shadow-xl leading-relaxed text-sm text-stone-300">
+          <div className="bg-white dark:bg-stone-900/90 border border-amber-200/80 dark:border-stone-800 rounded-3xl p-6 sm:p-8 space-y-6 shadow-xl leading-relaxed text-sm text-stone-700 dark:text-stone-300">
             <p>
-              Our family enterprise, **Bhavna Pooja Center**, operates in a specialized spiritual market, supplying a wide variety of authentic Pooja items, holy ritual essentials, and handcrafted sacred copper Yantras. What makes our enterprise distinct is that we operate our own dedicated manufacturing shop where skilled artisans craft copper Yantras using traditional acid etching and precision metal-cutting techniques.
+              Our family enterprise, <strong className="text-amber-800 dark:text-amber-300">Bhavna Pooja Center</strong>, operates in a specialized spiritual market, supplying a wide variety of authentic Pooja items, holy ritual essentials, and handcrafted sacred copper Yantras. What makes our enterprise distinct is that we operate our own dedicated manufacturing shop where skilled artisans craft copper Yantras using traditional acid etching and precision metal-cutting techniques.
             </p>
             <p>
               Previously, our retail store counter and manufacturing shop functioned as isolated manual units. Stock levels between the store counter and shop floor were logged manually in physical paper registers, leading to frequent inventory mismatches.
             </p>
             <p>
-              Developed under the guidance of Dr. Neelam Naik at SVKM's Usha Pravin Gandhi College of Arts, Science and Commerce, **Bhavna Pooja Center** digitally links our production shop directly with a modern online storefront—synchronizing stock counts in real time, streamlining order fulfillment, and expanding our market reach nationwide.
+              Developed under the guidance of Dr. Neelam Naik at SVKM's Usha Pravin Gandhi College of Arts, Science and Commerce, <strong className="text-amber-800 dark:text-amber-300">Bhavna Pooja Center</strong> digitally links our production shop directly with a modern online storefront—synchronizing stock counts in real time, streamlining order fulfillment, and expanding our market reach nationwide.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <div className="bg-stone-900/80 p-6 rounded-3xl border border-stone-800 space-y-2 text-center">
-              <Hammer className="w-8 h-8 text-amber-400 mx-auto" />
-              <h3 className="font-serif font-bold text-amber-200 text-sm">Traditional Metal Craft</h3>
-              <p className="text-xs text-stone-400">Deep etched by skilled artisans using 99.9% heavy copper sheets.</p>
+            <div className="bg-white dark:bg-stone-900/80 p-6 rounded-3xl border border-amber-200 dark:border-stone-800 space-y-2 text-center shadow-md">
+              <Hammer className="w-8 h-8 text-amber-600 dark:text-amber-400 mx-auto" />
+              <h3 className="font-serif font-bold text-stone-900 dark:text-amber-200 text-sm">Traditional Metal Craft</h3>
+              <p className="text-xs text-stone-600 dark:text-stone-400">Deep etched by skilled artisans using 99.9% heavy copper sheets.</p>
             </div>
-            <div className="bg-stone-900/80 p-6 rounded-3xl border border-stone-800 space-y-2 text-center">
-              <ShieldCheck className="w-8 h-8 text-emerald-400 mx-auto" />
-              <h3 className="font-serif font-bold text-amber-200 text-sm">Geometric Accuracy</h3>
-              <p className="text-xs text-stone-400">Verified sacred angles for authentic spiritual energy alignment.</p>
+            <div className="bg-white dark:bg-stone-900/80 p-6 rounded-3xl border border-amber-200 dark:border-stone-800 space-y-2 text-center shadow-md">
+              <ShieldCheck className="w-8 h-8 text-emerald-600 dark:text-emerald-400 mx-auto" />
+              <h3 className="font-serif font-bold text-stone-900 dark:text-amber-200 text-sm">Geometric Accuracy</h3>
+              <p className="text-xs text-stone-600 dark:text-stone-400">Verified sacred angles for authentic spiritual energy alignment.</p>
             </div>
-            <div className="bg-stone-900/80 p-6 rounded-3xl border border-stone-800 space-y-2 text-center">
-              <Layers className="w-8 h-8 text-amber-500 mx-auto" />
-              <h3 className="font-serif font-bold text-amber-200 text-sm">Live Stock Sync</h3>
-              <p className="text-xs text-stone-400">Factory batch entries instantly update central storefront inventory.</p>
+            <div className="bg-white dark:bg-stone-900/80 p-6 rounded-3xl border border-amber-200 dark:border-stone-800 space-y-2 text-center shadow-md">
+              <Layers className="w-8 h-8 text-amber-600 dark:text-amber-500 mx-auto" />
+              <h3 className="font-serif font-bold text-stone-900 dark:text-amber-200 text-sm">Live Stock Sync</h3>
+              <p className="text-xs text-stone-600 dark:text-stone-400">Factory batch entries instantly update central storefront inventory.</p>
+            </div>
+          </div>
+
+          {/* GOOGLE SEARCH & GOOGLE MAPS STORE LOCATION SECTION */}
+          <div className="space-y-6 pt-6 border-t border-amber-200 dark:border-stone-800">
+            <div className="text-center space-y-2">
+              <span className="text-xs font-mono bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-300 px-3.5 py-1 rounded-full border border-amber-300 dark:border-amber-800 inline-flex items-center gap-1.5 font-bold">
+                <MapPin className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+                <span>GOOGLE SEARCH & MAP LOCATION</span>
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 dark:text-amber-200">
+                Visit Bhavna Pooja Center Store & Workshop
+              </h2>
+              <p className="text-xs text-stone-600 dark:text-stone-400 max-w-xl mx-auto">
+                Find our verified shop location on Google Maps or visit our retail counter in Girgaon, Mumbai for direct copper Yantra consultations.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+              {/* Google Business Knowledge Panel (5 cols) */}
+              <div className="lg:col-span-5 bg-white dark:bg-stone-900 border border-amber-200 dark:border-stone-800 rounded-3xl p-6 shadow-xl space-y-5 flex flex-col justify-between">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between border-b border-amber-100 dark:border-stone-800 pb-3">
+                    <div>
+                      <h3 className="font-serif font-bold text-xl text-stone-900 dark:text-amber-200">
+                        Bhavna Pooja Centre
+                      </h3>
+                      <p className="text-xs text-amber-700 dark:text-amber-400 font-medium mt-0.5">
+                        Religious Goods Store & Copper Workshop
+                      </p>
+                    </div>
+                    <span className="bg-amber-50 dark:bg-amber-950/80 border border-amber-300 dark:border-amber-700 text-amber-800 dark:text-amber-300 text-[10px] font-bold px-2.5 py-1 rounded-lg shrink-0">
+                      Google Verified
+                    </span>
+                  </div>
+
+                  {/* Rating & Reviews */}
+                  <div className="flex items-center gap-2 text-xs">
+                    <span className="font-black text-amber-600 dark:text-amber-400 text-base">4.9</span>
+                    <div className="flex text-amber-500 gap-0.5">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                      ))}
+                    </div>
+                    <span className="text-stone-500 dark:text-stone-400 font-medium">
+                      (128 Google Reviews)
+                    </span>
+                  </div>
+
+                  {/* Address & Contact Info */}
+                  <div className="space-y-2.5 text-xs text-stone-700 dark:text-stone-300 pt-1">
+                    <div className="flex items-start gap-2.5">
+                      <MapPin className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+                      <span>
+                        Bhuleshwar / Girgaon, Opposite Sacred Temple, Mumbai, Maharashtra 400004
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2.5">
+                      <Clock className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
+                      <span className="text-emerald-700 dark:text-emerald-400 font-semibold">
+                        Open Daily: 9:00 AM – 9:00 PM
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2.5">
+                      <Phone className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
+                      <span>+91 98765 43210 / Shop Counter</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Direct Google Maps Link */}
+                <div className="space-y-2 pt-4 border-t border-amber-100 dark:border-stone-800">
+                  <a
+                    href="https://www.google.com/maps/place/Bhavna+Pooja+Centre/@18.955853,72.8274435,17z/data=!3m1!4b1!4m6!3m5!1s0x3be7ce17c1072515:0x2b57e3085aa15608!8m2!3d18.955853!4d72.8274435!16s%2Fg%2F1yg93q2c1?entry=ttu&g_ep=EgoyMDI2MDkyMy4wIKXMDSoASAFQAw%3D%3D"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-3 px-4 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-stone-950 font-black rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg transition-all"
+                  >
+                    <MapPin className="w-4 h-4" />
+                    <span>Open in Google Maps & Get Directions</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Embedded Google Map (7 cols) */}
+              <div className="lg:col-span-7 bg-white dark:bg-stone-900 border border-amber-200 dark:border-stone-800 rounded-3xl overflow-hidden shadow-xl h-80 lg:h-auto min-h-[320px] relative">
+                <iframe
+                  title="Bhavna Pooja Centre Google Maps Location"
+                  src="https://maps.google.com/maps?q=18.955853,72.8274435&hl=en&z=17&output=embed"
+                  className="w-full h-full border-0 min-h-[320px]"
+                  loading="lazy"
+                  allowFullScreen
+                />
+              </div>
             </div>
           </div>
         </div>
