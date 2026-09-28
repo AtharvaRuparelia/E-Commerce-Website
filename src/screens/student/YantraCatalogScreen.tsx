@@ -1,4 +1,3 @@
-import React, { useState, useEffect, useMemo } from 'react';
 import {
   Search,
   Filter,
@@ -16,10 +15,12 @@ import {
   Sparkle,
   FlameKindling,
   Plus,
-  Minus
+  Minus,
+  Eye
 } from 'lucide-react';
 import { MenuItem, MainProductSection, PoojaSubCategory } from '../../types';
 import { useCart } from '../../context/CartContext';
+import { ProductDetailModal } from '../../components/ProductDetailModal';
 
 interface YantraCatalogScreenProps {
   menuItems: MenuItem[];
@@ -44,6 +45,7 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
   const [selectedSection, setSelectedSection] = useState<MainProductSection>(initialSection);
   const [selectedPoojaSubCategory, setSelectedPoojaSubCategory] = useState<PoojaSubCategory>(initialPoojaSubCategory);
   const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
+  const [selectedProduct, setSelectedProduct] = useState<MenuItem | null>(null);
 
   useEffect(() => {
     setSelectedSection(initialSection);
@@ -316,19 +318,30 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
                   return (
                     <div
                       key={item.id}
-                      className="bg-stone-900/90 border border-stone-800 rounded-2xl overflow-hidden hover:border-amber-600/50 transition-all duration-300 flex flex-col group shadow-lg"
+                      className="rounded-2xl overflow-hidden transition-all duration-300 flex flex-col group shadow-md border bg-white border-amber-200 text-stone-900 dark:bg-stone-900/90 dark:border-stone-800 dark:text-stone-100 hover:border-amber-500"
                     >
-                      {/* Image Thumbnail */}
-                      <div className="relative h-48 bg-stone-950 overflow-hidden">
+                      {/* Image Thumbnail with Click trigger */}
+                      <div
+                        onClick={() => setSelectedProduct(item)}
+                        className="relative h-48 bg-stone-950 overflow-hidden cursor-pointer group/img"
+                      >
                         <img
                           src={item.imageUrl}
                           alt={item.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-500"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-transparent to-transparent opacity-80" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-transparent to-transparent opacity-70 group-hover/img:opacity-50 transition-opacity" />
+
+                        {/* View Details Overlay Badge on Hover */}
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity bg-black/40 backdrop-blur-[2px]">
+                          <span className="bg-amber-600 text-stone-950 font-bold text-xs px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-lg">
+                            <Eye className="w-3.5 h-3.5" />
+                            <span>View Details</span>
+                          </span>
+                        </div>
 
                         {/* Badges */}
-                        <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
+                        <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 pointer-events-none">
                           {item.badge && (
                             <span className="bg-amber-600 text-stone-950 text-[10px] font-black px-2 py-0.5 rounded shadow">
                               {item.badge}
@@ -340,7 +353,7 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
                         </div>
 
                         {/* Stock Warning Badge */}
-                        <div className="absolute bottom-3 right-3">
+                        <div className="absolute bottom-3 right-3 pointer-events-none">
                           {isOutOfStock ? (
                             <span className="bg-rose-950 text-rose-300 text-[10px] font-bold px-2 py-0.5 rounded border border-rose-800">
                               Out of Stock
@@ -360,27 +373,30 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
 
                       {/* Details */}
                       <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
-                        <div>
-                          <h4 className="font-serif font-bold text-stone-100 text-sm group-hover:text-amber-300 transition-colors line-clamp-1">
+                        <div
+                          onClick={() => setSelectedProduct(item)}
+                          className="cursor-pointer"
+                        >
+                          <h4 className="font-serif font-bold text-sm text-stone-900 dark:text-stone-100 hover:text-amber-600 dark:hover:text-amber-300 transition-colors line-clamp-1">
                             {item.name}
                           </h4>
-                          <p className="text-[11px] text-stone-400 line-clamp-2 mt-1">
+                          <p className="text-[11px] text-stone-600 dark:text-stone-400 line-clamp-2 mt-1">
                             {item.description}
                           </p>
                         </div>
 
                         {/* Product Specifications (Weight & optional Size) */}
-                        <div className={`grid ${item.dimensionsInches ? 'grid-cols-2' : 'grid-cols-1'} gap-2 text-[10px] text-stone-300 bg-stone-950/60 p-2 rounded-xl border border-stone-800/80`}>
+                        <div className={`grid ${item.dimensionsInches ? 'grid-cols-2' : 'grid-cols-1'} gap-2 text-[10px] bg-stone-50 border-amber-200/80 text-stone-700 dark:bg-stone-950/60 dark:text-stone-300 p-2 rounded-xl border dark:border-stone-800/80`}>
                           <div>
-                            <span className="text-stone-500 block">Weight:</span>
-                            <span className="font-semibold text-amber-200">
+                            <span className="text-stone-400 dark:text-stone-500 block">Weight:</span>
+                            <span className="font-semibold text-stone-900 dark:text-amber-200">
                               {item.metalWeightGrams ? `${item.metalWeightGrams}g` : 'Standard'}
                             </span>
                           </div>
                           {item.dimensionsInches && (
                             <div>
-                              <span className="text-stone-500 block">Size:</span>
-                              <span className="font-semibold text-amber-200">
+                              <span className="text-stone-400 dark:text-stone-500 block">Size:</span>
+                              <span className="font-semibold text-stone-900 dark:text-amber-200">
                                 {item.dimensionsInches}
                               </span>
                             </div>
@@ -388,10 +404,10 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
                         </div>
 
                         {/* Price & Action */}
-                        <div className="pt-2 border-t border-stone-800/60 flex items-center justify-between">
-                          <div>
-                            <span className="text-[10px] text-stone-500 block">Price</span>
-                            <span className="text-lg font-black text-amber-400 font-mono">
+                        <div className="pt-2 border-t border-amber-200/60 dark:border-stone-800/60 flex items-center justify-between">
+                          <div onClick={() => setSelectedProduct(item)} className="cursor-pointer">
+                            <span className="text-[10px] text-stone-400 block">Price</span>
+                            <span className="text-lg font-black text-amber-600 dark:text-amber-400 font-mono">
                               ₹{item.price.toLocaleString()}
                             </span>
                           </div>
@@ -402,15 +418,15 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
 
                             if (qtyInCart > 0) {
                               return (
-                                <div className="flex items-center gap-1.5 bg-stone-950 border border-amber-600/50 rounded-xl p-1 shadow">
+                                <div className="flex items-center gap-1.5 bg-stone-100 dark:bg-stone-950 border border-amber-500/50 rounded-xl p-1 shadow">
                                   <button
                                     onClick={() => updateQuantity(item.id, qtyInCart - 1)}
-                                    className="w-7 h-7 bg-stone-900 hover:bg-stone-800 text-amber-300 font-bold rounded-lg flex items-center justify-center transition-colors active:scale-90 text-sm"
+                                    className="w-7 h-7 bg-stone-200 dark:bg-stone-900 text-stone-900 dark:text-amber-300 font-bold rounded-lg flex items-center justify-center transition-colors active:scale-90 text-sm"
                                     title="Decrease quantity"
                                   >
                                     <Minus className="w-3.5 h-3.5" />
                                   </button>
-                                  <span className="font-mono font-black text-amber-300 px-2 text-xs">
+                                  <span className="font-mono font-black text-amber-700 dark:text-amber-300 px-2 text-xs">
                                     {qtyInCart}
                                   </span>
                                   <button
@@ -432,7 +448,7 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
                                   addedNoticeId === item.id
                                     ? 'bg-emerald-600 text-white'
                                     : isOutOfStock
-                                    ? 'bg-stone-800 text-stone-600 cursor-not-allowed'
+                                    ? 'bg-stone-300 text-stone-500 dark:bg-stone-800 dark:text-stone-600 cursor-not-allowed'
                                     : 'bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-stone-950 active:scale-95'
                                 }`}
                               >
@@ -460,6 +476,14 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Product Detail Modal */}
+      <ProductDetailModal
+        isOpen={Boolean(selectedProduct)}
+        item={selectedProduct}
+        onClose={() => setSelectedProduct(null)}
+        onOpenCart={onOpenCart}
+      />
     </div>
   );
 };
