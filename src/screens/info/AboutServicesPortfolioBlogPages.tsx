@@ -135,50 +135,50 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
     const currentIntentData = intentMap[activeIntent];
 
     return (
-      <div className="w-full bg-[#120F0D] text-stone-100 min-h-screen pb-16 space-y-16 selection:bg-amber-500 selection:text-stone-950">
+      <div className="w-full min-h-screen pb-16 space-y-16 selection:bg-amber-500 selection:text-stone-950 transition-colors duration-300 bg-amber-50/60 text-stone-900 dark:bg-[#120F0D] dark:text-stone-100">
         {/* FESTIVE ANNOUNCEMENT BANNER */}
-        <div className="bg-gradient-to-r from-amber-950 via-amber-900 to-amber-950 text-amber-200 border-b border-amber-600/40 text-[11px] sm:text-xs py-2 px-4 text-center font-medium flex items-center justify-center gap-2 shadow-inner">
-          <Flame className="w-4 h-4 text-amber-400 animate-pulse shrink-0" />
+        <div className="bg-gradient-to-r from-amber-700 via-amber-800 to-amber-700 dark:from-amber-950 dark:via-amber-900 dark:to-amber-950 text-amber-100 dark:text-amber-200 border-b border-amber-500/40 dark:border-amber-600/40 text-[11px] sm:text-xs py-2 px-4 text-center font-medium flex items-center justify-center gap-2 shadow-inner">
+          <Flame className="w-4 h-4 text-amber-300 dark:text-amber-400 animate-pulse shrink-0" />
           <span>
             <strong>Bhavna Pooja Center:</strong> 100% Certified Pure Heavy Copper • Direct Shop Dispatch with Tax Invoice & Consecration Certificate!
           </span>
         </div>
 
         {/* HERO SECTION */}
-        <section className="relative bg-gradient-to-b from-[#2D1F16] via-[#1A1410] to-[#120F0D] border-b border-amber-900/40 py-12 sm:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <section className="relative bg-gradient-to-b from-amber-100/90 via-amber-50/70 to-amber-50/50 dark:from-[#2D1F16] dark:via-[#1A1410] dark:to-[#120F0D] border-b border-amber-200/80 dark:border-amber-900/40 py-12 sm:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
           {/* Subtle Ambient Radial Glows & Geometry */}
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-amber-600/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -top-24 -right-24 w-96 h-96 bg-yellow-600/5 rounded-full blur-2xl pointer-events-none" />
+          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-amber-500/10 dark:bg-amber-600/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -top-24 -right-24 w-96 h-96 bg-amber-400/10 dark:bg-yellow-600/5 rounded-full blur-2xl pointer-events-none" />
 
           <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
             {/* Left Headline Column */}
             <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-950 to-stone-900 border border-amber-600/50 text-amber-300 text-xs font-semibold px-4 py-1.5 rounded-full shadow-lg">
-                <Sparkles className="w-4 h-4 text-amber-400" />
+              <div className="inline-flex items-center gap-2 bg-white/90 dark:bg-gradient-to-r dark:from-amber-950 dark:to-stone-900 border border-amber-300 dark:border-amber-600/50 text-amber-900 dark:text-amber-300 text-xs font-semibold px-4 py-1.5 rounded-full shadow-md dark:shadow-lg">
+                <Sparkles className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                 <span>40+ Years Heritage Manufacturing Shop</span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black font-serif tracking-tight text-amber-100 leading-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black font-serif tracking-tight text-stone-900 dark:text-amber-100 leading-tight">
                 Sacred Energy Handcrafted <br />
-                <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-500 bg-clip-text text-transparent drop-shadow">
+                <span className="bg-gradient-to-r from-amber-700 via-amber-600 to-yellow-600 dark:from-amber-400 dark:via-amber-300 dark:to-yellow-500 bg-clip-text text-transparent drop-shadow-sm">
                   For Your Altar & Home
                 </span>
               </h1>
 
-              <p className="text-sm sm:text-base text-stone-300 leading-relaxed max-w-xl mx-auto lg:mx-0">
+              <p className="text-sm sm:text-base text-stone-700 dark:text-stone-300 leading-relaxed max-w-xl mx-auto lg:mx-0">
                 Crafted in our Mumbai shop using authentic 0.8mm acid deep etching. 100% pure heavy copper Yantras, organic hand-rolled Agarbattis, pure Cow Dung Dhoop, Rudraksha Malas, and consecrated Puja vessels.
               </p>
 
               {/* Feature Pills */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-xs text-stone-300">
-                <span className="bg-stone-900/90 border border-amber-600/30 px-3 py-1 rounded-full flex items-center gap-1.5">
-                  <Check className="w-3.5 h-3.5 text-amber-400" /> 0.8mm Deep Etched Copper
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-xs text-stone-800 dark:text-stone-300">
+                <span className="bg-white/90 dark:bg-stone-900/90 border border-amber-300/80 dark:border-amber-600/30 px-3 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
+                  <Check className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" /> 0.8mm Deep Etched Copper
                 </span>
-                <span className="bg-stone-900/90 border border-amber-600/30 px-3 py-1 rounded-full flex items-center gap-1.5">
-                  <Check className="w-3.5 h-3.5 text-amber-400" /> Pure Copper Polish Finish
+                <span className="bg-white/90 dark:bg-stone-900/90 border border-amber-300/80 dark:border-amber-600/30 px-3 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
+                  <Check className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" /> Pure Copper Polish Finish
                 </span>
-                <span className="bg-stone-900/90 border border-amber-600/30 px-3 py-1 rounded-full flex items-center gap-1.5">
-                  <Check className="w-3.5 h-3.5 text-amber-400" /> Verified Sacred Geometry
+                <span className="bg-white/90 dark:bg-stone-900/90 border border-amber-300/80 dark:border-amber-600/30 px-3 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
+                  <Check className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" /> Verified Sacred Geometry
                 </span>
               </div>
 
@@ -186,7 +186,7 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-3">
                 <button
                   onClick={() => onSelectView('catalog')}
-                  className="px-6 py-3.5 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-stone-950 font-black rounded-2xl shadow-xl transition-all flex items-center gap-2 text-xs sm:text-sm active:scale-95"
+                  className="px-6 py-3.5 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white dark:text-stone-950 font-black rounded-2xl shadow-xl transition-all flex items-center gap-2 text-xs sm:text-sm active:scale-95"
                 >
                   <ShoppingBag className="w-4.5 h-4.5" />
                   <span>Explore Full Collection</span>
@@ -195,9 +195,9 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
                 {onOpenAiChat && (
                   <button
                     onClick={onOpenAiChat}
-                    className="px-5 py-3.5 bg-stone-900 hover:bg-stone-800 text-amber-300 border border-amber-600/50 font-bold rounded-2xl text-xs sm:text-sm transition-all flex items-center gap-2 shadow"
+                    className="px-5 py-3.5 bg-white dark:bg-stone-900 hover:bg-amber-50 dark:hover:bg-stone-800 text-amber-900 dark:text-amber-300 border border-amber-400 dark:border-amber-600/50 font-bold rounded-2xl text-xs sm:text-sm transition-all flex items-center gap-2 shadow"
                   >
-                    <Bot className="w-4.5 h-4.5 text-amber-400" />
+                    <Bot className="w-4.5 h-4.5 text-amber-600 dark:text-amber-400" />
                     <span>Ask AI Yantra Advisor</span>
                   </button>
                 )}
@@ -214,15 +214,15 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
 
             {/* Right Spotlight Card */}
             <div className="lg:col-span-5 flex justify-center">
-              <div className="w-full max-w-md bg-stone-900/90 border-2 border-amber-600/50 rounded-3xl p-6 shadow-2xl space-y-4 backdrop-blur relative group">
-                <div className="relative h-64 rounded-2xl overflow-hidden border border-amber-600/30">
+              <div className="w-full max-w-md bg-white/95 dark:bg-stone-900/90 border-2 border-amber-300 dark:border-amber-600/50 rounded-3xl p-6 shadow-2xl space-y-4 backdrop-blur relative group">
+                <div className="relative h-64 rounded-2xl overflow-hidden border border-amber-300 dark:border-amber-600/30">
                   <img
                     src={defaultSpotlightItem.imageUrl}
                     alt={defaultSpotlightItem.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-transparent to-transparent opacity-80" />
-                  <span className="absolute top-3 left-3 bg-gradient-to-r from-amber-600 to-yellow-600 text-stone-950 text-[10px] font-black px-2.5 py-1 rounded-full shadow">
+                  <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-transparent to-transparent opacity-80" />
+                  <span className="absolute top-3 left-3 bg-gradient-to-r from-amber-600 to-yellow-600 text-white dark:text-stone-950 text-[10px] font-black px-2.5 py-1 rounded-full shadow">
                     FEATURED ARTISAN SPOTLIGHT
                   </span>
                   <span className="absolute bottom-3 right-3 bg-stone-950/90 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-800">
@@ -232,27 +232,27 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
 
                 <div className="space-y-2">
                   <div className="flex justify-between items-start">
-                    <h3 className="font-serif font-bold text-amber-200 text-base">
+                    <h3 className="font-serif font-bold text-stone-900 dark:text-amber-200 text-base">
                       {defaultSpotlightItem.name}
                     </h3>
-                    <span className="text-lg font-mono font-bold text-amber-400 shrink-0 ml-2">
+                    <span className="text-lg font-mono font-bold text-amber-700 dark:text-amber-400 shrink-0 ml-2">
                       ₹{defaultSpotlightItem.price.toLocaleString()}
                     </span>
                   </div>
-                  <p className="text-stone-400 text-xs line-clamp-2">
+                  <p className="text-stone-600 dark:text-stone-400 text-xs line-clamp-2">
                     {defaultSpotlightItem.description}
                   </p>
 
-                  <div className="grid grid-cols-2 gap-2 text-[10px] text-stone-300 bg-stone-950/80 p-2.5 rounded-xl border border-stone-800">
+                  <div className="grid grid-cols-2 gap-2 text-[10px] text-stone-700 dark:text-stone-300 bg-amber-50/80 dark:bg-stone-950/80 p-2.5 rounded-xl border border-amber-200 dark:border-stone-800">
                     <div>
-                      <span className="text-stone-500 block">Pure Copper Weight:</span>
-                      <span className="font-semibold text-amber-200">
+                      <span className="text-stone-500 dark:text-stone-500 block">Pure Copper Weight:</span>
+                      <span className="font-semibold text-amber-900 dark:text-amber-200">
                         {defaultSpotlightItem.metalWeightGrams ? `${defaultSpotlightItem.metalWeightGrams}g` : '250g'}
                       </span>
                     </div>
                     <div>
-                      <span className="text-stone-500 block">Dimensions:</span>
-                      <span className="font-semibold text-amber-200">
+                      <span className="text-stone-500 dark:text-stone-500 block">Dimensions:</span>
+                      <span className="font-semibold text-amber-900 dark:text-amber-200">
                         {defaultSpotlightItem.dimensionsInches || '6x6 in'}
                       </span>
                     </div>
@@ -265,19 +265,19 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
 
                   if (qtyInCart > 0) {
                     return (
-                      <div className="w-full py-2 bg-stone-950 border border-amber-600/50 rounded-xl flex items-center justify-between px-4 shadow">
-                        <span className="text-xs font-bold text-amber-200">Quantity in Cart:</span>
+                      <div className="w-full py-2 bg-amber-50 dark:bg-stone-950 border border-amber-300 dark:border-amber-600/50 rounded-xl flex items-center justify-between px-4 shadow">
+                        <span className="text-xs font-bold text-amber-900 dark:text-amber-200">Quantity in Cart:</span>
                         <div className="flex items-center gap-2">
                           <button
                             onClick={() => updateQuantity(defaultSpotlightItem.id, qtyInCart - 1)}
-                            className="w-7 h-7 bg-stone-900 hover:bg-stone-800 text-amber-300 font-bold rounded-lg flex items-center justify-center text-sm"
+                            className="w-7 h-7 bg-white dark:bg-stone-900 hover:bg-amber-100 dark:hover:bg-stone-800 text-amber-900 dark:text-amber-300 font-bold rounded-lg flex items-center justify-center text-sm border border-amber-300 dark:border-stone-700"
                           >
                             <Minus className="w-3.5 h-3.5" />
                           </button>
-                          <span className="font-mono font-black text-amber-300 px-2 text-sm">{qtyInCart}</span>
+                          <span className="font-mono font-black text-amber-900 dark:text-amber-300 px-2 text-sm">{qtyInCart}</span>
                           <button
                             onClick={() => updateQuantity(defaultSpotlightItem.id, qtyInCart + 1)}
-                            className="w-7 h-7 bg-amber-600 hover:bg-amber-500 text-stone-950 font-bold rounded-lg flex items-center justify-center text-sm"
+                            className="w-7 h-7 bg-amber-600 hover:bg-amber-500 text-white dark:text-stone-950 font-bold rounded-lg flex items-center justify-center text-sm"
                           >
                             <Plus className="w-3.5 h-3.5" />
                           </button>
@@ -292,7 +292,7 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
                       className={`w-full py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all shadow ${
                         addedNoticeId === defaultSpotlightItem.id
                           ? 'bg-emerald-600 text-white'
-                          : 'bg-amber-600 hover:bg-amber-500 text-stone-950 active:scale-95'
+                          : 'bg-amber-600 hover:bg-amber-500 text-white dark:text-stone-950 active:scale-95'
                       }`}
                     >
                       {addedNoticeId === defaultSpotlightItem.id ? (
@@ -317,43 +317,43 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
         {/* 4 KEY TRUST PILLARS BAR */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="bg-stone-900/80 border border-amber-600/30 rounded-2xl p-4 flex items-center gap-3 backdrop-blur shadow">
-              <div className="w-10 h-10 bg-amber-950 text-amber-400 rounded-xl flex items-center justify-center shrink-0 border border-amber-800">
+            <div className="bg-white/95 dark:bg-stone-900/80 border border-amber-200 dark:border-amber-600/30 rounded-2xl p-4 flex items-center gap-3 backdrop-blur shadow-md dark:shadow">
+              <div className="w-10 h-10 bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-400 rounded-xl flex items-center justify-center shrink-0 border border-amber-300 dark:border-amber-800">
                 <Truck className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="text-xs font-bold text-amber-200">Express All-India Shipping</h4>
-                <p className="text-[11px] text-stone-400">Safe padded box packaging</p>
+                <h4 className="text-xs font-bold text-stone-900 dark:text-amber-200">Express All-India Shipping</h4>
+                <p className="text-[11px] text-stone-600 dark:text-stone-400">Safe padded box packaging</p>
               </div>
             </div>
 
-            <div className="bg-stone-900/80 border border-amber-600/30 rounded-2xl p-4 flex items-center gap-3 backdrop-blur shadow">
-              <div className="w-10 h-10 bg-amber-950 text-amber-400 rounded-xl flex items-center justify-center shrink-0 border border-amber-800">
-                <ShieldCheck className="w-5 h-5 text-emerald-400" />
+            <div className="bg-white/95 dark:bg-stone-900/80 border border-amber-200 dark:border-amber-600/30 rounded-2xl p-4 flex items-center gap-3 backdrop-blur shadow-md dark:shadow">
+              <div className="w-10 h-10 bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-400 rounded-xl flex items-center justify-center shrink-0 border border-amber-300 dark:border-amber-800">
+                <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
               </div>
               <div>
-                <h4 className="text-xs font-bold text-amber-200">100% Pure Heavy Copper</h4>
-                <p className="text-[11px] text-stone-400">0.8mm Acid etched geometric accuracy</p>
+                <h4 className="text-xs font-bold text-stone-900 dark:text-amber-200">100% Pure Heavy Copper</h4>
+                <p className="text-[11px] text-stone-600 dark:text-stone-400">0.8mm Acid etched geometric accuracy</p>
               </div>
             </div>
 
-            <div className="bg-stone-900/80 border border-amber-600/30 rounded-2xl p-4 flex items-center gap-3 backdrop-blur shadow">
-              <div className="w-10 h-10 bg-amber-950 text-amber-400 rounded-xl flex items-center justify-center shrink-0 border border-amber-800">
+            <div className="bg-white/95 dark:bg-stone-900/80 border border-amber-200 dark:border-amber-600/30 rounded-2xl p-4 flex items-center gap-3 backdrop-blur shadow-md dark:shadow">
+              <div className="w-10 h-10 bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-400 rounded-xl flex items-center justify-center shrink-0 border border-amber-300 dark:border-amber-800">
                 <Hammer className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="text-xs font-bold text-amber-200">Direct Shop Pricing</h4>
-                <p className="text-[11px] text-stone-400">No middleman price inflations</p>
+                <h4 className="text-xs font-bold text-stone-900 dark:text-amber-200">Direct Shop Pricing</h4>
+                <p className="text-[11px] text-stone-600 dark:text-stone-400">No middleman price inflations</p>
               </div>
             </div>
 
-            <div className="bg-stone-900/80 border border-amber-600/30 rounded-2xl p-4 flex items-center gap-3 backdrop-blur shadow">
-              <div className="w-10 h-10 bg-amber-950 text-amber-400 rounded-xl flex items-center justify-center shrink-0 border border-amber-800">
+            <div className="bg-white/95 dark:bg-stone-900/80 border border-amber-200 dark:border-amber-600/30 rounded-2xl p-4 flex items-center gap-3 backdrop-blur shadow-md dark:shadow">
+              <div className="w-10 h-10 bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-400 rounded-xl flex items-center justify-center shrink-0 border border-amber-300 dark:border-amber-800">
                 <MessageCircle className="w-5 h-5 text-[#25D366]" />
               </div>
               <div>
-                <h4 className="text-xs font-bold text-amber-200">WhatsApp Expert Advice</h4>
-                <p className="text-[11px] text-stone-400">Free directional placement guidance</p>
+                <h4 className="text-xs font-bold text-stone-900 dark:text-amber-200">WhatsApp Expert Advice</h4>
+                <p className="text-[11px] text-stone-600 dark:text-stone-400">Free directional placement guidance</p>
               </div>
             </div>
           </div>
@@ -362,13 +362,13 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
         {/* EXPLORE SUB-CATEGORIES TILES SHOWCASE */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
           <div className="text-center space-y-2">
-            <span className="text-xs font-mono bg-amber-950 text-amber-300 px-3 py-1 rounded-full border border-amber-800">
+            <span className="text-xs font-mono bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-300 px-3 py-1 rounded-full border border-amber-300 dark:border-amber-800 font-bold">
               EXPLORE OUR DEPARTMENTS
             </span>
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-amber-200">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 dark:text-amber-200">
               Sacred Collections & Pooja Essentials
             </h2>
-            <p className="text-xs sm:text-sm text-stone-400 max-w-xl mx-auto">
+            <p className="text-xs sm:text-sm text-stone-600 dark:text-stone-400 max-w-xl mx-auto">
               Select a sacred category below to browse specific handcrafted Yantras, organic incenses, or copper ritual vessels.
             </p>
           </div>
@@ -377,96 +377,96 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
             {/* Tile 1: Copper Yantra */}
             <button
               onClick={() => onSelectCategory ? onSelectCategory('Copper Yantra') : onSelectView('catalog')}
-              className="bg-stone-900/90 border border-stone-800 hover:border-amber-600/60 p-4 rounded-2xl text-center group transition-all hover:bg-stone-850 flex flex-col items-center gap-2 shadow"
+              className="bg-white/90 dark:bg-stone-900/90 border border-amber-200 dark:border-stone-800 hover:border-amber-500 dark:hover:border-amber-600/60 p-4 rounded-2xl text-center group transition-all hover:bg-amber-50/80 dark:hover:bg-stone-850 flex flex-col items-center gap-2 shadow-md dark:shadow"
             >
-              <div className="w-12 h-12 rounded-xl bg-amber-950/80 border border-amber-700/50 flex items-center justify-center text-amber-300 group-hover:scale-110 transition-transform">
+              <div className="w-12 h-12 rounded-xl bg-amber-100/90 dark:bg-amber-950/80 border border-amber-300 dark:border-amber-700/50 flex items-center justify-center text-amber-800 dark:text-amber-300 group-hover:scale-110 transition-transform">
                 <Sparkles className="w-6 h-6" />
               </div>
               <div>
-                <span className="font-serif font-bold text-xs text-amber-100 block group-hover:text-amber-300">
+                <span className="font-serif font-bold text-xs text-stone-900 dark:text-amber-100 block group-hover:text-amber-700 dark:group-hover:text-amber-300">
                   Copper Yantra
                 </span>
-                <span className="text-[10px] text-stone-500">Shree, Kuber, Vastu</span>
+                <span className="text-[10px] text-stone-500 dark:text-stone-500">Shree, Kuber, Vastu</span>
               </div>
             </button>
 
             {/* Tile 2: Aggarbatti */}
             <button
               onClick={() => onSelectCategory ? onSelectCategory('Pooja Products', 'Aggarbatti') : onSelectView('catalog')}
-              className="bg-stone-900/90 border border-stone-800 hover:border-amber-600/60 p-4 rounded-2xl text-center group transition-all hover:bg-stone-850 flex flex-col items-center gap-2 shadow"
+              className="bg-white/90 dark:bg-stone-900/90 border border-amber-200 dark:border-stone-800 hover:border-amber-500 dark:hover:border-amber-600/60 p-4 rounded-2xl text-center group transition-all hover:bg-amber-50/80 dark:hover:bg-stone-850 flex flex-col items-center gap-2 shadow-md dark:shadow"
             >
-              <div className="w-12 h-12 rounded-xl bg-amber-950/80 border border-amber-700/50 flex items-center justify-center text-amber-300 group-hover:scale-110 transition-transform">
+              <div className="w-12 h-12 rounded-xl bg-amber-100/90 dark:bg-amber-950/80 border border-amber-300 dark:border-amber-700/50 flex items-center justify-center text-amber-800 dark:text-amber-300 group-hover:scale-110 transition-transform">
                 <Flame className="w-6 h-6" />
               </div>
               <div>
-                <span className="font-serif font-bold text-xs text-amber-100 block group-hover:text-amber-300">
+                <span className="font-serif font-bold text-xs text-stone-900 dark:text-amber-100 block group-hover:text-amber-700 dark:group-hover:text-amber-300">
                   Aggarbatti
                 </span>
-                <span className="text-[10px] text-stone-500">Sandal, Rose, Mogra</span>
+                <span className="text-[10px] text-stone-500 dark:text-stone-500">Sandal, Rose, Mogra</span>
               </div>
             </button>
 
             {/* Tile 3: Dhoop Batti */}
             <button
               onClick={() => onSelectCategory ? onSelectCategory('Pooja Products', 'Dhoop batti') : onSelectView('catalog')}
-              className="bg-stone-900/90 border border-stone-800 hover:border-amber-600/60 p-4 rounded-2xl text-center group transition-all hover:bg-stone-850 flex flex-col items-center gap-2 shadow"
+              className="bg-white/90 dark:bg-stone-900/90 border border-amber-200 dark:border-stone-800 hover:border-amber-500 dark:hover:border-amber-600/60 p-4 rounded-2xl text-center group transition-all hover:bg-amber-50/80 dark:hover:bg-stone-850 flex flex-col items-center gap-2 shadow-md dark:shadow"
             >
-              <div className="w-12 h-12 rounded-xl bg-amber-950/80 border border-amber-700/50 flex items-center justify-center text-amber-300 group-hover:scale-110 transition-transform">
+              <div className="w-12 h-12 rounded-xl bg-amber-100/90 dark:bg-amber-950/80 border border-amber-300 dark:border-amber-700/50 flex items-center justify-center text-amber-800 dark:text-amber-300 group-hover:scale-110 transition-transform">
                 <Sun className="w-6 h-6" />
               </div>
               <div>
-                <span className="font-serif font-bold text-xs text-amber-100 block group-hover:text-amber-300">
+                <span className="font-serif font-bold text-xs text-stone-900 dark:text-amber-100 block group-hover:text-amber-700 dark:group-hover:text-amber-300">
                   Dhoop Batti
                 </span>
-                <span className="text-[10px] text-stone-500">Guggal, Sambrani</span>
+                <span className="text-[10px] text-stone-500 dark:text-stone-500">Guggal, Sambrani</span>
               </div>
             </button>
 
             {/* Tile 4: Dhoop */}
             <button
               onClick={() => onSelectCategory ? onSelectCategory('Pooja Products', 'Dhoop') : onSelectView('catalog')}
-              className="bg-stone-900/90 border border-stone-800 hover:border-amber-600/60 p-4 rounded-2xl text-center group transition-all hover:bg-stone-850 flex flex-col items-center gap-2 shadow"
+              className="bg-white/90 dark:bg-stone-900/90 border border-amber-200 dark:border-stone-800 hover:border-amber-500 dark:hover:border-amber-600/60 p-4 rounded-2xl text-center group transition-all hover:bg-amber-50/80 dark:hover:bg-stone-850 flex flex-col items-center gap-2 shadow-md dark:shadow"
             >
-              <div className="w-12 h-12 rounded-xl bg-amber-950/80 border border-amber-700/50 flex items-center justify-center text-amber-300 group-hover:scale-110 transition-transform">
+              <div className="w-12 h-12 rounded-xl bg-amber-100/90 dark:bg-amber-950/80 border border-amber-300 dark:border-amber-700/50 flex items-center justify-center text-amber-800 dark:text-amber-300 group-hover:scale-110 transition-transform">
                 <Layers className="w-6 h-6" />
               </div>
               <div>
-                <span className="font-serif font-bold text-xs text-amber-100 block group-hover:text-amber-300">
+                <span className="font-serif font-bold text-xs text-stone-900 dark:text-amber-100 block group-hover:text-amber-700 dark:group-hover:text-amber-300">
                   Pure Dhoop
                 </span>
-                <span className="text-[10px] text-stone-500">Cow Dung & Herbal</span>
+                <span className="text-[10px] text-stone-500 dark:text-stone-500">Cow Dung & Herbal</span>
               </div>
             </button>
 
             {/* Tile 5: Mala */}
             <button
               onClick={() => onSelectCategory ? onSelectCategory('Pooja Products', 'Mala') : onSelectView('catalog')}
-              className="bg-stone-900/90 border border-stone-800 hover:border-amber-600/60 p-4 rounded-2xl text-center group transition-all hover:bg-stone-850 flex flex-col items-center gap-2 shadow"
+              className="bg-white/90 dark:bg-stone-900/90 border border-amber-200 dark:border-stone-800 hover:border-amber-500 dark:hover:border-amber-600/60 p-4 rounded-2xl text-center group transition-all hover:bg-amber-50/80 dark:hover:bg-stone-850 flex flex-col items-center gap-2 shadow-md dark:shadow"
             >
-              <div className="w-12 h-12 rounded-xl bg-amber-950/80 border border-amber-700/50 flex items-center justify-center text-amber-300 group-hover:scale-110 transition-transform">
+              <div className="w-12 h-12 rounded-xl bg-amber-100/90 dark:bg-amber-950/80 border border-amber-300 dark:border-amber-700/50 flex items-center justify-center text-amber-800 dark:text-amber-300 group-hover:scale-110 transition-transform">
                 <Compass className="w-6 h-6" />
               </div>
               <div>
-                <span className="font-serif font-bold text-xs text-amber-100 block group-hover:text-amber-300">
+                <span className="font-serif font-bold text-xs text-stone-900 dark:text-amber-100 block group-hover:text-amber-700 dark:group-hover:text-amber-300">
                   Sacred Mala
                 </span>
-                <span className="text-[10px] text-stone-500">108 Bead Rudraksha</span>
+                <span className="text-[10px] text-stone-500 dark:text-stone-500">108 Bead Rudraksha</span>
               </div>
             </button>
 
             {/* Tile 6: Copper Products */}
             <button
               onClick={() => onSelectCategory ? onSelectCategory('Pooja Products', 'Copper Products') : onSelectView('catalog')}
-              className="bg-stone-900/90 border border-stone-800 hover:border-amber-600/60 p-4 rounded-2xl text-center group transition-all hover:bg-stone-850 flex flex-col items-center gap-2 shadow"
+              className="bg-white/90 dark:bg-stone-900/90 border border-amber-200 dark:border-stone-800 hover:border-amber-500 dark:hover:border-amber-600/60 p-4 rounded-2xl text-center group transition-all hover:bg-amber-50/80 dark:hover:bg-stone-850 flex flex-col items-center gap-2 shadow-md dark:shadow"
             >
-              <div className="w-12 h-12 rounded-xl bg-amber-950/80 border border-amber-700/50 flex items-center justify-center text-amber-300 group-hover:scale-110 transition-transform">
+              <div className="w-12 h-12 rounded-xl bg-amber-100/90 dark:bg-amber-950/80 border border-amber-300 dark:border-amber-700/50 flex items-center justify-center text-amber-800 dark:text-amber-300 group-hover:scale-110 transition-transform">
                 <Hammer className="w-6 h-6" />
               </div>
               <div>
-                <span className="font-serif font-bold text-xs text-amber-100 block group-hover:text-amber-300">
+                <span className="font-serif font-bold text-xs text-stone-900 dark:text-amber-100 block group-hover:text-amber-700 dark:group-hover:text-amber-300">
                   Copper Goods
                 </span>
-                <span className="text-[10px] text-stone-500">Kalash, Lota, Thali</span>
+                <span className="text-[10px] text-stone-500 dark:text-stone-500">Kalash, Lota, Thali</span>
               </div>
             </button>
           </div>
@@ -474,16 +474,16 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
 
         {/* INTERACTIVE SACRED YANTRA FINDER WIDGET */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-r from-stone-900 via-[#1F1712] to-stone-900 border-2 border-amber-600/40 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-stone-800 pb-4">
+          <div className="bg-gradient-to-r from-amber-100/90 via-amber-50/80 to-amber-100/90 dark:from-stone-900 dark:via-[#1F1712] dark:to-stone-900 border-2 border-amber-300 dark:border-amber-600/40 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-amber-200 dark:border-stone-800 pb-4">
               <div>
-                <span className="text-xs font-mono bg-amber-950 text-amber-300 px-3 py-1 rounded-full border border-amber-800">
+                <span className="text-xs font-mono bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-300 px-3 py-1 rounded-full border border-amber-300 dark:border-amber-800 font-bold">
                   INTERACTIVE INTENT GUIDE
                 </span>
-                <h2 className="text-2xl font-serif font-bold text-amber-200 mt-2">
+                <h2 className="text-2xl font-serif font-bold text-stone-900 dark:text-amber-200 mt-2">
                   Find the Exact Yantra for Your Spiritual Need
                 </h2>
-                <p className="text-xs text-stone-400">
+                <p className="text-xs text-stone-600 dark:text-stone-400">
                   Select your primary intention to discover the specific geometrically verified Yantra crafted for your goal.
                 </p>
               </div>
@@ -494,8 +494,8 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
                   onClick={() => setActiveIntent('wealth')}
                   className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                     activeIntent === 'wealth'
-                      ? 'bg-amber-600 text-stone-950 shadow-lg'
-                      : 'bg-stone-950 text-stone-400 hover:text-amber-300 border border-stone-800'
+                      ? 'bg-amber-600 text-white dark:text-stone-950 shadow-lg'
+                      : 'bg-white dark:bg-stone-950 text-stone-700 dark:text-stone-400 hover:text-amber-800 dark:hover:text-amber-300 border border-amber-200 dark:border-stone-800'
                   }`}
                 >
                   💰 Wealth & Prosperity
@@ -504,8 +504,8 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
                   onClick={() => setActiveIntent('protection')}
                   className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                     activeIntent === 'protection'
-                      ? 'bg-amber-600 text-stone-950 shadow-lg'
-                      : 'bg-stone-950 text-stone-400 hover:text-amber-300 border border-stone-800'
+                      ? 'bg-amber-600 text-white dark:text-stone-950 shadow-lg'
+                      : 'bg-white dark:bg-stone-950 text-stone-700 dark:text-stone-400 hover:text-amber-800 dark:hover:text-amber-300 border border-amber-200 dark:border-stone-800'
                   }`}
                 >
                   🛡️ Protection & Health
@@ -514,8 +514,8 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
                   onClick={() => setActiveIntent('knowledge')}
                   className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                     activeIntent === 'knowledge'
-                      ? 'bg-amber-600 text-stone-950 shadow-lg'
-                      : 'bg-stone-950 text-stone-400 hover:text-amber-300 border border-stone-800'
+                      ? 'bg-amber-600 text-white dark:text-stone-950 shadow-lg'
+                      : 'bg-white dark:bg-stone-950 text-stone-700 dark:text-stone-400 hover:text-amber-800 dark:hover:text-amber-300 border border-amber-200 dark:border-stone-800'
                   }`}
                 >
                   📚 Knowledge & Career
@@ -524,8 +524,8 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
                   onClick={() => setActiveIntent('vastu')}
                   className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                     activeIntent === 'vastu'
-                      ? 'bg-amber-600 text-stone-950 shadow-lg'
-                      : 'bg-stone-950 text-stone-400 hover:text-amber-300 border border-stone-800'
+                      ? 'bg-amber-600 text-white dark:text-stone-950 shadow-lg'
+                      : 'bg-white dark:bg-stone-950 text-stone-700 dark:text-stone-400 hover:text-amber-800 dark:hover:text-amber-300 border border-amber-200 dark:border-stone-800'
                   }`}
                 >
                   🏡 Vastu & Harmony
@@ -534,26 +534,26 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
             </div>
 
             {/* Active Intent Highlight Box */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center bg-stone-950/80 p-6 rounded-2xl border border-stone-800">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center bg-white/90 dark:bg-stone-950/80 p-6 rounded-2xl border border-amber-200 dark:border-stone-800">
               <div className="md:col-span-8 space-y-3">
-                <span className="text-[10px] font-bold text-amber-400 uppercase tracking-widest bg-amber-950/80 px-2.5 py-1 rounded border border-amber-800 inline-block">
+                <span className="text-[10px] font-bold text-amber-900 dark:text-amber-400 uppercase tracking-widest bg-amber-100 dark:bg-amber-950/80 px-2.5 py-1 rounded border border-amber-300 dark:border-amber-800 inline-block">
                   {currentIntentData.badge}
                 </span>
-                <h3 className="text-xl font-serif font-bold text-amber-100">
+                <h3 className="text-xl font-serif font-bold text-stone-900 dark:text-amber-100">
                   {currentIntentData.yantraName}
                 </h3>
-                <p className="text-xs text-stone-300 leading-relaxed">
+                <p className="text-xs text-stone-700 dark:text-stone-300 leading-relaxed">
                   {currentIntentData.desc}
                 </p>
-                <div className="flex flex-wrap gap-4 text-xs text-stone-400 pt-2">
-                  <span>Weight: <strong className="text-amber-300">{currentIntentData.weight}</strong></span>
-                  <span>Dimensions: <strong className="text-amber-300">{currentIntentData.size}</strong></span>
-                  <span>Pure Heavy Gauge: <strong className="text-amber-300">0.8mm Etched</strong></span>
+                <div className="flex flex-wrap gap-4 text-xs text-stone-600 dark:text-stone-400 pt-2">
+                  <span>Weight: <strong className="text-amber-800 dark:text-amber-300">{currentIntentData.weight}</strong></span>
+                  <span>Dimensions: <strong className="text-amber-800 dark:text-amber-300">{currentIntentData.size}</strong></span>
+                  <span>Pure Heavy Gauge: <strong className="text-amber-800 dark:text-amber-300">0.8mm Etched</strong></span>
                 </div>
               </div>
 
-              <div className="md:col-span-4 flex flex-col items-end justify-center space-y-3 border-t md:border-t-0 md:border-l border-stone-800 pt-4 md:pt-0 md:pl-6">
-                <span className="text-2xl font-mono font-black text-amber-400">
+              <div className="md:col-span-4 flex flex-col items-end justify-center space-y-3 border-t md:border-t-0 md:border-l border-amber-200 dark:border-stone-800 pt-4 md:pt-0 md:pl-6">
+                <span className="text-2xl font-mono font-black text-amber-700 dark:text-amber-400">
                   ₹{currentIntentData.price.toLocaleString()}
                 </span>
                 {(() => {
@@ -562,19 +562,19 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
 
                   if (qtyInCart > 0) {
                     return (
-                      <div className="w-full py-2 bg-stone-900 border border-amber-600/50 rounded-xl flex items-center justify-between px-3 shadow">
-                        <span className="text-xs font-bold text-amber-200">In Cart:</span>
+                      <div className="w-full py-2 bg-amber-50 dark:bg-stone-900 border border-amber-300 dark:border-amber-600/50 rounded-xl flex items-center justify-between px-3 shadow">
+                        <span className="text-xs font-bold text-amber-900 dark:text-amber-200">In Cart:</span>
                         <div className="flex items-center gap-2">
                           <button
                             onClick={() => updateQuantity(currentIntentData.item.id, qtyInCart - 1)}
-                            className="w-7 h-7 bg-stone-950 hover:bg-stone-800 text-amber-300 font-bold rounded-lg flex items-center justify-center text-sm"
+                            className="w-7 h-7 bg-white dark:bg-stone-950 hover:bg-amber-100 dark:hover:bg-stone-800 text-amber-900 dark:text-amber-300 font-bold rounded-lg flex items-center justify-center text-sm border border-amber-300 dark:border-stone-700"
                           >
                             <Minus className="w-3.5 h-3.5" />
                           </button>
-                          <span className="font-mono font-black text-amber-300 px-2 text-sm">{qtyInCart}</span>
+                          <span className="font-mono font-black text-amber-900 dark:text-amber-300 px-2 text-sm">{qtyInCart}</span>
                           <button
                             onClick={() => updateQuantity(currentIntentData.item.id, qtyInCart + 1)}
-                            className="w-7 h-7 bg-amber-600 hover:bg-amber-500 text-stone-950 font-bold rounded-lg flex items-center justify-center text-sm"
+                            className="w-7 h-7 bg-amber-600 hover:bg-amber-500 text-white dark:text-stone-950 font-bold rounded-lg flex items-center justify-center text-sm"
                           >
                             <Plus className="w-3.5 h-3.5" />
                           </button>
@@ -586,7 +586,7 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
                   return (
                     <button
                       onClick={() => handleAddToCart(currentIntentData.item)}
-                      className="w-full py-3 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-stone-950 font-black rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all"
+                      className="w-full py-3 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white dark:text-stone-950 font-black rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all"
                     >
                       <ShoppingBag className="w-4 h-4" />
                       <span>Add Recommended Yantra</span>
@@ -600,19 +600,19 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
 
         {/* CURATED FEATURED PRODUCTS GRID */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-stone-800 pb-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-amber-200 dark:border-stone-800 pb-4">
             <div>
-              <span className="text-xs font-mono bg-amber-950 text-amber-300 px-3 py-1 rounded-full border border-amber-800">
+              <span className="text-xs font-mono bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-300 px-3 py-1 rounded-full border border-amber-300 dark:border-amber-800 font-bold">
                 HANDCRAFTED SELECTIONS
               </span>
-              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-amber-200 mt-2">
+              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 dark:text-amber-200 mt-2">
                 Popular Copper Yantras & Ritual Essentials
               </h2>
             </div>
 
             <button
               onClick={() => onSelectView('catalog')}
-              className="text-xs font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1 bg-stone-900 border border-stone-800 px-4 py-2 rounded-xl"
+              className="text-xs font-bold text-amber-900 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 flex items-center gap-1 bg-white dark:bg-stone-900 border border-amber-300 dark:border-stone-800 px-4 py-2 rounded-xl shadow-sm"
             >
               <span>View Full Catalog ({featuredItems.length} items)</span>
               <ChevronRight className="w-4 h-4" />
@@ -623,56 +623,56 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
             {featuredItems.slice(0, 4).map((item) => (
               <div
                 key={item.id}
-                className="bg-stone-900/90 border border-stone-800 rounded-3xl overflow-hidden hover:border-amber-600/50 transition-all duration-300 flex flex-col justify-between group shadow-xl"
+                className="bg-white/95 dark:bg-stone-900/90 border border-amber-200 dark:border-stone-800 rounded-3xl overflow-hidden hover:border-amber-400 dark:hover:border-amber-600/50 transition-all duration-300 flex flex-col justify-between group shadow-xl"
               >
-                <div className="relative h-48 bg-stone-950 overflow-hidden">
+                <div className="relative h-48 bg-stone-100 dark:bg-stone-950 overflow-hidden">
                   <img
                     src={item.imageUrl}
                     alt={item.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-transparent to-transparent opacity-80" />
-                  <span className="absolute top-3 left-3 bg-amber-600 text-stone-950 text-[10px] font-black px-2 py-0.5 rounded shadow">
+                  <div className="absolute inset-0 bg-gradient-to-t from-stone-950/70 via-transparent to-transparent opacity-80" />
+                  <span className="absolute top-3 left-3 bg-amber-600 text-white dark:text-stone-950 text-[10px] font-black px-2 py-0.5 rounded shadow">
                     {item.category}
                   </span>
                 </div>
 
                 <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
                   <div>
-                    <h3 className="font-serif font-bold text-amber-100 text-sm group-hover:text-amber-300 transition-colors line-clamp-1">
+                    <h3 className="font-serif font-bold text-stone-900 dark:text-amber-100 text-sm group-hover:text-amber-700 dark:group-hover:text-amber-300 transition-colors line-clamp-1">
                       {item.name}
                     </h3>
-                    <p className="text-[11px] text-stone-400 line-clamp-2 mt-1">
+                    <p className="text-[11px] text-stone-600 dark:text-stone-400 line-clamp-2 mt-1">
                       {item.description}
                     </p>
                   </div>
 
-                  <div className={`grid ${item.dimensionsInches ? 'grid-cols-2' : 'grid-cols-1'} gap-2 text-[10px] text-stone-300 bg-stone-950/60 p-2 rounded-xl border border-stone-800/80`}>
+                  <div className={`grid ${item.dimensionsInches ? 'grid-cols-2' : 'grid-cols-1'} gap-2 text-[10px] text-stone-700 dark:text-stone-300 bg-amber-50/80 dark:bg-stone-950/60 p-2 rounded-xl border border-amber-200/80 dark:border-stone-800/80`}>
                     <div>
-                      <span className="text-stone-500 block">Weight:</span>
-                      <span className="font-semibold text-amber-200">
+                      <span className="text-stone-500 dark:text-stone-500 block">Weight:</span>
+                      <span className="font-semibold text-amber-900 dark:text-amber-200">
                         {item.metalWeightGrams ? `${item.metalWeightGrams}g` : '200g'}
                       </span>
                     </div>
                     {item.dimensionsInches && (
                       <div>
-                        <span className="text-stone-500 block">Size:</span>
-                        <span className="font-semibold text-amber-200">
+                        <span className="text-stone-500 dark:text-stone-500 block">Size:</span>
+                        <span className="font-semibold text-amber-900 dark:text-amber-200">
                           {item.dimensionsInches}
                         </span>
                       </div>
                     )}
                   </div>
 
-                  <div className="pt-2 border-t border-stone-800 flex items-center justify-between">
-                    <span className="text-base font-black text-amber-400 font-mono">
+                  <div className="pt-2 border-t border-amber-200 dark:border-stone-800 flex items-center justify-between">
+                    <span className="text-base font-black text-amber-700 dark:text-amber-400 font-mono">
                       ₹{item.price.toLocaleString()}
                     </span>
                     {(() => {
                       const isOutOfStock = item.isAvailable === false || (item.stockCountRemaining ?? 0) <= 0;
                       if (isOutOfStock) {
                         return (
-                          <span className="px-3 py-1.5 rounded-xl text-xs font-bold bg-stone-950 text-rose-400 border border-rose-800/80">
+                          <span className="px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-50 dark:bg-stone-950 text-rose-600 dark:text-rose-400 border border-rose-300 dark:border-rose-800/80">
                             Out of Stock
                           </span>
                         );
@@ -683,17 +683,17 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
 
                       if (qtyInCart > 0) {
                         return (
-                          <div className="flex items-center gap-1 bg-stone-950 border border-amber-600/50 rounded-xl p-1 shadow">
+                          <div className="flex items-center gap-1 bg-amber-50 dark:bg-stone-950 border border-amber-300 dark:border-amber-600/50 rounded-xl p-1 shadow">
                             <button
                               onClick={() => updateQuantity(item.id, qtyInCart - 1)}
-                              className="w-6 h-6 bg-stone-900 hover:bg-stone-800 text-amber-300 font-bold rounded flex items-center justify-center text-xs"
+                              className="w-6 h-6 bg-white dark:bg-stone-900 hover:bg-amber-100 dark:hover:bg-stone-800 text-amber-900 dark:text-amber-300 font-bold rounded flex items-center justify-center text-xs border border-amber-200 dark:border-stone-700"
                             >
                               <Minus className="w-3 h-3" />
                             </button>
-                            <span className="font-mono font-black text-amber-300 px-1.5 text-xs">{qtyInCart}</span>
+                            <span className="font-mono font-black text-amber-900 dark:text-amber-300 px-1.5 text-xs">{qtyInCart}</span>
                             <button
                               onClick={() => updateQuantity(item.id, qtyInCart + 1)}
-                              className="w-6 h-6 bg-amber-600 hover:bg-amber-500 text-stone-950 font-bold rounded flex items-center justify-center text-xs"
+                              className="w-6 h-6 bg-amber-600 hover:bg-amber-500 text-white dark:text-stone-950 font-bold rounded flex items-center justify-center text-xs"
                             >
                               <Plus className="w-3 h-3" />
                             </button>
@@ -707,7 +707,7 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
                           className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all shadow ${
                             addedNoticeId === item.id
                               ? 'bg-emerald-600 text-white'
-                              : 'bg-amber-600 hover:bg-amber-500 text-stone-950'
+                              : 'bg-amber-600 hover:bg-amber-500 text-white dark:text-stone-950'
                           }`}
                         >
                           {addedNoticeId === item.id ? 'Added' : 'Add to Cart'}
@@ -724,51 +724,51 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
         {/* WHY PURE COPPER MATTERS (4 FEATURE CARDS) */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="text-center space-y-2">
-            <span className="text-xs font-mono bg-amber-950 text-amber-300 px-3 py-1 rounded-full border border-amber-800">
+            <span className="text-xs font-mono bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-300 px-3 py-1 rounded-full border border-amber-300 dark:border-amber-800 font-bold">
               SACRED QUALITY STANDARDS
             </span>
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-amber-200">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 dark:text-amber-200">
               Why Devotees Choose Bhavna Pooja Center
             </h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-stone-900/80 border border-stone-800 rounded-3xl p-6 space-y-3 hover:border-amber-600/40 transition-all shadow-xl">
-              <div className="w-12 h-12 bg-amber-950 text-amber-400 rounded-2xl flex items-center justify-center border border-amber-800">
+            <div className="bg-white/95 dark:bg-stone-900/80 border border-amber-200 dark:border-stone-800 rounded-3xl p-6 space-y-3 hover:border-amber-400 dark:hover:border-amber-600/40 transition-all shadow-xl">
+              <div className="w-12 h-12 bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-400 rounded-2xl flex items-center justify-center border border-amber-300 dark:border-amber-800">
                 <ShieldCheck className="w-6 h-6" />
               </div>
-              <h3 className="font-serif font-bold text-amber-200 text-base">99.9% Pure Heavy Copper</h3>
-              <p className="text-xs text-stone-400 leading-relaxed">
+              <h3 className="font-serif font-bold text-stone-900 dark:text-amber-200 text-base">99.9% Pure Heavy Copper</h3>
+              <p className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
                 Heavy gauge pure copper conducts cosmic energy and neutralizes negative Vastu doshas effectively.
               </p>
             </div>
 
-            <div className="bg-stone-900/80 border border-stone-800 rounded-3xl p-6 space-y-3 hover:border-amber-600/40 transition-all shadow-xl">
-              <div className="w-12 h-12 bg-amber-950 text-amber-400 rounded-2xl flex items-center justify-center border border-amber-800">
+            <div className="bg-white/95 dark:bg-stone-900/80 border border-amber-200 dark:border-stone-800 rounded-3xl p-6 space-y-3 hover:border-amber-400 dark:hover:border-amber-600/40 transition-all shadow-xl">
+              <div className="w-12 h-12 bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-400 rounded-2xl flex items-center justify-center border border-amber-300 dark:border-amber-800">
                 <Sparkles className="w-6 h-6" />
               </div>
-              <h3 className="font-serif font-bold text-amber-200 text-base">Pure Copper Craftsmanship</h3>
-              <p className="text-xs text-stone-400 leading-relaxed">
+              <h3 className="font-serif font-bold text-stone-900 dark:text-amber-200 text-base">Pure Copper Craftsmanship</h3>
+              <p className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
                 High grade pure copper prevents tarnishing, keeping your Yantra mirror-bright with simple natural care.
               </p>
             </div>
 
-            <div className="bg-stone-900/80 border border-stone-800 rounded-3xl p-6 space-y-3 hover:border-amber-600/40 transition-all shadow-xl">
-              <div className="w-12 h-12 bg-amber-950 text-amber-400 rounded-2xl flex items-center justify-center border border-amber-800">
+            <div className="bg-white/95 dark:bg-stone-900/80 border border-amber-200 dark:border-stone-800 rounded-3xl p-6 space-y-3 hover:border-amber-400 dark:hover:border-amber-600/40 transition-all shadow-xl">
+              <div className="w-12 h-12 bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-400 rounded-2xl flex items-center justify-center border border-amber-300 dark:border-amber-800">
                 <Hammer className="w-6 h-6" />
               </div>
-              <h3 className="font-serif font-bold text-amber-200 text-base">0.8mm Acid Deep Etching</h3>
-              <p className="text-xs text-stone-400 leading-relaxed">
+              <h3 className="font-serif font-bold text-stone-900 dark:text-amber-200 text-base">0.8mm Acid Deep Etching</h3>
+              <p className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
                 Precision 3D geometric lines engraved deeply by skilled artisans to ensure authentic energy alignments.
               </p>
             </div>
 
-            <div className="bg-stone-900/80 border border-stone-800 rounded-3xl p-6 space-y-3 hover:border-amber-600/40 transition-all shadow-xl">
-              <div className="w-12 h-12 bg-amber-950 text-amber-400 rounded-2xl flex items-center justify-center border border-amber-800">
+            <div className="bg-white/95 dark:bg-stone-900/80 border border-amber-200 dark:border-stone-800 rounded-3xl p-6 space-y-3 hover:border-amber-400 dark:hover:border-amber-600/40 transition-all shadow-xl">
+              <div className="w-12 h-12 bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-400 rounded-2xl flex items-center justify-center border border-amber-300 dark:border-amber-800">
                 <Award className="w-6 h-6" />
               </div>
-              <h3 className="font-serif font-bold text-amber-200 text-base">Direct Shop Pricing</h3>
-              <p className="text-xs text-stone-400 leading-relaxed">
+              <h3 className="font-serif font-bold text-stone-900 dark:text-amber-200 text-base">Direct Shop Pricing</h3>
+              <p className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
                 Handcrafted in our own family manufacturing shop, eliminating middleman markups for honest pricing.
               </p>
             </div>
@@ -777,38 +777,38 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
 
         {/* HERITAGE STATS BAR */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-stone-900/80 border border-amber-600/30 rounded-3xl p-6 text-center shadow-xl backdrop-blur">
-            <div className="space-y-1 p-2 border-r border-stone-800 last:border-r-0">
-              <span className="text-3xl font-black font-serif text-amber-400">40+</span>
-              <span className="text-xs text-stone-300 block font-semibold">Years Craft Heritage</span>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white/95 dark:bg-stone-900/80 border border-amber-300 dark:border-amber-600/30 rounded-3xl p-6 text-center shadow-xl backdrop-blur">
+            <div className="space-y-1 p-2 border-r border-amber-200 dark:border-stone-800 last:border-r-0">
+              <span className="text-3xl font-black font-serif text-amber-700 dark:text-amber-400">40+</span>
+              <span className="text-xs text-stone-700 dark:text-stone-300 block font-semibold">Years Craft Heritage</span>
             </div>
-            <div className="space-y-1 p-2 border-r border-stone-800 last:border-r-0">
-              <span className="text-3xl font-black font-serif text-amber-400">10,000+</span>
-              <span className="text-xs text-stone-300 block font-semibold">Devotee Households</span>
+            <div className="space-y-1 p-2 border-r border-amber-200 dark:border-stone-800 last:border-r-0">
+              <span className="text-3xl font-black font-serif text-amber-700 dark:text-amber-400">10,000+</span>
+              <span className="text-xs text-stone-700 dark:text-stone-300 block font-semibold">Devotee Households</span>
             </div>
-            <div className="space-y-1 p-2 border-r border-stone-800 last:border-r-0">
-              <span className="text-3xl font-black font-serif text-emerald-400">100%</span>
-              <span className="text-xs text-stone-300 block font-semibold">Vedic Geometric Precision</span>
+            <div className="space-y-1 p-2 border-r border-amber-200 dark:border-stone-800 last:border-r-0">
+              <span className="text-3xl font-black font-serif text-emerald-600 dark:text-emerald-400">100%</span>
+              <span className="text-xs text-stone-700 dark:text-stone-300 block font-semibold">Vedic Geometric Precision</span>
             </div>
             <div className="space-y-1 p-2">
-              <span className="text-3xl font-black font-serif text-amber-400">Direct</span>
-              <span className="text-xs text-stone-300 block font-semibold">Shop Dispatch</span>
+              <span className="text-3xl font-black font-serif text-amber-700 dark:text-amber-400">Direct</span>
+              <span className="text-xs text-stone-700 dark:text-stone-300 block font-semibold">Shop Dispatch</span>
             </div>
           </div>
         </section>
 
         {/* FESTIVE & CUSTOM CONSECRATION BANNER */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-r from-amber-950 via-stone-900 to-amber-950 border border-amber-600/50 rounded-3xl p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl">
+          <div className="bg-gradient-to-r from-amber-100 via-amber-50 to-amber-100 dark:from-amber-950 dark:via-stone-900 dark:to-amber-950 border border-amber-300 dark:border-amber-600/50 rounded-3xl p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl">
             <div className="space-y-3 text-center md:text-left">
-              <div className="inline-flex items-center gap-2 bg-amber-900/80 border border-amber-600/40 text-amber-300 text-xs font-semibold px-3 py-1 rounded-full">
-                <Flame className="w-4 h-4 fill-amber-400 text-amber-400" />
+              <div className="inline-flex items-center gap-2 bg-amber-200/80 dark:bg-amber-900/80 border border-amber-400 dark:border-amber-600/40 text-amber-950 dark:text-amber-300 text-xs font-semibold px-3 py-1 rounded-full">
+                <Flame className="w-4 h-4 fill-amber-600 dark:fill-amber-400 text-amber-600 dark:text-amber-400" />
                 <span>Custom Temple & Corporate Orders</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-amber-200">
+              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 dark:text-amber-200">
                 Need Custom Sized Yantras or Bulk Festive Gift Boxes?
               </h2>
-              <p className="text-xs sm:text-sm text-stone-300 max-w-xl">
+              <p className="text-xs sm:text-sm text-stone-700 dark:text-stone-300 max-w-xl">
                 We craft custom heavy copper Yantras (up to 24x24 inch) and bulk gift sets for Diwali, housewarming, and temple consecration rituals.
               </p>
             </div>
@@ -823,7 +823,7 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
               </button>
               <button
                 onClick={() => onSelectView('about')}
-                className="px-6 py-3.5 bg-stone-950 hover:bg-stone-800 text-amber-300 border border-amber-600/40 font-bold rounded-2xl text-xs sm:text-sm"
+                className="px-6 py-3.5 bg-white dark:bg-stone-950 text-amber-950 dark:text-amber-300 border border-amber-300 dark:border-amber-600/40 font-bold rounded-2xl text-xs sm:text-sm shadow-sm"
               >
                 Contact Shop
               </button>
@@ -834,57 +834,57 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
         {/* DEVOTEE TESTIMONIALS */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="text-center space-y-2">
-            <span className="text-xs font-mono bg-amber-950 text-amber-300 px-3 py-1 rounded-full border border-amber-800">
+            <span className="text-xs font-mono bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-300 px-3 py-1 rounded-full border border-amber-300 dark:border-amber-800 font-bold">
               DEVOTEE BLESSINGS
             </span>
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-amber-200">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 dark:text-amber-200">
               What Devotees Say About Our Craft
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-stone-900/90 border border-stone-800 rounded-3xl p-6 space-y-4 shadow-xl">
-              <div className="flex text-amber-400 gap-1">
+            <div className="bg-white/95 dark:bg-stone-900/90 border border-amber-200 dark:border-stone-800 rounded-3xl p-6 space-y-4 shadow-xl">
+              <div className="flex text-amber-500 dark:text-amber-400 gap-1">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                  <Star key={i} className="w-4 h-4 fill-amber-500 dark:fill-amber-400 text-amber-500 dark:text-amber-400" />
                 ))}
               </div>
-              <p className="text-xs text-stone-300 italic leading-relaxed">
+              <p className="text-xs text-stone-700 dark:text-stone-300 italic leading-relaxed">
                 "The Pure Copper Shree Yantra from Bhavna Pooja Center has remarkable geometric clarity. Deep etching is clearly visible, and it has enhanced the positive vibe in my office altar."
               </p>
               <div>
-                <span className="font-bold text-amber-200 text-xs block">Rajesh Sharma</span>
-                <span className="text-[10px] text-stone-500">Business Owner, Mumbai</span>
+                <span className="font-bold text-stone-900 dark:text-amber-200 text-xs block">Rajesh Sharma</span>
+                <span className="text-[10px] text-stone-500 dark:text-stone-500">Business Owner, Mumbai</span>
               </div>
             </div>
 
-            <div className="bg-stone-900/90 border border-stone-800 rounded-3xl p-6 space-y-4 shadow-xl">
-              <div className="flex text-amber-400 gap-1">
+            <div className="bg-white/95 dark:bg-stone-900/90 border border-amber-200 dark:border-stone-800 rounded-3xl p-6 space-y-4 shadow-xl">
+              <div className="flex text-amber-500 dark:text-amber-400 gap-1">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                  <Star key={i} className="w-4 h-4 fill-amber-500 dark:fill-amber-400 text-amber-500 dark:text-amber-400" />
                 ))}
               </div>
-              <p className="text-xs text-stone-300 italic leading-relaxed">
+              <p className="text-xs text-stone-700 dark:text-stone-300 italic leading-relaxed">
                 "Heavy pure copper quality kalash and 7-piece thali set. Excellent shop direct craftsmanship. Delivery was fast with live tracking and PDF invoice."
               </p>
               <div>
-                <span className="font-bold text-amber-200 text-xs block">Sunita Joshi</span>
-                <span className="text-[10px] text-stone-500">Devotee, Pune</span>
+                <span className="font-bold text-stone-900 dark:text-amber-200 text-xs block">Sunita Joshi</span>
+                <span className="text-[10px] text-stone-500 dark:text-stone-500">Devotee, Pune</span>
               </div>
             </div>
 
-            <div className="bg-stone-900/90 border border-stone-800 rounded-3xl p-6 space-y-4 shadow-xl">
-              <div className="flex text-amber-400 gap-1">
+            <div className="bg-white/95 dark:bg-stone-900/90 border border-amber-200 dark:border-stone-800 rounded-3xl p-6 space-y-4 shadow-xl">
+              <div className="flex text-amber-500 dark:text-amber-400 gap-1">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                  <Star key={i} className="w-4 h-4 fill-amber-500 dark:fill-amber-400 text-amber-500 dark:text-amber-400" />
                 ))}
               </div>
-              <p className="text-xs text-stone-300 italic leading-relaxed">
+              <p className="text-xs text-stone-700 dark:text-stone-300 italic leading-relaxed">
                 "I ordered the Vastu Dosh Nivaran copper Yantra and consulted their AI Yantra Advisor for directional placement. Truly authentic work."
               </p>
               <div>
-                <span className="font-bold text-amber-200 text-xs block">Dr. Milind Kulkarni</span>
-                <span className="text-[10px] text-stone-500">Vastu Consultant, Thane</span>
+                <span className="font-bold text-stone-900 dark:text-amber-200 text-xs block">Dr. Milind Kulkarni</span>
+                <span className="text-[10px] text-stone-500 dark:text-stone-500">Vastu Consultant, Thane</span>
               </div>
             </div>
           </div>
@@ -1015,7 +1015,7 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
                     href="https://www.google.com/maps/place/Bhavna+Pooja+Centre/@18.955853,72.8274435,17z/data=!3m1!4b1!4m6!3m5!1s0x3be7ce17c1072515:0x2b57e3085aa15608!8m2!3d18.955853!4d72.8274435!16s%2Fg%2F1yg93q2c1?entry=ttu&g_ep=EgoyMDI2MDkyMy4wIKXMDSoASAFQAw%3D%3D"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full py-3 px-4 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-stone-950 font-black rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg transition-all"
+                    className="w-full py-3 px-4 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white dark:text-stone-950 font-black rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg transition-all"
                   >
                     <MapPin className="w-4 h-4" />
                     <span>Open in Google Maps & Get Directions</span>
@@ -1053,13 +1053,13 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
   // SERVICES PAGE (4.4.5.3)
   if (currentView === 'services') {
     return (
-      <div className="w-full bg-[#120F0D] text-stone-100 min-h-screen pb-16 pt-8">
+      <div className="w-full min-h-screen pb-16 pt-8 transition-colors duration-300 bg-amber-50/60 text-stone-900 dark:bg-[#120F0D] dark:text-stone-100">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           <div className="text-center space-y-3">
-            <span className="text-xs font-mono bg-amber-950 text-amber-300 px-3 py-1 rounded-full border border-amber-800">
+            <span className="text-xs font-mono bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-300 px-3 py-1 rounded-full border border-amber-300 dark:border-amber-800 font-bold">
               SPECIALIZED OFFERINGS
             </span>
-            <h1 className="text-3xl sm:text-4xl font-serif font-bold text-amber-200">
+            <h1 className="text-3xl sm:text-4xl font-serif font-bold text-stone-900 dark:text-amber-200">
               Shop Customization & Services
             </h1>
           </div>
@@ -1083,12 +1083,12 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
                 desc: 'We offer professional polishing, tarnishing prevention lacquer recoating, and restoration for old sacred copper Yantras.'
               }
             ].map((srv, idx) => (
-              <div key={idx} className="bg-stone-900/90 border border-stone-800 rounded-3xl p-6 space-y-3 shadow-xl">
-                <h3 className="font-serif font-bold text-amber-300 text-base">{srv.title}</h3>
-                <p className="text-xs text-stone-400 leading-relaxed">{srv.desc}</p>
+              <div key={idx} className="bg-white dark:bg-stone-900/90 border border-amber-200 dark:border-stone-800 rounded-3xl p-6 space-y-3 shadow-xl">
+                <h3 className="font-serif font-bold text-amber-800 dark:text-amber-300 text-base">{srv.title}</h3>
+                <p className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">{srv.desc}</p>
                 <button
                   onClick={openWhatsApp}
-                  className="text-xs text-amber-500 font-bold hover:underline flex items-center gap-1"
+                  className="text-xs text-amber-700 dark:text-amber-500 font-bold hover:underline flex items-center gap-1"
                 >
                   <span>Request Service Quote on WhatsApp</span>
                   <ChevronRight className="w-3.5 h-3.5" />
@@ -1104,13 +1104,13 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
   // PORTFOLIO / GALLERY PAGE (4.4.5.4)
   if (currentView === 'portfolio') {
     return (
-      <div className="w-full bg-[#120F0D] text-stone-100 min-h-screen pb-16 pt-8">
+      <div className="w-full min-h-screen pb-16 pt-8 transition-colors duration-300 bg-amber-50/60 text-stone-900 dark:bg-[#120F0D] dark:text-stone-100">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="text-center space-y-3">
-            <span className="text-xs font-mono bg-amber-950 text-amber-300 px-3 py-1 rounded-full border border-amber-800">
+            <span className="text-xs font-mono bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-300 px-3 py-1 rounded-full border border-amber-300 dark:border-amber-800 font-bold">
               SHOP CRAFTSMANSHIP
             </span>
-            <h1 className="text-3xl sm:text-4xl font-serif font-bold text-amber-200">
+            <h1 className="text-3xl sm:text-4xl font-serif font-bold text-stone-900 dark:text-amber-200">
               Artisan Craft Portfolio & Gallery
             </h1>
           </div>
@@ -1133,13 +1133,13 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
                 img: '/items/shree-yantra.jpg'
               }
             ].map((item, idx) => (
-              <div key={idx} className="bg-stone-900/90 border border-stone-800 rounded-3xl overflow-hidden shadow-xl">
-                <div className="h-52 bg-stone-950">
+              <div key={idx} className="bg-white dark:bg-stone-900/90 border border-amber-200 dark:border-stone-800 rounded-3xl overflow-hidden shadow-xl">
+                <div className="h-52 bg-stone-100 dark:bg-stone-950">
                   <img src={item.img} alt={item.title} className="w-full h-full object-cover" />
                 </div>
                 <div className="p-5 space-y-2">
-                  <h3 className="font-serif font-bold text-amber-200 text-sm">{item.title}</h3>
-                  <p className="text-xs text-stone-400">{item.desc}</p>
+                  <h3 className="font-serif font-bold text-stone-900 dark:text-amber-200 text-sm">{item.title}</h3>
+                  <p className="text-xs text-stone-600 dark:text-stone-400">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -1151,13 +1151,13 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
 
   // BLOG PAGE (4.4.5.6)
   return (
-    <div className="w-full bg-[#120F0D] text-stone-100 min-h-screen pb-16 pt-8">
+    <div className="w-full min-h-screen pb-16 pt-8 transition-colors duration-300 bg-amber-50/60 text-stone-900 dark:bg-[#120F0D] dark:text-stone-100">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         <div className="text-center space-y-3">
-          <span className="text-xs font-mono bg-amber-950 text-amber-300 px-3 py-1 rounded-full border border-amber-800">
+          <span className="text-xs font-mono bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-300 px-3 py-1 rounded-full border border-amber-300 dark:border-amber-800 font-bold">
             SACRED GUIDANCE & ARTICLES
           </span>
-          <h1 className="text-3xl sm:text-4xl font-serif font-bold text-amber-200">
+          <h1 className="text-3xl sm:text-4xl font-serif font-bold text-stone-900 dark:text-amber-200">
             Sacred Geometry & Copper Care Blog
           </h1>
         </div>
@@ -1179,19 +1179,19 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
               img: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80'
             }
           ].map((blog, idx) => (
-            <div key={idx} className="bg-stone-900/90 border border-stone-800 rounded-3xl overflow-hidden shadow-xl space-y-4">
-              <div className="h-48 bg-stone-950">
+            <div key={idx} className="bg-white dark:bg-stone-900/90 border border-amber-200 dark:border-stone-800 rounded-3xl overflow-hidden shadow-xl space-y-4">
+              <div className="h-48 bg-stone-100 dark:bg-stone-950">
                 <img src={blog.img} alt={blog.title} className="w-full h-full object-cover" />
               </div>
               <div className="p-6 space-y-3">
                 <div className="flex items-center gap-2 text-[11px]">
-                  <span className="bg-amber-950 text-amber-300 font-bold px-2 py-0.5 rounded border border-amber-800">
+                  <span className="bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-300 font-bold px-2 py-0.5 rounded border border-amber-300 dark:border-amber-800">
                     {blog.category}
                   </span>
-                  <span className="text-stone-400 font-mono">{blog.date}</span>
+                  <span className="text-stone-500 dark:text-stone-400 font-mono">{blog.date}</span>
                 </div>
-                <h3 className="font-serif font-bold text-stone-100 text-base">{blog.title}</h3>
-                <p className="text-xs text-stone-400">{blog.excerpt}</p>
+                <h3 className="font-serif font-bold text-stone-900 dark:text-stone-100 text-base">{blog.title}</h3>
+                <p className="text-xs text-stone-600 dark:text-stone-400">{blog.excerpt}</p>
               </div>
             </div>
           ))}
