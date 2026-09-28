@@ -991,7 +991,7 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
                     <div className="flex items-start gap-2.5">
                       <MapPin className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
                       <span className="font-medium leading-relaxed">
-                        Shreeji Bhuvan, Shop No 3, 114, Panjrapole St, near Kabutar Khana, Bhuleshwar, Mumbai, Maharashtra 400004
+                        Madhav Bagh Compound, Cawasji Patel Tank Rd, Marine Lines East, Gulal Wadi, Bhuleshwar, Mumbai, Maharashtra 400004
                       </span>
                     </div>
 
