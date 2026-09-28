@@ -1,12 +1,21 @@
 @import './bitejoy.css';
 
-/* Ensure the full page wrapper preserves BiteJoy's native dimensions and styling */
+/* Dynamic theme root styling */
 html, body {
   margin: 0;
   padding: 0;
   min-height: 100%;
-  background-color: var(--yellow) !important;
-  color: var(--black) !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html.dark body {
+  background-color: #120F0D;
+  color: #f5f5f4;
+}
+
+html:not(.dark) body {
+  background-color: #FAF7F2;
+  color: #1c1917;
 }
 
 /* Hide Webflow badge */

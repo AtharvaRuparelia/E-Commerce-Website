@@ -137,14 +137,13 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
   ]);
 
   return (
-    <div className="w-full bg-[#120F0D] text-stone-100 min-h-screen pb-16">
-
+    <div className="w-full min-h-screen pb-16 transition-colors duration-300 bg-amber-50/60 text-stone-900 dark:bg-[#120F0D] dark:text-stone-100">
 
       {/* Sub-Navigation for Pooja Products */}
       {(selectedSection === 'Pooja Products' || selectedSection === 'All') && (
-        <div className="bg-stone-950/90 border-b border-stone-800 py-3 px-4 sm:px-6 lg:px-8">
+        <div className="border-b py-3 px-4 sm:px-6 lg:px-8 transition-colors bg-white/90 border-amber-200 dark:bg-stone-950/90 dark:border-stone-800">
           <div className="max-w-7xl mx-auto flex items-center gap-2 overflow-x-auto text-xs whitespace-nowrap">
-            <span className="font-bold text-amber-400 mr-2 flex items-center gap-1">
+            <span className="font-bold text-amber-600 dark:text-amber-400 mr-2 flex items-center gap-1">
               <Layers className="w-3.5 h-3.5" />
               <span>Pooja Categories:</span>
             </span>
@@ -158,7 +157,7 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
                 className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all border ${
                   selectedSection === 'Pooja Products' && selectedPoojaSubCategory === subCat
                     ? 'bg-amber-600 text-stone-950 border-amber-500 shadow'
-                    : 'bg-stone-900 text-stone-300 border-stone-800 hover:border-amber-600/40 hover:text-amber-300'
+                    : 'bg-stone-100 text-stone-700 border-amber-200 hover:bg-amber-100 dark:bg-stone-900 dark:text-stone-300 dark:border-stone-800 dark:hover:text-amber-300'
                 }`}
               >
                 {subCat === 'All' ? 'All Pooja Products' : subCat}
@@ -172,9 +171,9 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Left Sidebar: Filters */}
           <div className="lg:col-span-1 space-y-6">
-            <div className="bg-stone-900/80 border border-stone-800 rounded-2xl p-5 space-y-5 shadow-lg backdrop-blur">
-              <div className="flex items-center justify-between border-b border-stone-800 pb-3">
-                <div className="flex items-center gap-2 text-amber-300 font-bold text-sm">
+            <div className="rounded-2xl p-5 space-y-5 shadow-lg backdrop-blur border bg-white border-amber-200/80 text-stone-900 dark:bg-stone-900/80 dark:border-stone-800 dark:text-stone-100">
+              <div className="flex items-center justify-between border-b border-amber-100 dark:border-stone-800 pb-3">
+                <div className="flex items-center gap-2 text-amber-700 dark:text-amber-300 font-bold text-sm">
                   <Filter className="w-4 h-4" />
                   <span>Filter Products</span>
                 </div>
@@ -187,7 +186,7 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
                     setSelectedDimension('All');
                     setMaxPrice(5000);
                   }}
-                  className="text-xs text-stone-400 hover:text-amber-400 underline"
+                  className="text-xs text-stone-500 hover:text-amber-600 dark:text-stone-400 dark:hover:text-amber-400 underline"
                 >
                   Reset
                 </button>
@@ -195,15 +194,15 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
 
               {/* Keyword Search */}
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-stone-300">Search Products</label>
+                <label className="text-xs font-semibold text-stone-700 dark:text-stone-300">Search Products</label>
                 <div className="relative">
-                  <Search className="w-4 h-4 absolute left-3 top-2.5 text-stone-500" />
+                  <Search className="w-4 h-4 absolute left-3 top-2.5 text-stone-400" />
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search Shree Yantra, Agarbatti..."
-                    className="w-full bg-stone-950 border border-stone-800 rounded-xl pl-9 pr-3 py-2 text-xs text-stone-200 placeholder-stone-600 focus:outline-none focus:border-amber-500"
+                    className="w-full rounded-xl pl-9 pr-3 py-2 text-xs border bg-stone-50 border-amber-200 text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500 dark:bg-stone-950 dark:border-stone-800 dark:text-stone-200 dark:placeholder-stone-600"
                   />
                 </div>
               </div>
