@@ -948,10 +948,10 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
                 <span>GOOGLE SEARCH & MAP LOCATION</span>
               </span>
               <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 dark:text-amber-200">
-                Visit Bhavna Pooja Center Store & Workshop
+                Visit Bhavna Pooja Center Store
               </h2>
               <p className="text-xs text-stone-600 dark:text-stone-400 max-w-xl mx-auto">
-                Find our verified shop location on Google Maps or visit our retail counter in Girgaon, Mumbai for direct copper Yantra consultations.
+                Find our verified shop location on Google Maps or visit our retail counter in Bhuleshwar, Mumbai.
               </p>
             </div>
 
@@ -965,7 +965,7 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
                         Bhavna Pooja Centre
                       </h3>
                       <p className="text-xs text-amber-700 dark:text-amber-400 font-medium mt-0.5">
-                        Religious Goods Store & Copper Workshop
+                        Religious Goods Store & Pooja Essentials
                       </p>
                     </div>
                     <span className="bg-amber-50 dark:bg-amber-950/80 border border-amber-300 dark:border-amber-700 text-amber-800 dark:text-amber-300 text-[10px] font-bold px-2.5 py-1 rounded-lg shrink-0">
@@ -990,8 +990,8 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
                   <div className="space-y-2.5 text-xs text-stone-700 dark:text-stone-300 pt-1">
                     <div className="flex items-start gap-2.5">
                       <MapPin className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
-                      <span>
-                        Bhuleshwar / Girgaon, Opposite Sacred Temple, Mumbai, Maharashtra 400004
+                      <span className="font-medium leading-relaxed">
+                        Shreeji Bhuvan, Shop No 3, 114, Panjrapole St, near Kabutar Khana, Bhuleshwar, Mumbai, Maharashtra 400004
                       </span>
                     </div>
 
