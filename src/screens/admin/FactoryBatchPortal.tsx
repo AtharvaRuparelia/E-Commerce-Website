@@ -87,33 +87,33 @@ export const FactoryBatchPortal: React.FC = () => {
   const selectedProduct = products.find((p) => p.id === selectedProductId);
 
   return (
-    <div className="w-full bg-[#120F0D] text-stone-100 min-h-screen pb-16 pt-6">
+    <div className="w-full min-h-screen pb-16 pt-6 transition-colors duration-300 bg-amber-50/60 text-stone-900 dark:bg-[#120F0D] dark:text-stone-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         {/* Top Header Banner */}
-        <div className="bg-gradient-to-r from-amber-950 via-stone-900 to-amber-950 border border-amber-600/40 rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl">
+        <div className="bg-gradient-to-r from-amber-100 via-amber-50 to-amber-100 dark:from-amber-950 dark:via-stone-900 dark:to-amber-950 border border-amber-300 dark:border-amber-600/40 rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl">
           <div className="space-y-2 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 bg-amber-900/60 border border-amber-600/40 text-amber-300 text-xs font-semibold px-3 py-1 rounded-full">
+            <div className="inline-flex items-center gap-2 bg-amber-200/80 dark:bg-amber-900/60 border border-amber-300 dark:border-amber-600/40 text-amber-950 dark:text-amber-300 text-xs font-semibold px-3 py-1 rounded-full">
               <Factory className="w-3.5 h-3.5" />
               <span>Shop Production & Live Inventory Synchronization</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold font-serif text-amber-200">
+            <h1 className="text-2xl sm:text-3xl font-bold font-serif text-stone-900 dark:text-amber-200">
               Factory Batch Production Portal
             </h1>
-            <p className="text-xs text-stone-400 max-w-xl">
+            <p className="text-xs text-stone-600 dark:text-stone-400 max-w-xl">
               Dedicated portal for manufacturing personnel to enter finished copper Yantra production batches, instantly updating central warehouse inventory in real time.
             </p>
           </div>
 
-          <div className="flex items-center gap-4 bg-stone-950/80 p-4 rounded-2xl border border-stone-800">
-            <div className="text-center px-3 border-r border-stone-800">
-              <span className="block text-2xl font-black text-amber-400">{batches.length}</span>
-              <span className="text-[10px] text-stone-400 uppercase tracking-wider">Logged Batches</span>
+          <div className="flex items-center gap-4 bg-white/90 dark:bg-stone-950/80 p-4 rounded-2xl border border-amber-200 dark:border-stone-800 shadow-sm">
+            <div className="text-center px-3 border-r border-amber-200 dark:border-stone-800">
+              <span className="block text-2xl font-black text-amber-700 dark:text-amber-400">{batches.length}</span>
+              <span className="text-[10px] text-stone-500 dark:text-stone-400 uppercase tracking-wider font-semibold">Logged Batches</span>
             </div>
             <div className="text-center px-3">
-              <span className="block text-2xl font-black text-emerald-400">
+              <span className="block text-2xl font-black text-emerald-600 dark:text-emerald-400">
                 {products.reduce((acc, curr) => acc + (curr.stockCountRemaining || 0), 0)}
               </span>
-              <span className="text-[10px] text-stone-400 uppercase tracking-wider">Total Stock</span>
+              <span className="text-[10px] text-stone-500 dark:text-stone-400 uppercase tracking-wider font-semibold">Total Stock</span>
             </div>
           </div>
         </div>
@@ -121,22 +121,22 @@ export const FactoryBatchPortal: React.FC = () => {
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column: Log Batch Entry Form */}
-          <div className="lg:col-span-1 bg-stone-900/90 border border-stone-800 rounded-3xl p-6 space-y-6 shadow-xl">
-            <div className="border-b border-stone-800 pb-3 flex items-center gap-2 text-amber-300 font-serif font-bold text-base">
-              <PlusCircle className="w-5 h-5 text-amber-500" />
+          <div className="lg:col-span-1 bg-white/95 dark:bg-stone-900/90 border border-amber-200 dark:border-stone-800 rounded-3xl p-6 space-y-6 shadow-xl">
+            <div className="border-b border-amber-200 dark:border-stone-800 pb-3 flex items-center gap-2 text-amber-900 dark:text-amber-300 font-serif font-bold text-base">
+              <PlusCircle className="w-5 h-5 text-amber-600 dark:text-amber-500" />
               <span>Log New Manufacturing Batch</span>
             </div>
 
             {successMessage && (
-              <div className="bg-emerald-950/80 border border-emerald-700 text-emerald-200 p-4 rounded-2xl text-xs flex items-start gap-2 animate-fadeIn">
-                <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+              <div className="bg-emerald-50 dark:bg-emerald-950/80 border border-emerald-300 dark:border-emerald-700 text-emerald-900 dark:text-emerald-200 p-4 rounded-2xl text-xs flex items-start gap-2 animate-fadeIn">
+                <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
                 <span>{successMessage}</span>
               </div>
             )}
 
             {errorMessage && (
-              <div className="bg-rose-950/80 border border-rose-800 text-rose-200 p-4 rounded-2xl text-xs flex items-start gap-2">
-                <AlertTriangle className="w-5 h-5 text-rose-400 shrink-0" />
+              <div className="bg-rose-50 dark:bg-rose-950/80 border border-rose-300 dark:border-rose-800 text-rose-900 dark:text-rose-200 p-4 rounded-2xl text-xs flex items-start gap-2">
+                <AlertTriangle className="w-5 h-5 text-rose-600 dark:text-rose-400 shrink-0" />
                 <span>{errorMessage}</span>
               </div>
             )}
@@ -144,11 +144,11 @@ export const FactoryBatchPortal: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-4 text-xs">
               {/* Product Selection */}
               <div className="space-y-1.5">
-                <label className="font-semibold text-stone-300">Select Copper Yantra Item</label>
+                <label className="font-semibold text-stone-700 dark:text-stone-300">Select Copper Yantra Item</label>
                 <select
                   value={selectedProductId}
                   onChange={(e) => setSelectedProductId(e.target.value)}
-                  className="w-full bg-stone-950 border border-stone-800 rounded-xl px-3 py-2 text-stone-200 focus:outline-none focus:border-amber-500 font-medium"
+                  className="w-full bg-amber-50/50 dark:bg-stone-950 border border-amber-300 dark:border-stone-800 rounded-xl px-3 py-2 text-stone-900 dark:text-stone-200 focus:outline-none focus:border-amber-500 font-medium"
                 >
                   {products.map((p) => (
                     <option key={p.id} value={p.id}>
@@ -159,17 +159,17 @@ export const FactoryBatchPortal: React.FC = () => {
               </div>
 
               {selectedProduct && (
-                <div className="bg-stone-950/80 p-3 rounded-2xl border border-stone-800/80 space-y-1">
+                <div className="bg-amber-50/80 dark:bg-stone-950/80 p-3 rounded-2xl border border-amber-200 dark:border-stone-800/80 space-y-1">
                   <div className="flex justify-between text-[11px]">
-                    <span className="text-stone-400">Metal Specifications:</span>
-                    <span className="font-semibold text-amber-300">
+                    <span className="text-stone-500 dark:text-stone-400">Metal Specifications:</span>
+                    <span className="font-semibold text-amber-900 dark:text-amber-300">
                       {selectedProduct.metalWeightGrams ? `${selectedProduct.metalWeightGrams}g` : ''}{' '}
                       {selectedProduct.dimensionsInches || ''}
                     </span>
                   </div>
                   <div className="flex justify-between text-[11px]">
-                    <span className="text-stone-400">Current Warehouse Stock:</span>
-                    <span className="font-bold text-emerald-400">
+                    <span className="text-stone-500 dark:text-stone-400">Current Warehouse Stock:</span>
+                    <span className="font-bold text-emerald-600 dark:text-emerald-400">
                       {selectedProduct.stockCountRemaining ?? 0} Units
                     </span>
                   </div>
@@ -178,95 +178,104 @@ export const FactoryBatchPortal: React.FC = () => {
 
               {/* Quantity Produced */}
               <div className="space-y-1.5">
-                <label className="font-semibold text-stone-300">Finished Batch Quantity (Units)</label>
+                <label className="font-semibold text-stone-700 dark:text-stone-300">Finished Batch Quantity (Units)</label>
                 <input
                   type="number"
                   min={1}
                   max={500}
                   value={quantity}
                   onChange={(e) => setQuantity(Number(e.target.value))}
-                  className="w-full bg-stone-950 border border-stone-800 rounded-xl px-3 py-2 text-stone-200 font-mono font-bold focus:outline-none focus:border-amber-500"
+                  className="w-full bg-amber-50/50 dark:bg-stone-950 border border-amber-300 dark:border-stone-800 rounded-xl px-3 py-2 text-stone-900 dark:text-stone-200 font-mono font-bold focus:outline-none focus:border-amber-500"
                 />
               </div>
 
               {/* Supervisor Name / ID */}
               <div className="space-y-1.5">
-                <label className="font-semibold text-stone-300">Supervisor / Artisan Lead</label>
+                <label className="font-semibold text-stone-700 dark:text-stone-300">Supervisor / Artisan Lead</label>
                 <input
                   type="text"
                   value={supervisorName}
                   onChange={(e) => setSupervisorName(e.target.value)}
                   placeholder="Supervisor Name or SAP ID"
-                  className="w-full bg-stone-950 border border-stone-800 rounded-xl px-3 py-2 text-stone-200 focus:outline-none focus:border-amber-500"
+                  className="w-full bg-amber-50/50 dark:bg-stone-950 border border-amber-300 dark:border-stone-800 rounded-xl px-3 py-2 text-stone-900 dark:text-stone-200 focus:outline-none focus:border-amber-500"
                 />
               </div>
 
-              {/* Production Notes */}
+              {/* Notes */}
               <div className="space-y-1.5">
-                <label className="font-semibold text-stone-300">Shop Notes / Quality Verification</label>
+                <label className="font-semibold text-stone-700 dark:text-stone-300">Batch Etching & Polish Notes (Optional)</label>
                 <textarea
                   rows={3}
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  placeholder="E.g., 0.8mm gauge deep etched, lacquered, geometrically verified..."
-                  className="w-full bg-stone-950 border border-stone-800 rounded-xl p-3 text-stone-200 placeholder-stone-600 focus:outline-none focus:border-amber-500"
+                  placeholder="e.g. 0.8mm Acid Etching complete, protective lacquer coating applied."
+                  className="w-full bg-amber-50/50 dark:bg-stone-950 border border-amber-300 dark:border-stone-800 rounded-xl px-3 py-2 text-stone-900 dark:text-stone-200 focus:outline-none focus:border-amber-500"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full py-3 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-stone-950 font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 active:scale-95"
+                className="w-full py-3 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white dark:text-stone-950 font-black rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg transition-all active:scale-95 disabled:opacity-50"
               >
-                <Factory className="w-4 h-4" />
-                <span>{submitting ? 'Logging Batch...' : 'Submit & Increment Warehouse Stock'}</span>
+                <Boxes className="w-4 h-4" />
+                <span>{submitting ? 'Logging Batch...' : 'Log Batch & Sync Inventory'}</span>
               </button>
             </form>
           </div>
 
-          {/* Right Column: Factory Production Logs */}
-          <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center justify-between">
-              <h3 className="font-serif font-bold text-amber-200 text-base flex items-center gap-2">
-                <ClipboardList className="w-5 h-5 text-amber-500" />
-                <span>Shop Production Batch Audit Log</span>
-              </h3>
-              <span className="text-xs text-stone-400 font-mono">
-                {batches.length} Recorded Submissions
-              </span>
+          {/* Right Column: Recent Factory Production Batches */}
+          <div className="lg:col-span-2 bg-white/95 dark:bg-stone-900/90 border border-amber-200 dark:border-stone-800 rounded-3xl p-6 space-y-6 shadow-xl">
+            <div className="border-b border-amber-200 dark:border-stone-800 pb-3 flex items-center justify-between">
+              <div className="flex items-center gap-2 text-stone-900 dark:text-amber-200 font-serif font-bold text-base">
+                <ClipboardList className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+                <span>Recent Production Logs</span>
+              </div>
+              <span className="text-xs text-stone-500 dark:text-stone-400 font-mono">Real-time Factory Ledger</span>
             </div>
 
-            <div className="bg-stone-900/90 border border-stone-800 rounded-3xl p-4 sm:p-6 overflow-hidden shadow-xl">
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs">
-                  <thead className="bg-stone-950 text-stone-400 border-b border-stone-800">
-                    <tr>
-                      <th className="p-3">Batch Code</th>
-                      <th className="p-3">Yantra Product</th>
-                      <th className="p-3 text-center">Qty Added</th>
-                      <th className="p-3">Supervisor</th>
-                      <th className="p-3 text-right">Production Date</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-stone-800 text-stone-200 font-medium">
-                    {batches.map((batch) => (
-                      <tr key={batch.id} className="hover:bg-stone-800/40 transition-colors">
-                        <td className="p-3 font-mono font-bold text-amber-400">{batch.batchCode}</td>
-                        <td className="p-3 font-semibold text-stone-100">{batch.productName}</td>
-                        <td className="p-3 text-center">
-                          <span className="bg-emerald-950 text-emerald-300 font-bold px-2 py-0.5 rounded border border-emerald-800">
-                            +{batch.quantityProduced}
-                          </span>
-                        </td>
-                        <td className="p-3 text-stone-300">{batch.supervisorName}</td>
-                        <td className="p-3 text-right text-stone-400 font-mono text-[11px]">
-                          {new Date(batch.productionDate).toLocaleString()}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+            <div className="space-y-4">
+              {batches.map((batch) => {
+                const product = products.find((p) => p.id === batch.menuItemId);
+                return (
+                  <div
+                    key={batch.id}
+                    className="bg-amber-50/60 dark:bg-stone-950/90 border border-amber-200 dark:border-stone-800 rounded-2xl p-4 space-y-3 shadow-md dark:shadow"
+                  >
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-amber-200/80 dark:border-stone-800/80 pb-2">
+                      <div>
+                        <span className="font-mono font-black text-amber-800 dark:text-amber-400 text-sm">{batch.batchCode}</span>
+                        <h4 className="font-bold text-stone-900 dark:text-stone-100 text-xs">
+                          {product ? product.name : batch.menuItemId}
+                        </h4>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <span className="bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 font-mono font-black px-3 py-1 rounded-xl text-xs">
+                          +{batch.quantityProduced} Units Added
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-stone-600 dark:text-stone-400">
+                      <div className="flex items-center gap-1.5">
+                        <UserCheck className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
+                        <span>Supervisor: <strong className="text-stone-900 dark:text-stone-200">{batch.supervisorName}</strong></span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Calendar className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
+                        <span>Logged At: <strong className="text-stone-900 dark:text-stone-200 font-mono">{new Date(batch.createdAt).toLocaleString()}</strong></span>
+                      </div>
+                    </div>
+
+                    {batch.notes && (
+                      <p className="text-[11px] italic text-stone-600 dark:text-stone-400 bg-white/80 dark:bg-stone-900 p-2 rounded-xl border border-amber-200 dark:border-stone-800">
+                        "{batch.notes}"
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
