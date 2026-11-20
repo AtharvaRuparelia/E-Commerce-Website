@@ -92,7 +92,7 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
 
       // Sub-category filter under Pooja Products
       if (selectedSection === 'Pooja Products' && selectedPoojaSubCategory !== 'All') {
-        if (item.category !== selectedPoojaSubCategory) {
+        if (item.category.toLowerCase() !== selectedPoojaSubCategory.toLowerCase()) {
           return false;
         }
       }
@@ -146,26 +146,69 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
       {(selectedSection === 'Pooja Products' || selectedSection === 'All') && (
         <div className="border-b py-3 px-4 sm:px-6 lg:px-8 transition-colors bg-white/90 border-amber-200 dark:bg-stone-950/90 dark:border-stone-800">
           <div className="max-w-7xl mx-auto flex items-center gap-2 overflow-x-auto text-xs whitespace-nowrap">
-            <span className="font-bold text-amber-600 dark:text-amber-400 mr-2 flex items-center gap-1">
+            <span className="font-bold text-amber-600 dark:text-amber-400 mr-2 flex items-center gap-1 shrink-0">
               <Layers className="w-3.5 h-3.5" />
-              <span>Pooja Categories:</span>
+              <span>Categories:</span>
             </span>
-            {poojaSubCategories.map((subCat) => (
-              <button
-                key={subCat}
-                onClick={() => {
-                  setSelectedSection('Pooja Products');
-                  setSelectedPoojaSubCategory(subCat);
-                }}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all border ${
-                  selectedSection === 'Pooja Products' && selectedPoojaSubCategory === subCat
-                    ? 'bg-amber-600 text-stone-950 border-amber-500 shadow'
-                    : 'bg-stone-100 text-stone-700 border-amber-200 hover:bg-amber-100 dark:bg-stone-900 dark:text-stone-300 dark:border-stone-800 dark:hover:text-amber-300'
-                }`}
-              >
-                {subCat === 'All' ? 'All Pooja Products' : subCat}
-              </button>
-            ))}
+            <button
+              onClick={() => {
+                setSelectedSection('Copper Yantra');
+                setSelectedPoojaSubCategory('All');
+              }}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all border ${
+                selectedSection === 'Copper Yantra'
+                  ? 'bg-amber-600 text-stone-950 border-amber-500 shadow'
+                  : 'bg-stone-100 text-stone-700 border-amber-200 hover:bg-amber-100 dark:bg-stone-900 dark:text-stone-300 dark:border-stone-800 dark:hover:text-amber-300'
+              }`}
+            >
+              Copper Yantras (10)
+            </button>
+            {poojaSubCategories.map((subCat) => {
+              const count = subCat === 'All' 
+                ? menuItems.filter(i => i.section === 'Pooja Products').length
+                : menuItems.filter(i => i.category.toLowerCase() === subCat.toLowerCase()).length;
+              return (
+                <button
+                  key={subCat}
+                  onClick={() => {
+                    setSelectedSection('Pooja Products');
+                    setSelectedPoojaSubCategory(subCat);
+                  }}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all border ${
+                    selectedSection === 'Pooja Products' && selectedPoojaSubCategory === subCat
+                      ? 'bg-amber-600 text-stone-950 border-amber-500 shadow'
+                      : 'bg-stone-100 text-stone-700 border-amber-200 hover:bg-amber-100 dark:bg-stone-900 dark:text-stone-300 dark:border-stone-800 dark:hover:text-amber-300'
+                  }`}
+                >
+                  {subCat === 'All' ? `All Pooja Items (${count})` : `${subCat} (${count})`}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {selectedSection === 'Copper Yantra' && (
+        <div className="border-b py-3 px-4 sm:px-6 lg:px-8 transition-colors bg-white/90 border-amber-200 dark:bg-stone-950/90 dark:border-stone-800">
+          <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 overflow-x-auto text-xs whitespace-nowrap">
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Sacred Copper Yantras:</span>
+              </span>
+              <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 font-mono font-bold text-[11px] border border-amber-300 dark:border-amber-800">
+                10 Mastercrafted 0.8mm Acid-Etched Designs
+              </span>
+            </div>
+            <button
+              onClick={() => {
+                setSelectedSection('All');
+                setSelectedPoojaSubCategory('All');
+              }}
+              className="text-stone-600 dark:text-stone-400 hover:text-amber-600 dark:hover:text-amber-300 underline font-medium"
+            >
+              Show All Products
+            </button>
           </div>
         </div>
       )}
