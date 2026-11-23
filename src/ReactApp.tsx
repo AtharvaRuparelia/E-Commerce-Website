@@ -143,6 +143,7 @@ export const ReactApp: React.FC = () => {
             initialSection={selectedSection}
             initialPoojaSubCategory={selectedPoojaSubCategory}
             initialSearchQuery={headerSearch}
+            isDarkMode={isDarkMode}
           />
         )}
 
@@ -169,6 +170,7 @@ export const ReactApp: React.FC = () => {
           <OrderTrackingScreen
             orderId={activeTrackingId}
             onBackToMenu={() => setCurrentView('catalog')}
+            isDarkMode={isDarkMode}
           />
         )}
 
@@ -213,6 +215,7 @@ export const ReactApp: React.FC = () => {
         onClose={() => setCartOpen(false)}
         onOrderSuccess={handleOrderSuccess}
         onRequireAuth={() => setAuthOpen(true)}
+        isDarkMode={isDarkMode}
       />
 
       {/* Auth Modal */}

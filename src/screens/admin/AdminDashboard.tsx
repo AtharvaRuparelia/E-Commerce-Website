@@ -14,7 +14,9 @@ import {
   Printer,
   ShieldCheck,
   Search,
-  ChevronRight
+  ChevronRight,
+  Upload,
+  Image as ImageIcon
 } from 'lucide-react';
 import { MenuItem, Order, OrderStatus, FactoryBatch } from '../../types';
 import { listenToMenuItems, addOrUpdateYantraItem, deleteYantraItem } from '../../services/menuService';
@@ -388,7 +390,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ isDarkMode = tru
                 className="px-4 py-2 bg-gradient-to-r from-amber-600 to-amber-700 text-white dark:text-stone-950 font-bold rounded-xl text-xs flex items-center gap-2 shadow"
               >
                 <Plus className="w-4 h-4" />
-                <span>Add New Yantra Listing</span>
+                <span>Add New Product</span>
               </button>
             </div>
 
@@ -506,10 +508,62 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ isDarkMode = tru
             isDarkMode ? 'bg-stone-900 border-stone-800 text-stone-100' : 'bg-white border-amber-300 text-stone-900'
           }`}>
             <h3 className={`font-serif font-bold text-lg ${isDarkMode ? 'text-amber-200' : 'text-amber-900'}`}>
-              {editingItem.id ? 'Edit Product Listing' : 'Add New Yantra Listing'}
+              {editingItem.id ? 'Edit Product' : 'Add New Product'}
             </h3>
 
             <form onSubmit={handleSaveProduct} className="space-y-3 text-xs">
+              {/* Add Image Option */}
+              <div className="space-y-1.5">
+                <label className={`block font-semibold text-xs ${isDarkMode ? 'text-amber-200' : 'text-stone-700'}`}>
+                  Add Image
+                </label>
+                <div className="flex items-center gap-3">
+                  <div className={`w-16 h-16 rounded-2xl border flex items-center justify-center overflow-hidden shrink-0 shadow-inner ${
+                    isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-500' : 'bg-amber-50/60 border-amber-300 text-stone-400'
+                  }`}>
+                    {editingItem.imageUrl ? (
+                      <img
+                        src={editingItem.imageUrl}
+                        alt="Product preview"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <ImageIcon className="w-6 h-6 text-stone-400" />
+                    )}
+                  </div>
+                  <div className="flex-1 space-y-1.5">
+                    <label className="cursor-pointer inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-600 hover:bg-amber-500 text-white dark:text-stone-950 shadow transition-all active:scale-95">
+                      <Upload className="w-4 h-4" />
+                      <span>Upload Image</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onloadend = () => {
+                              setEditingItem((prev) => ({ ...prev, imageUrl: reader.result as string }));
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                      />
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Or enter image URL (e.g. /items/shree-yantra.jpg)"
+                      value={editingItem.imageUrl || ''}
+                      onChange={(e) => setEditingItem({ ...editingItem, imageUrl: e.target.value })}
+                      className={`w-full border rounded-xl p-2 text-[11px] focus:outline-none focus:border-amber-500 ${
+                        isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200' : 'bg-amber-50/50 border-amber-300 text-stone-900'
+                      }`}
+                    />
+                  </div>
+                </div>
+              </div>
+
               <input
                 type="text"
                 placeholder="Product Name"
@@ -533,7 +587,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ isDarkMode = tru
                 />
                 <input
                   type="number"
-                  placeholder="Stock Quantity"
+                  placeholder="Quantity"
                   value={editingItem.stockCountRemaining || ''}
                   onChange={(e) => setEditingItem({ ...editingItem, stockCountRemaining: Number(e.target.value) })}
                   className={`w-full border rounded-xl p-3 focus:outline-none focus:border-amber-500 ${
@@ -546,7 +600,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ isDarkMode = tru
               <div className="grid grid-cols-2 gap-3">
                 <input
                   type="number"
-                  placeholder="Metal Weight (Grams)"
+                  placeholder="Weight(Grams)"
                   value={editingItem.metalWeightGrams || ''}
                   onChange={(e) => setEditingItem({ ...editingItem, metalWeightGrams: Number(e.target.value) })}
                   className={`w-full border rounded-xl p-3 focus:outline-none focus:border-amber-500 ${
@@ -555,7 +609,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ isDarkMode = tru
                 />
                 <input
                   type="text"
-                  placeholder="Dimensions (e.g. 6x6 in)"
+                  placeholder="size(eg.6x6 in)"
                   value={editingItem.dimensionsInches || ''}
                   onChange={(e) => setEditingItem({ ...editingItem, dimensionsInches: e.target.value })}
                   className={`w-full border rounded-xl p-3 focus:outline-none focus:border-amber-500 ${
@@ -588,7 +642,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ isDarkMode = tru
                   type="submit"
                   className="px-5 py-2 bg-amber-600 text-white dark:text-stone-950 rounded-xl font-bold shadow hover:bg-amber-500"
                 >
-                  Save Listing
+                  Save
                 </button>
               </div>
             </form>

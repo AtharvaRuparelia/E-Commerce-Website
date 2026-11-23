@@ -19,11 +19,13 @@ import { InvoiceModal } from '../../components/InvoiceModal';
 interface OrderTrackingScreenProps {
   orderId?: string | null;
   onBackToMenu?: () => void;
+  isDarkMode?: boolean;
 }
 
 export const OrderTrackingScreen: React.FC<OrderTrackingScreenProps> = ({
   orderId,
-  onBackToMenu
+  onBackToMenu,
+  isDarkMode = true
 }) => {
   const { firebaseUser } = useAuth();
   const [orders, setOrders] = useState<Order[]>([]);
@@ -47,13 +49,23 @@ export const OrderTrackingScreen: React.FC<OrderTrackingScreenProps> = ({
 
   if (orders.length === 0) {
     return (
-      <div className="w-full bg-[#120F0D] text-stone-100 min-h-screen flex items-center justify-center p-6">
-        <div className="bg-stone-900/90 border border-stone-800 rounded-3xl p-8 max-w-md text-center space-y-4 shadow-xl">
-          <div className="w-16 h-16 bg-amber-950/80 border border-amber-600/40 rounded-full flex items-center justify-center mx-auto text-amber-400">
+      <div className={`w-full min-h-screen flex items-center justify-center p-6 transition-colors duration-300 ${
+        isDarkMode ? 'bg-[#120F0D] text-stone-100' : 'bg-[#FAF7F2] text-stone-900'
+      }`}>
+        <div className={`border rounded-3xl p-8 max-w-md text-center space-y-4 shadow-xl ${
+          isDarkMode ? 'bg-stone-900/90 border-stone-800' : 'bg-white border-amber-200'
+        }`}>
+          <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto border ${
+            isDarkMode ? 'bg-amber-950/80 border-amber-600/40 text-amber-400' : 'bg-amber-100 border-amber-300 text-amber-800'
+          }`}>
             <PackageCheck className="w-8 h-8" />
           </div>
-          <h3 className="font-serif text-2xl font-bold text-amber-200">No Orders Found</h3>
-          <p className="text-xs text-stone-400">
+          <h3 className={`font-serif text-2xl font-bold ${
+            isDarkMode ? 'text-amber-200' : 'text-stone-900'
+          }`}>No Orders Found</h3>
+          <p className={`text-xs ${
+            isDarkMode ? 'text-stone-400' : 'text-stone-600'
+          }`}>
             You have not placed any copper Yantra orders yet. Select items from our catalog to receive live delivery status updates!
           </p>
           {onBackToMenu && (
@@ -119,25 +131,37 @@ export const OrderTrackingScreen: React.FC<OrderTrackingScreenProps> = ({
   const currentStepIdx = getStepIndex(currentOrder.status);
 
   return (
-    <div className="w-full bg-[#120F0D] text-stone-100 min-h-screen pb-16 pt-6">
+    <div className={`w-full min-h-screen pb-16 pt-6 transition-colors duration-300 ${
+      isDarkMode ? 'bg-[#120F0D] text-stone-100' : 'bg-[#FAF7F2] text-stone-900'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone-800 pb-4">
+        <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b pb-4 ${
+          isDarkMode ? 'border-stone-800' : 'border-amber-200'
+        }`}>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs bg-amber-950 text-amber-300 font-mono px-2 py-0.5 rounded border border-amber-800">
+              <span className={`text-xs font-mono px-2 py-0.5 rounded border font-bold ${
+                isDarkMode ? 'bg-amber-950 text-amber-300 border-amber-800' : 'bg-amber-100 text-amber-900 border-amber-300'
+              }`}>
                 LIVE ORDER TRACKING
               </span>
-              <span className="text-xs text-stone-400 font-mono">ID: {currentOrder.orderNumber}</span>
+              <span className={`text-xs font-mono ${isDarkMode ? 'text-stone-400' : 'text-stone-500'}`}>
+                ID: {currentOrder.orderNumber}
+              </span>
             </div>
-            <h1 className="text-2xl font-serif font-bold text-amber-200 mt-1">
+            <h1 className={`text-2xl font-serif font-bold mt-1 ${
+              isDarkMode ? 'text-amber-200' : 'text-stone-900'
+            }`}>
               Customer Order & Delivery Status
             </h1>
           </div>
 
           <button
             onClick={() => setInvoiceModalOpen(true)}
-            className="self-start sm:self-auto px-4 py-2 bg-stone-900 hover:bg-stone-800 text-amber-300 border border-amber-600/40 rounded-xl text-xs font-bold flex items-center gap-2 transition-colors"
+            className={`self-start sm:self-auto px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 border transition-colors shadow-sm ${
+              isDarkMode ? 'bg-stone-900 hover:bg-stone-800 text-amber-300 border-amber-600/40' : 'bg-white hover:bg-amber-50 text-amber-900 border-amber-300'
+            }`}
           >
             <FileText className="w-4 h-4" />
             <span>Download PDF Invoice</span>
@@ -148,19 +172,25 @@ export const OrderTrackingScreen: React.FC<OrderTrackingScreenProps> = ({
           {/* Main Delivery Progress Column */}
           <div className="lg:col-span-2 space-y-6">
             {/* Status Timeline Card */}
-            <div className="bg-stone-900/90 border border-stone-800 rounded-3xl p-6 sm:p-8 space-y-8 shadow-xl">
+            <div className={`border rounded-3xl p-6 sm:p-8 space-y-8 shadow-xl ${
+              isDarkMode ? 'bg-stone-900/90 border-stone-800' : 'bg-white border-amber-200 text-stone-900'
+            }`}>
               <div className="flex items-center justify-between">
                 <div>
-                  <span className="text-xs text-stone-400 block">Current Status</span>
-                  <span className="text-xl font-bold font-serif text-amber-400 flex items-center gap-2">
+                  <span className={`text-xs block ${isDarkMode ? 'text-stone-400' : 'text-stone-500'}`}>Current Status</span>
+                  <span className={`text-xl font-bold font-serif flex items-center gap-2 ${
+                    isDarkMode ? 'text-amber-400' : 'text-amber-700'
+                  }`}>
                     <Sparkles className="w-5 h-5 text-amber-500" />
                     {currentOrder.status.toUpperCase()}
                   </span>
                 </div>
 
                 <div className="text-right">
-                  <span className="text-xs text-stone-400 block">Pickup / Verification Code</span>
-                  <span className="text-2xl font-mono font-black text-amber-300 bg-stone-950 px-3 py-1 rounded-xl border border-stone-800 inline-block">
+                  <span className={`text-xs block ${isDarkMode ? 'text-stone-400' : 'text-stone-500'}`}>Pickup / Verification Code</span>
+                  <span className={`text-2xl font-mono font-black px-3 py-1 rounded-xl border inline-block ${
+                    isDarkMode ? 'text-amber-300 bg-stone-950 border-stone-800' : 'text-amber-800 bg-amber-50 border-amber-300'
+                  }`}>
                     {currentOrder.pickupOtp || '8942'}
                   </span>
                 </div>
@@ -168,7 +198,9 @@ export const OrderTrackingScreen: React.FC<OrderTrackingScreenProps> = ({
 
               {/* Progress Bar Timeline */}
               <div className="relative py-4">
-                <div className="overflow-hidden h-2 mb-8 text-xs flex rounded bg-stone-950 border border-stone-800">
+                <div className={`overflow-hidden h-2 mb-8 text-xs flex rounded border ${
+                  isDarkMode ? 'bg-stone-950 border-stone-800' : 'bg-stone-200 border-amber-200'
+                }`}>
                   <div
                     style={{ width: `${((currentStepIdx + 1) / 4) * 100}%` }}
                     className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-gradient-to-r from-amber-600 to-yellow-500 transition-all duration-500"
@@ -186,7 +218,7 @@ export const OrderTrackingScreen: React.FC<OrderTrackingScreenProps> = ({
                           className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all ${
                             isPassed
                               ? 'bg-amber-600 border-amber-400 text-stone-950 shadow-lg'
-                              : 'bg-stone-950 border-stone-800 text-stone-600'
+                              : isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-600' : 'bg-stone-100 border-stone-300 text-stone-400'
                           }`}
                         >
                           {step.icon}
@@ -194,12 +226,16 @@ export const OrderTrackingScreen: React.FC<OrderTrackingScreenProps> = ({
                         <div>
                           <span
                             className={`text-xs font-bold block ${
-                              isCurrent ? 'text-amber-300' : isPassed ? 'text-stone-200' : 'text-stone-500'
+                              isCurrent 
+                                ? (isDarkMode ? 'text-amber-300' : 'text-amber-800') 
+                                : isPassed 
+                                ? (isDarkMode ? 'text-stone-200' : 'text-stone-800') 
+                                : (isDarkMode ? 'text-stone-500' : 'text-stone-400')
                             }`}
                           >
                             {step.label}
                           </span>
-                          <span className="text-[10px] text-stone-500 hidden sm:block">
+                          <span className={`text-[10px] hidden sm:block ${isDarkMode ? 'text-stone-500' : 'text-stone-500'}`}>
                             {step.desc}
                           </span>
                         </div>
@@ -210,23 +246,29 @@ export const OrderTrackingScreen: React.FC<OrderTrackingScreenProps> = ({
               </div>
 
               {/* Shipping Address & Dispatch Note */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-stone-800 text-xs">
-                <div className="flex items-start gap-2 bg-stone-950/80 p-3 rounded-2xl border border-stone-800">
+              <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t text-xs ${
+                isDarkMode ? 'border-stone-800' : 'border-amber-200'
+              }`}>
+                <div className={`flex items-start gap-2 p-3 rounded-2xl border ${
+                  isDarkMode ? 'bg-stone-950/80 border-stone-800' : 'bg-amber-50/60 border-amber-200'
+                }`}>
                   <MapPin className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
                   <div>
-                    <span className="text-stone-400 block font-semibold">Delivery Address</span>
-                    <span className="text-stone-200">
+                    <span className={`block font-semibold ${isDarkMode ? 'text-stone-400' : 'text-stone-600'}`}>Delivery Address</span>
+                    <span className={isDarkMode ? 'text-stone-200' : 'text-stone-800'}>
                       {currentOrder.shippingAddress || '402 Vile Parle West, Juhu Scheme, Mumbai 400056'}
                     </span>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-2 bg-stone-950/80 p-3 rounded-2xl border border-stone-800">
-                  <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                <div className={`flex items-start gap-2 p-3 rounded-2xl border ${
+                  isDarkMode ? 'bg-stone-950/80 border-stone-800' : 'bg-amber-50/60 border-amber-200'
+                }`}>
+                  <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                   <div>
-                    <span className="text-stone-400 block font-semibold">Quality & Payment Verification</span>
-                    <span className="text-stone-200">
-                      Payment Status: <strong className="text-emerald-400">{currentOrder.paymentStatus || 'PAID'}</strong> | Direct-from-factory warranty applied.
+                    <span className={`block font-semibold ${isDarkMode ? 'text-stone-400' : 'text-stone-600'}`}>Quality & Payment Verification</span>
+                    <span className={isDarkMode ? 'text-stone-200' : 'text-stone-800'}>
+                      Payment Status: <strong className={isDarkMode ? 'text-emerald-400' : 'text-emerald-700'}>{currentOrder.paymentStatus || 'PAID'}</strong> | Direct-from-shop warranty applied.
                     </span>
                   </div>
                 </div>
@@ -234,28 +276,34 @@ export const OrderTrackingScreen: React.FC<OrderTrackingScreenProps> = ({
             </div>
 
             {/* Order Items Listing */}
-            <div className="bg-stone-900/90 border border-stone-800 rounded-3xl p-6 space-y-4 shadow-xl">
-              <h3 className="font-serif font-bold text-amber-200 text-sm border-b border-stone-800 pb-3">
+            <div className={`border rounded-3xl p-6 space-y-4 shadow-xl ${
+              isDarkMode ? 'bg-stone-900/90 border-stone-800 text-stone-100' : 'bg-white border-amber-200 text-stone-900'
+            }`}>
+              <h3 className={`font-serif font-bold text-sm border-b pb-3 ${
+                isDarkMode ? 'text-amber-200 border-stone-800' : 'text-stone-900 border-amber-200'
+              }`}>
                 Order Items ({currentOrder.items.length})
               </h3>
-              <div className="divide-y divide-stone-800">
+              <div className={`divide-y ${isDarkMode ? 'divide-stone-800' : 'divide-amber-200'}`}>
                 {currentOrder.items.map((item, idx) => (
                   <div key={idx} className="py-3 flex items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
                       <img
                         src={item.menuItem.imageUrl}
                         alt={item.menuItem.name}
-                        className="w-12 h-12 rounded-xl object-cover border border-stone-800"
+                        className={`w-12 h-12 rounded-xl object-cover border ${
+                          isDarkMode ? 'border-stone-800' : 'border-amber-200'
+                        }`}
                       />
                       <div>
-                        <h4 className="text-xs font-bold text-stone-100">{item.menuItem.name}</h4>
-                        <p className="text-[11px] text-stone-400 font-mono">
+                        <h4 className={`text-xs font-bold ${isDarkMode ? 'text-stone-100' : 'text-stone-900'}`}>{item.menuItem.name}</h4>
+                        <p className={`text-[11px] font-mono ${isDarkMode ? 'text-stone-400' : 'text-stone-500'}`}>
                           Qty: {item.quantity} | {item.menuItem.metalWeightGrams ? `${item.menuItem.metalWeightGrams}g` : ''}{' '}
                           {item.menuItem.dimensionsInches || ''}
                         </p>
                       </div>
                     </div>
-                    <span className="text-xs font-mono font-bold text-amber-400">
+                    <span className={`text-xs font-mono font-bold ${isDarkMode ? 'text-amber-400' : 'text-amber-700'}`}>
                       ₹{item.menuItem.price * item.quantity}
                     </span>
                   </div>
@@ -266,7 +314,7 @@ export const OrderTrackingScreen: React.FC<OrderTrackingScreenProps> = ({
 
           {/* Right Sidebar: Order History List */}
           <div className="space-y-4">
-            <h3 className="font-serif font-bold text-stone-200 text-sm">Past Order History</h3>
+            <h3 className={`font-serif font-bold text-sm ${isDarkMode ? 'text-stone-200' : 'text-stone-900'}`}>Past Order History</h3>
             <div className="space-y-3">
               {orders.map((ord) => (
                 <div
@@ -274,19 +322,21 @@ export const OrderTrackingScreen: React.FC<OrderTrackingScreenProps> = ({
                   onClick={() => setSelectedOrder(ord)}
                   className={`p-4 rounded-2xl border cursor-pointer transition-all ${
                     currentOrder.id === ord.id
-                      ? 'bg-amber-950/40 border-amber-600/60 shadow-lg'
-                      : 'bg-stone-900/80 border-stone-800 hover:border-stone-700'
+                      ? isDarkMode ? 'bg-amber-950/40 border-amber-600/60 shadow-lg' : 'bg-amber-100 border-amber-400 shadow-md'
+                      : isDarkMode ? 'bg-stone-900/80 border-stone-800 hover:border-stone-700' : 'bg-white border-amber-200 hover:border-amber-300 shadow-sm'
                   }`}
                 >
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-mono font-bold text-amber-300">{ord.orderNumber}</span>
-                    <span className="text-[10px] text-stone-400">
+                    <span className={`font-mono font-bold ${isDarkMode ? 'text-amber-300' : 'text-amber-800'}`}>{ord.orderNumber}</span>
+                    <span className={`text-[10px] ${isDarkMode ? 'text-stone-400' : 'text-stone-500'}`}>
                       {new Date(ord.createdAt).toLocaleDateString()}
                     </span>
                   </div>
                   <div className="flex items-center justify-between text-xs mt-2">
-                    <span className="text-stone-300 font-medium">₹{ord.total}</span>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-stone-950 text-amber-400 border border-stone-800">
+                    <span className={`font-medium ${isDarkMode ? 'text-stone-300' : 'text-stone-700'}`}>₹{ord.total}</span>
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${
+                      isDarkMode ? 'bg-stone-950 text-amber-400 border-stone-800' : 'bg-amber-50 text-amber-800 border-amber-300'
+                    }`}>
                       {ord.status}
                     </span>
                   </div>
@@ -302,6 +352,7 @@ export const OrderTrackingScreen: React.FC<OrderTrackingScreenProps> = ({
         isOpen={invoiceModalOpen}
         onClose={() => setInvoiceModalOpen(false)}
         order={currentOrder}
+        isDarkMode={isDarkMode}
       />
     </div>
   );

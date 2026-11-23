@@ -23,13 +23,15 @@ interface BiteJoyCartDrawerProps {
   onClose: () => void;
   onOrderSuccess: (order: Order) => void;
   onRequireAuth: () => void;
+  isDarkMode?: boolean;
 }
 
 export const BiteJoyCartDrawer: React.FC<BiteJoyCartDrawerProps> = ({
   isOpen,
   onClose,
   onOrderSuccess,
-  onRequireAuth
+  onRequireAuth,
+  isDarkMode = true
 }) => {
   const { items, updateQuantity, removeFromCart, clearCart, subtotal, tax, total } = useCart();
   const { firebaseUser, profile } = useAuth();
@@ -107,22 +109,38 @@ export const BiteJoyCartDrawer: React.FC<BiteJoyCartDrawerProps> = ({
       onClick={onClose}
     >
       <div
-        className="w-full max-w-md bg-stone-900 border-l border-amber-600/40 text-stone-100 h-full flex flex-col justify-between p-6 shadow-2xl space-y-6"
+        className={`w-full max-w-md border-l h-full flex flex-col justify-between p-6 shadow-2xl space-y-6 transition-colors duration-300 ${
+          isDarkMode
+            ? 'bg-stone-900 border-amber-600/40 text-stone-100'
+            : 'bg-white border-amber-300 text-stone-900'
+        }`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-stone-800 pb-4">
+        <div className={`flex items-center justify-between border-b pb-4 ${
+          isDarkMode ? 'border-stone-800' : 'border-amber-200'
+        }`}>
           <div className="flex items-center gap-2">
-            <ShoppingBag className="w-5 h-5 text-amber-400" />
-            <h3 className="font-serif font-bold text-amber-200 text-lg">Your Shopping Cart</h3>
-            <span className="text-xs bg-amber-950 text-amber-300 font-mono px-2 py-0.5 rounded border border-amber-800">
+            <ShoppingBag className={`w-5 h-5 ${isDarkMode ? 'text-amber-400' : 'text-amber-700'}`} />
+            <h3 className={`font-serif font-bold text-lg ${isDarkMode ? 'text-amber-200' : 'text-stone-900'}`}>
+              Your Shopping Cart
+            </h3>
+            <span className={`text-xs font-mono px-2 py-0.5 rounded border font-bold ${
+              isDarkMode
+                ? 'bg-amber-950 text-amber-300 border-amber-800'
+                : 'bg-amber-100 text-amber-900 border-amber-300'
+            }`}>
               {items.length} Items
             </span>
           </div>
 
           <button
             onClick={onClose}
-            className="p-1.5 text-stone-400 hover:text-white bg-stone-800 rounded-full transition-colors"
+            className={`p-1.5 rounded-full transition-colors ${
+              isDarkMode
+                ? 'text-stone-400 hover:text-white bg-stone-800'
+                : 'text-stone-600 hover:text-stone-900 bg-amber-100'
+            }`}
           >
             <X className="w-5 h-5" />
           </button>
@@ -132,42 +150,58 @@ export const BiteJoyCartDrawer: React.FC<BiteJoyCartDrawerProps> = ({
         <div className="flex-1 overflow-y-auto space-y-4 pr-1">
           {items.length === 0 ? (
             <div className="py-20 text-center space-y-3">
-              <ShoppingBag className="w-12 h-12 text-stone-600 mx-auto" />
-              <p className="text-xs text-stone-400">Your shopping cart is currently empty.</p>
+              <ShoppingBag className={`w-12 h-12 mx-auto ${isDarkMode ? 'text-stone-600' : 'text-amber-300'}`} />
+              <p className={`text-xs ${isDarkMode ? 'text-stone-400' : 'text-stone-500'}`}>
+                Your shopping cart is currently empty.
+              </p>
             </div>
           ) : (
             items.map((item) => (
               <div
                 key={item.menuItem.id}
-                className="bg-stone-950 p-3.5 rounded-2xl border border-stone-800 flex items-center justify-between gap-3 text-xs"
+                className={`p-3.5 rounded-2xl border flex items-center justify-between gap-3 text-xs transition-colors shadow-sm ${
+                  isDarkMode
+                    ? 'bg-stone-950 border-stone-800'
+                    : 'bg-amber-50/70 border-amber-200'
+                }`}
               >
                 <img
                   src={item.menuItem.imageUrl}
                   alt={item.menuItem.name}
-                  className="w-14 h-14 rounded-xl object-cover border border-stone-800 shrink-0"
+                  className={`w-14 h-14 rounded-xl object-cover shrink-0 border ${
+                    isDarkMode ? 'border-stone-800' : 'border-amber-200'
+                  }`}
                 />
 
                 <div className="flex-1 min-w-0">
-                  <h4 className="font-bold text-stone-100 truncate">{item.menuItem.name}</h4>
-                  <span className="text-stone-400 font-mono text-[10px] block">
+                  <h4 className={`font-bold truncate ${isDarkMode ? 'text-stone-100' : 'text-stone-900'}`}>
+                    {item.menuItem.name}
+                  </h4>
+                  <span className={`font-mono text-[10px] block ${isDarkMode ? 'text-stone-400' : 'text-stone-500'}`}>
                     {item.menuItem.metalWeightGrams ? `${item.menuItem.metalWeightGrams}g` : ''}{' '}
                     {item.menuItem.dimensionsInches || ''}
                   </span>
-                  <span className="text-amber-400 font-mono font-bold">₹{item.menuItem.price}</span>
+                  <span className={`font-mono font-bold ${isDarkMode ? 'text-amber-400' : 'text-amber-800'}`}>
+                    ₹{item.menuItem.price}
+                  </span>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-1 bg-stone-900 border border-stone-800 rounded-lg p-1">
+                  <div className={`flex items-center gap-1 border rounded-lg p-1 ${
+                    isDarkMode ? 'bg-stone-900 border-stone-800' : 'bg-white border-amber-200'
+                  }`}>
                     <button
                       onClick={() => updateQuantity(item.menuItem.id, item.quantity - 1)}
-                      className="p-1 text-stone-400 hover:text-stone-100"
+                      className={`p-1 ${isDarkMode ? 'text-stone-400 hover:text-stone-100' : 'text-stone-600 hover:text-stone-900'}`}
                     >
                       <Minus className="w-3 h-3" />
                     </button>
-                    <span className="font-mono font-bold px-1.5 text-amber-300">{item.quantity}</span>
+                    <span className={`font-mono font-bold px-1.5 ${isDarkMode ? 'text-amber-300' : 'text-amber-900'}`}>
+                      {item.quantity}
+                    </span>
                     <button
                       onClick={() => updateQuantity(item.menuItem.id, item.quantity + 1)}
-                      className="p-1 text-stone-400 hover:text-stone-100"
+                      className={`p-1 ${isDarkMode ? 'text-stone-400 hover:text-stone-100' : 'text-stone-600 hover:text-stone-900'}`}
                     >
                       <Plus className="w-3 h-3" />
                     </button>
@@ -175,7 +209,7 @@ export const BiteJoyCartDrawer: React.FC<BiteJoyCartDrawerProps> = ({
 
                   <button
                     onClick={() => removeFromCart(item.menuItem.id)}
-                    className="p-1 text-stone-500 hover:text-rose-400"
+                    className="p-1 text-stone-400 hover:text-rose-500 transition-colors"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -187,10 +221,14 @@ export const BiteJoyCartDrawer: React.FC<BiteJoyCartDrawerProps> = ({
 
         {/* Multi-step Checkout Controls */}
         {items.length > 0 && (
-          <form onSubmit={handleCheckout} className="space-y-4 text-xs pt-4 border-t border-stone-800 overflow-y-auto max-h-[50vh]">
+          <form onSubmit={handleCheckout} className={`space-y-4 text-xs pt-4 border-t overflow-y-auto max-h-[50vh] ${
+            isDarkMode ? 'border-stone-800' : 'border-amber-200'
+          }`}>
             {/* Delivery Address */}
             <div className="space-y-1">
-              <label className="font-semibold text-stone-300 flex items-center gap-1">
+              <label className={`font-semibold flex items-center gap-1 ${
+                isDarkMode ? 'text-stone-300' : 'text-stone-700'
+              }`}>
                 <MapPin className="w-3.5 h-3.5 text-amber-500" />
                 <span>Shipping Delivery Address</span>
               </label>
@@ -199,27 +237,39 @@ export const BiteJoyCartDrawer: React.FC<BiteJoyCartDrawerProps> = ({
                 value={shippingAddress}
                 onChange={(e) => setShippingAddress(e.target.value)}
                 placeholder="Enter complete delivery address"
-                className="w-full bg-stone-950 border border-stone-800 rounded-xl p-2.5 text-stone-200 focus:outline-none focus:border-amber-500"
+                className={`w-full border rounded-xl p-2.5 focus:outline-none focus:border-amber-500 ${
+                  isDarkMode
+                    ? 'bg-stone-950 border-stone-800 text-stone-200'
+                    : 'bg-stone-50 border-amber-200 text-stone-900'
+                }`}
                 required
               />
             </div>
 
             {/* Special Instructions */}
             <div className="space-y-1">
-              <label className="font-semibold text-stone-300">Ritual / Order Instructions</label>
+              <label className={`font-semibold ${isDarkMode ? 'text-stone-300' : 'text-stone-700'}`}>
+                Ritual / Order Instructions
+              </label>
               <input
                 type="text"
                 value={specialInstructions}
                 onChange={(e) => setSpecialInstructions(e.target.value)}
                 placeholder="E.g., Consecration request, gift wrapping..."
-                className="w-full bg-stone-950 border border-stone-800 rounded-xl p-2.5 text-stone-200 focus:outline-none focus:border-amber-500"
+                className={`w-full border rounded-xl p-2.5 focus:outline-none focus:border-amber-500 ${
+                  isDarkMode
+                    ? 'bg-stone-950 border-stone-800 text-stone-200'
+                    : 'bg-stone-50 border-amber-200 text-stone-900'
+                }`}
               />
             </div>
 
             {/* Select Payment Method */}
-            <div className="space-y-2 pt-2 border-t border-stone-800">
-              <label className="font-bold text-amber-300 flex items-center gap-1">
-                <CreditCard className="w-4 h-4 text-amber-400" />
+            <div className={`space-y-2 pt-2 border-t ${isDarkMode ? 'border-stone-800' : 'border-amber-200'}`}>
+              <label className={`font-bold flex items-center gap-1 ${
+                isDarkMode ? 'text-amber-300' : 'text-amber-800'
+              }`}>
+                <CreditCard className="w-4 h-4 text-amber-500" />
                 <span>Select Payment Method</span>
               </label>
 
@@ -228,13 +278,17 @@ export const BiteJoyCartDrawer: React.FC<BiteJoyCartDrawerProps> = ({
                 <button
                   type="button"
                   onClick={() => setPaymentMode('upi')}
-                  className={`p-2.5 rounded-xl border flex items-center gap-2 transition-all ${
+                  className={`p-2.5 rounded-xl border flex items-center gap-2 transition-all shadow-sm ${
                     paymentMode === 'upi'
-                      ? 'bg-amber-950/80 border-amber-500 text-amber-200 font-bold'
-                      : 'bg-stone-950 border-stone-800 text-stone-400 hover:border-stone-700'
+                      ? isDarkMode
+                        ? 'bg-amber-950/80 border-amber-500 text-amber-200 font-bold'
+                        : 'bg-amber-100 border-amber-500 text-amber-900 font-bold'
+                      : isDarkMode
+                      ? 'bg-stone-950 border-stone-800 text-stone-400 hover:border-stone-700'
+                      : 'bg-stone-50 border-amber-200 text-stone-700 hover:bg-amber-50'
                   }`}
                 >
-                  <Smartphone className="w-4 h-4 text-amber-400 shrink-0" />
+                  <Smartphone className="w-4 h-4 text-amber-500 shrink-0" />
                   <span className="text-[11px]">UPI / QR Code</span>
                 </button>
 
@@ -242,13 +296,17 @@ export const BiteJoyCartDrawer: React.FC<BiteJoyCartDrawerProps> = ({
                 <button
                   type="button"
                   onClick={() => setPaymentMode('card')}
-                  className={`p-2.5 rounded-xl border flex items-center gap-2 transition-all ${
+                  className={`p-2.5 rounded-xl border flex items-center gap-2 transition-all shadow-sm ${
                     paymentMode === 'card'
-                      ? 'bg-amber-950/80 border-amber-500 text-amber-200 font-bold'
-                      : 'bg-stone-950 border-stone-800 text-stone-400 hover:border-stone-700'
+                      ? isDarkMode
+                        ? 'bg-amber-950/80 border-amber-500 text-amber-200 font-bold'
+                        : 'bg-amber-100 border-amber-500 text-amber-900 font-bold'
+                      : isDarkMode
+                      ? 'bg-stone-950 border-stone-800 text-stone-400 hover:border-stone-700'
+                      : 'bg-stone-50 border-amber-200 text-stone-700 hover:bg-amber-50'
                   }`}
                 >
-                  <CreditCard className="w-4 h-4 text-amber-400 shrink-0" />
+                  <CreditCard className="w-4 h-4 text-amber-500 shrink-0" />
                   <span className="text-[11px]">Credit / Debit Card</span>
                 </button>
 
@@ -256,13 +314,17 @@ export const BiteJoyCartDrawer: React.FC<BiteJoyCartDrawerProps> = ({
                 <button
                   type="button"
                   onClick={() => setPaymentMode('netbanking')}
-                  className={`p-2.5 rounded-xl border flex items-center gap-2 transition-all ${
+                  className={`p-2.5 rounded-xl border flex items-center gap-2 transition-all shadow-sm ${
                     paymentMode === 'netbanking'
-                      ? 'bg-amber-950/80 border-amber-500 text-amber-200 font-bold'
-                      : 'bg-stone-950 border-stone-800 text-stone-400 hover:border-stone-700'
+                      ? isDarkMode
+                        ? 'bg-amber-950/80 border-amber-500 text-amber-200 font-bold'
+                        : 'bg-amber-100 border-amber-500 text-amber-900 font-bold'
+                      : isDarkMode
+                      ? 'bg-stone-950 border-stone-800 text-stone-400 hover:border-stone-700'
+                      : 'bg-stone-50 border-amber-200 text-stone-700 hover:bg-amber-50'
                   }`}
                 >
-                  <Landmark className="w-4 h-4 text-amber-400 shrink-0" />
+                  <Landmark className="w-4 h-4 text-amber-500 shrink-0" />
                   <span className="text-[11px]">Net Banking</span>
                 </button>
 
@@ -270,30 +332,44 @@ export const BiteJoyCartDrawer: React.FC<BiteJoyCartDrawerProps> = ({
                 <button
                   type="button"
                   onClick={() => setPaymentMode('cod')}
-                  className={`p-2.5 rounded-xl border flex items-center gap-2 transition-all ${
+                  className={`p-2.5 rounded-xl border flex items-center gap-2 transition-all shadow-sm ${
                     paymentMode === 'cod'
-                      ? 'bg-amber-950/80 border-amber-500 text-amber-200 font-bold'
-                      : 'bg-stone-950 border-stone-800 text-stone-400 hover:border-stone-700'
+                      ? isDarkMode
+                        ? 'bg-amber-950/80 border-amber-500 text-amber-200 font-bold'
+                        : 'bg-amber-100 border-amber-500 text-amber-900 font-bold'
+                      : isDarkMode
+                      ? 'bg-stone-950 border-stone-800 text-stone-400 hover:border-stone-700'
+                      : 'bg-stone-50 border-amber-200 text-stone-700 hover:bg-amber-50'
                   }`}
                 >
-                  <Banknote className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <Banknote className="w-4 h-4 text-emerald-500 shrink-0" />
                   <span className="text-[11px]">Cash on Delivery</span>
                 </button>
               </div>
 
               {/* Payment Details Sub-Inputs */}
-              <div className="bg-stone-950 p-3 rounded-xl border border-stone-800 space-y-2 text-[11px]">
+              <div className={`p-3 rounded-xl border space-y-2 text-[11px] ${
+                isDarkMode ? 'bg-stone-950 border-stone-800' : 'bg-amber-50/60 border-amber-200'
+              }`}>
                 {paymentMode === 'upi' && (
                   <div className="space-y-1.5">
-                    <span className="text-stone-300 font-semibold block">Pay via GPay, PhonePe, Paytm, or BHIM</span>
+                    <span className={`font-semibold block ${isDarkMode ? 'text-stone-300' : 'text-stone-700'}`}>
+                      Pay via GPay, PhonePe, Paytm, or BHIM
+                    </span>
                     <input
                       type="text"
                       value={upiId}
                       onChange={(e) => setUpiId(e.target.value)}
                       placeholder="Enter UPI ID (e.g. name@okaxis) [Optional]"
-                      className="w-full bg-stone-900 border border-stone-800 rounded-lg p-2 text-stone-200 focus:outline-none focus:border-amber-500"
+                      className={`w-full border rounded-lg p-2 focus:outline-none focus:border-amber-500 ${
+                        isDarkMode
+                          ? 'bg-stone-900 border-stone-800 text-stone-200'
+                          : 'bg-white border-amber-200 text-stone-900'
+                      }`}
                     />
-                    <p className="text-[10px] text-stone-500">Scan QR code or approve notification in your UPI app upon ordering.</p>
+                    <p className={`text-[10px] ${isDarkMode ? 'text-stone-500' : 'text-stone-500'}`}>
+                      Scan QR code or approve notification in your UPI app upon ordering.
+                    </p>
                   </div>
                 )}
 
@@ -305,7 +381,11 @@ export const BiteJoyCartDrawer: React.FC<BiteJoyCartDrawerProps> = ({
                       value={cardNumber}
                       onChange={(e) => setCardNumber(e.target.value)}
                       placeholder="Card Number (16 digits)"
-                      className="w-full bg-stone-900 border border-stone-800 rounded-lg p-2 text-stone-200 focus:outline-none focus:border-amber-500 font-mono"
+                      className={`w-full border rounded-lg p-2 focus:outline-none focus:border-amber-500 font-mono ${
+                        isDarkMode
+                          ? 'bg-stone-900 border-stone-800 text-stone-200'
+                          : 'bg-white border-amber-200 text-stone-900'
+                      }`}
                     />
                     <div className="grid grid-cols-2 gap-2">
                       <input
@@ -314,7 +394,11 @@ export const BiteJoyCartDrawer: React.FC<BiteJoyCartDrawerProps> = ({
                         maxLength={5}
                         value={cardExpiry}
                         onChange={(e) => setCardExpiry(e.target.value)}
-                        className="bg-stone-900 border border-stone-800 rounded-lg p-2 text-stone-200 focus:outline-none focus:border-amber-500 font-mono"
+                        className={`border rounded-lg p-2 focus:outline-none focus:border-amber-500 font-mono ${
+                          isDarkMode
+                            ? 'bg-stone-900 border-stone-800 text-stone-200'
+                            : 'bg-white border-amber-200 text-stone-900'
+                        }`}
                       />
                       <input
                         type="password"
@@ -322,7 +406,11 @@ export const BiteJoyCartDrawer: React.FC<BiteJoyCartDrawerProps> = ({
                         maxLength={3}
                         value={cardCvv}
                         onChange={(e) => setCardCvv(e.target.value)}
-                        className="bg-stone-900 border border-stone-800 rounded-lg p-2 text-stone-200 focus:outline-none focus:border-amber-500 font-mono"
+                        className={`border rounded-lg p-2 focus:outline-none focus:border-amber-500 font-mono ${
+                          isDarkMode
+                            ? 'bg-stone-900 border-stone-800 text-stone-200'
+                            : 'bg-white border-amber-200 text-stone-900'
+                        }`}
                       />
                     </div>
                   </div>
@@ -330,11 +418,17 @@ export const BiteJoyCartDrawer: React.FC<BiteJoyCartDrawerProps> = ({
 
                 {paymentMode === 'netbanking' && (
                   <div className="space-y-1.5">
-                    <span className="text-stone-300 font-semibold block">Select Your Bank:</span>
+                    <span className={`font-semibold block ${isDarkMode ? 'text-stone-300' : 'text-stone-700'}`}>
+                      Select Your Bank:
+                    </span>
                     <select
                       value={selectedBank}
                       onChange={(e) => setSelectedBank(e.target.value)}
-                      className="w-full bg-stone-900 border border-stone-800 rounded-lg p-2 text-amber-300 focus:outline-none focus:border-amber-500 font-medium"
+                      className={`w-full border rounded-lg p-2 focus:outline-none focus:border-amber-500 font-medium ${
+                        isDarkMode
+                          ? 'bg-stone-900 border-stone-800 text-amber-300'
+                          : 'bg-white border-amber-200 text-amber-900'
+                      }`}
                     >
                       <option value="HDFC Bank">HDFC Bank</option>
                       <option value="State Bank of India">State Bank of India (SBI)</option>
@@ -347,9 +441,11 @@ export const BiteJoyCartDrawer: React.FC<BiteJoyCartDrawerProps> = ({
                 )}
 
                 {paymentMode === 'cod' && (
-                  <div className="text-stone-300 space-y-1">
-                    <span className="font-semibold text-emerald-400 block">✓ Cash on Delivery Selected</span>
-                    <p className="text-[10px] text-stone-400">
+                  <div className="space-y-1">
+                    <span className="font-semibold text-emerald-600 dark:text-emerald-400 block">
+                      ✓ Cash on Delivery Selected
+                    </span>
+                    <p className={`text-[10px] ${isDarkMode ? 'text-stone-400' : 'text-stone-600'}`}>
                       You can pay via Cash or UPI directly to our delivery executive when your parcel arrives. Zero extra COD charge.
                     </p>
                   </div>
@@ -358,16 +454,20 @@ export const BiteJoyCartDrawer: React.FC<BiteJoyCartDrawerProps> = ({
             </div>
 
             {/* Summary Totals */}
-            <div className="bg-stone-950 p-3.5 rounded-2xl border border-stone-800 space-y-1.5">
-              <div className="flex justify-between text-stone-400">
+            <div className={`p-3.5 rounded-2xl border space-y-1.5 ${
+              isDarkMode ? 'bg-stone-950 border-stone-800' : 'bg-amber-50/70 border-amber-200'
+            }`}>
+              <div className={`flex justify-between ${isDarkMode ? 'text-stone-400' : 'text-stone-600'}`}>
                 <span>Items Subtotal:</span>
-                <span className="font-mono text-stone-200">₹{subtotal}</span>
+                <span className={`font-mono ${isDarkMode ? 'text-stone-200' : 'text-stone-900'}`}>₹{subtotal}</span>
               </div>
-              <div className="flex justify-between text-stone-400">
+              <div className={`flex justify-between ${isDarkMode ? 'text-stone-400' : 'text-stone-600'}`}>
                 <span>GST & Taxes (18%):</span>
-                <span className="font-mono text-stone-200">₹{tax}</span>
+                <span className={`font-mono ${isDarkMode ? 'text-stone-200' : 'text-stone-900'}`}>₹{tax}</span>
               </div>
-              <div className="flex justify-between text-amber-300 font-bold pt-1 border-t border-stone-800 text-sm">
+              <div className={`flex justify-between font-bold pt-1 border-t text-sm ${
+                isDarkMode ? 'border-stone-800 text-amber-300' : 'border-amber-200 text-amber-900'
+              }`}>
                 <span>Total Amount:</span>
                 <span className="font-mono text-base">₹{total}</span>
               </div>
@@ -393,4 +493,3 @@ export const BiteJoyCartDrawer: React.FC<BiteJoyCartDrawerProps> = ({
     </div>
   );
 };
-
