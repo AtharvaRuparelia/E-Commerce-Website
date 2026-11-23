@@ -137,7 +137,7 @@ export const CopperHeader: React.FC<CopperHeaderProps> = ({
               onClick={() => onSelectView('home')}
               className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
                 activeView === 'home'
-                  ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-stone-950 font-black shadow-md'
+                  ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold shadow-md'
                   : isDarkMode ? 'text-stone-300 hover:text-amber-300 hover:bg-stone-800' : 'text-stone-700 hover:text-amber-800 hover:bg-amber-100'
               }`}
             >
@@ -148,7 +148,7 @@ export const CopperHeader: React.FC<CopperHeaderProps> = ({
               onClick={() => onSelectView('about')}
               className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
                 activeView === 'about'
-                  ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-stone-950 font-black shadow-md'
+                  ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold shadow-md'
                   : isDarkMode ? 'text-stone-300 hover:text-amber-300 hover:bg-stone-800' : 'text-stone-700 hover:text-amber-800 hover:bg-amber-100'
               }`}
             >
@@ -162,7 +162,7 @@ export const CopperHeader: React.FC<CopperHeaderProps> = ({
                 onMouseEnter={() => setDropdownOpen(true)}
                 className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
                   activeView === 'catalog'
-                    ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-stone-950 font-black shadow-md'
+                    ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold shadow-md'
                     : isDarkMode ? 'text-stone-300 hover:text-amber-300 hover:bg-stone-800' : 'text-stone-700 hover:text-amber-800 hover:bg-amber-100'
                 }`}
               >
@@ -283,10 +283,14 @@ export const CopperHeader: React.FC<CopperHeaderProps> = ({
             {isAdmin && (
               <button
                 onClick={() => onSelectView('admin')}
-                className="hidden lg:flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-xl border bg-stone-900 text-amber-400 border-amber-600/30 hover:border-amber-500/60 transition-all font-bold"
+                className={`hidden lg:flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-xl border font-bold transition-all shadow-sm ${
+                  isDarkMode
+                    ? 'bg-stone-900 text-amber-400 border-amber-600/30 hover:border-amber-500/60'
+                    : 'bg-white hover:bg-amber-50 text-amber-900 border-amber-300'
+                }`}
                 title="Admin Dashboard & Factory Logs"
               >
-                <Factory className="w-3.5 h-3.5" />
+                <Factory className={`w-3.5 h-3.5 ${isDarkMode ? 'text-amber-400' : 'text-amber-600'}`} />
                 <span>Admin Portal</span>
               </button>
             )}
@@ -304,7 +308,11 @@ export const CopperHeader: React.FC<CopperHeaderProps> = ({
               <ShoppingBag className="w-4 h-4 text-amber-500" />
               <span className="hidden sm:inline">Cart</span>
               {itemCount > 0 && (
-                <span className="bg-amber-500 text-stone-950 text-[10px] font-black px-1.5 py-0.2 rounded-full border border-stone-950">
+                <span className={`text-[10px] font-black px-1.5 py-0.2 rounded-full border ${
+                  isDarkMode
+                    ? 'bg-amber-500 text-stone-950 border-stone-950'
+                    : 'bg-amber-500 text-white border-amber-600'
+                }`}>
                   {itemCount}
                 </span>
               )}
@@ -315,16 +323,26 @@ export const CopperHeader: React.FC<CopperHeaderProps> = ({
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <button
                   onClick={() => onSelectView('tracking')}
-                  className="hidden sm:flex items-center gap-1.5 bg-stone-900 text-amber-200 border border-stone-800 px-3 py-1.5 rounded-xl text-xs font-bold hover:text-amber-400 transition-colors"
+                  className={`hidden sm:flex items-center gap-1.5 border px-3 py-1.5 rounded-xl text-xs font-bold transition-colors shadow-sm ${
+                    isDarkMode
+                      ? 'bg-stone-900 text-amber-200 border-stone-800 hover:text-amber-400'
+                      : 'bg-white hover:bg-amber-50 text-amber-900 border-amber-300'
+                  }`}
+                  title="My Orders & Tracking"
                 >
-                  <User className="w-3.5 h-3.5 text-amber-400" />
+                  <User className={`w-3.5 h-3.5 ${isDarkMode ? 'text-amber-400' : 'text-amber-600'}`} />
                   <span className="truncate max-w-[80px]">
                     {profile?.name?.split(' ')[0] || firebaseUser.email?.split('@')[0]}
                   </span>
                 </button>
                 <button
                   onClick={logout}
-                  className="text-xs text-stone-400 hover:text-rose-400 bg-stone-900 px-2 sm:px-2.5 py-1.5 rounded-xl border border-stone-800 font-semibold"
+                  className={`text-xs px-2 sm:px-2.5 py-1.5 rounded-xl border font-semibold transition-colors shadow-sm ${
+                    isDarkMode
+                      ? 'bg-stone-900 text-stone-400 hover:text-rose-400 border-stone-800'
+                      : 'bg-white hover:bg-rose-50 text-stone-700 hover:text-rose-600 border-amber-300'
+                  }`}
+                  title="Sign Out"
                 >
                   Logout
                 </button>
@@ -332,7 +350,7 @@ export const CopperHeader: React.FC<CopperHeaderProps> = ({
             ) : (
               <button
                 onClick={onOpenAuth}
-                className="flex items-center gap-1.5 text-xs font-bold bg-amber-600 hover:bg-amber-500 text-stone-950 px-2.5 sm:px-3.5 py-1.5 rounded-xl transition-colors shadow shrink-0"
+                className="flex items-center gap-1.5 text-xs font-bold bg-amber-600 hover:bg-amber-500 text-white px-2.5 sm:px-3.5 py-1.5 rounded-xl transition-colors shadow shrink-0"
               >
                 <User className="w-3.5 h-3.5" />
                 <span>Login</span>
@@ -388,7 +406,7 @@ export const CopperHeader: React.FC<CopperHeaderProps> = ({
             }}
             className={`w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold transition-colors ${
               activeView === 'home'
-                ? 'bg-amber-600 text-stone-950 font-black'
+                ? 'bg-amber-600 text-white font-bold'
                 : isDarkMode ? 'text-stone-200 hover:bg-stone-900' : 'text-stone-800 hover:bg-amber-50'
             }`}
           >
@@ -402,7 +420,7 @@ export const CopperHeader: React.FC<CopperHeaderProps> = ({
             }}
             className={`w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold transition-colors ${
               activeView === 'about'
-                ? 'bg-amber-600 text-stone-950 font-black'
+                ? 'bg-amber-600 text-white font-bold'
                 : isDarkMode ? 'text-stone-200 hover:bg-stone-900' : 'text-stone-800 hover:bg-amber-50'
             }`}
           >
@@ -416,7 +434,7 @@ export const CopperHeader: React.FC<CopperHeaderProps> = ({
             }}
             className={`w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold transition-colors ${
               activeView === 'catalog'
-                ? 'bg-amber-600 text-stone-950 font-black'
+                ? 'bg-amber-600 text-white font-bold'
                 : isDarkMode ? 'text-stone-200 hover:bg-stone-900' : 'text-stone-800 hover:bg-amber-50'
             }`}
           >
@@ -430,9 +448,13 @@ export const CopperHeader: React.FC<CopperHeaderProps> = ({
                 onSelectView('admin');
                 setMobileMenuOpen(false);
               }}
-              className="w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold bg-amber-950/60 text-amber-300 border border-amber-700/50 hover:bg-amber-900/60 flex items-center gap-2"
+              className={`w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold border flex items-center gap-2 transition-colors ${
+                isDarkMode
+                  ? 'bg-amber-950/60 text-amber-300 border-amber-700/50 hover:bg-amber-900/60'
+                  : 'bg-amber-50 text-amber-900 border-amber-200 hover:bg-amber-100'
+              }`}
             >
-              <Factory className="w-4 h-4 text-amber-400" />
+              <Factory className={`w-4 h-4 ${isDarkMode ? 'text-amber-400' : 'text-amber-600'}`} />
               <span>Admin Portal & Inventory</span>
             </button>
           )}

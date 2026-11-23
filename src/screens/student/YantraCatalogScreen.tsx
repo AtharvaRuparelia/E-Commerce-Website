@@ -160,7 +160,7 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
               }}
               className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all border shrink-0 ${
                 (selectedSection as string) === 'Copper Yantra'
-                  ? 'bg-amber-600 text-stone-950 border-amber-500 shadow'
+                  ? 'bg-amber-600 text-white border-amber-500 shadow font-black'
                   : 'bg-stone-100 text-stone-700 border-amber-200 hover:bg-amber-100 dark:bg-stone-900 dark:text-stone-300 dark:border-stone-800 dark:hover:text-amber-300'
               }`}
             >
@@ -179,7 +179,7 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
                   }}
                   className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all border shrink-0 ${
                     selectedSection === 'Pooja Products' && selectedPoojaSubCategory === subCat
-                      ? 'bg-amber-600 text-stone-950 border-amber-500 shadow'
+                      ? 'bg-amber-600 text-white border-amber-500 shadow font-black'
                       : 'bg-stone-100 text-stone-700 border-amber-200 hover:bg-amber-100 dark:bg-stone-900 dark:text-stone-300 dark:border-stone-800 dark:hover:text-amber-300'
                   }`}
                 >
@@ -512,7 +512,7 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
                                     ? 'bg-emerald-600 text-white'
                                     : isOutOfStock
                                     ? 'bg-stone-300 text-stone-500 dark:bg-stone-800 dark:text-stone-600 cursor-not-allowed'
-                                    : 'bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-stone-950 active:scale-95'
+                                    : 'bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white active:scale-95'
                                 }`}
                               >
                                 {addedNoticeId === item.id ? (
