@@ -4,8 +4,8 @@ import { getItemPriceINR } from '../utils/price';
 
 interface CartContextType {
   items: CartItem[];
-  addToCart: (item: MenuItem) => void;
-  addItem: (item: MenuItem) => void;
+  addToCart: (item: MenuItem, quantity?: number) => void;
+  addItem: (item: MenuItem, quantity?: number) => void;
   removeFromCart: (itemId: string) => void;
   updateQuantity: (itemId: string, quantity: number) => void;
   clearCart: () => void;
@@ -31,17 +31,17 @@ const CartContext = createContext<CartContextType>({
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [items, setItems] = useState<CartItem[]>([]);
 
-  const addToCart = (menuItem: MenuItem) => {
+  const addToCart = (menuItem: MenuItem, quantity: number = 1) => {
     setItems((prev) => {
       const existing = prev.find((ci) => ci.menuItem.id === menuItem.id);
       if (existing) {
         return prev.map((ci) =>
           ci.menuItem.id === menuItem.id
-            ? { ...ci, quantity: ci.quantity + 1 }
+            ? { ...ci, quantity: ci.quantity + quantity }
             : ci
         );
       }
-      return [...prev, { menuItem, quantity: 1 }];
+      return [...prev, { menuItem, quantity }];
     });
   };
 

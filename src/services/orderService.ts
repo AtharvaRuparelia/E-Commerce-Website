@@ -19,6 +19,7 @@ const SAMPLE_ORDERS: Order[] = [
         menuItem: {
           id: 'yantra-1',
           name: 'Shree Yantra',
+          section: 'Copper Yantra',
           category: 'Shree Yantra',
           price: 1499,
           description: 'Masterfully etched pure copper Shree Yantra',

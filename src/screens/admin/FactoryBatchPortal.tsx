@@ -280,7 +280,7 @@ export const FactoryBatchPortal: React.FC<FactoryBatchPortalProps> = ({ isDarkMo
 
             <div className="space-y-4">
               {batches.map((batch) => {
-                const product = products.find((p) => p.id === batch.menuItemId);
+                const product = products.find((p) => p.id === (batch.productId || (batch as any).menuItemId));
                 return (
                   <div
                     key={batch.id}
@@ -294,7 +294,7 @@ export const FactoryBatchPortal: React.FC<FactoryBatchPortalProps> = ({ isDarkMo
                       <div>
                         <span className={`font-mono font-black text-sm ${isDarkMode ? 'text-amber-400' : 'text-amber-800'}`}>{batch.batchCode}</span>
                         <h4 className="font-bold text-xs">
-                          {product ? product.name : batch.menuItemId}
+                          {product ? product.name : (batch.productName || batch.productId || (batch as any).menuItemId)}
                         </h4>
                       </div>
 
@@ -316,7 +316,7 @@ export const FactoryBatchPortal: React.FC<FactoryBatchPortalProps> = ({ isDarkMo
                       </div>
                       <div className="flex items-center gap-1.5">
                         <Calendar className={`w-3.5 h-3.5 shrink-0 ${isDarkMode ? 'text-amber-400' : 'text-amber-600'}`} />
-                        <span>Logged At: <strong className={`font-mono ${isDarkMode ? 'text-stone-200' : 'text-stone-900'}`}>{new Date(batch.createdAt).toLocaleString()}</strong></span>
+                        <span>Logged At: <strong className={`font-mono ${isDarkMode ? 'text-stone-200' : 'text-stone-900'}`}>{new Date(batch.productionDate || (batch as any).createdAt || Date.now()).toLocaleString()}</strong></span>
                       </div>
                     </div>
 

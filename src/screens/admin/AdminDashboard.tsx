@@ -79,6 +79,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ isDarkMode = tru
     const newItem: MenuItem = {
       id: editingItem.id || `yantra-${Date.now()}`,
       name: editingItem.name,
+      section: editingItem.section || (editingItem.category?.includes('Yantra') ? 'Copper Yantra' : 'Pooja Products'),
       category: editingItem.category || 'Shree Yantras',
       price: Number(editingItem.price),
       description: editingItem.description || '',
@@ -141,12 +142,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ isDarkMode = tru
           </div>
 
           {/* Navigation Tabs */}
-          <div className={`flex items-center gap-2 p-1.5 rounded-2xl border ${
+          <div className={`flex items-center gap-2 p-1.5 rounded-2xl border overflow-x-auto scrollbar-none max-w-full ${
             isDarkMode ? 'bg-stone-900 border-stone-800' : 'bg-white border-amber-200 shadow-sm'
           }`}>
             <button
               onClick={() => setActiveTab('analytics')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 whitespace-nowrap ${
                 activeTab === 'analytics'
                   ? 'bg-amber-600 text-white dark:text-stone-950 shadow'
                   : isDarkMode ? 'text-stone-400 hover:text-stone-200' : 'text-stone-600 hover:text-stone-900'
@@ -156,7 +157,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ isDarkMode = tru
             </button>
             <button
               onClick={() => setActiveTab('orders')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 whitespace-nowrap ${
                 activeTab === 'orders'
                   ? 'bg-amber-600 text-white dark:text-stone-950 shadow'
                   : isDarkMode ? 'text-stone-400 hover:text-stone-200' : 'text-stone-600 hover:text-stone-900'
@@ -166,7 +167,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ isDarkMode = tru
             </button>
             <button
               onClick={() => setActiveTab('inventory')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 whitespace-nowrap ${
                 activeTab === 'inventory'
                   ? 'bg-amber-600 text-white dark:text-stone-950 shadow'
                   : isDarkMode ? 'text-stone-400 hover:text-stone-200' : 'text-stone-600 hover:text-stone-900'
@@ -297,10 +298,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ isDarkMode = tru
             <h3 className={`font-serif font-bold text-base ${isDarkMode ? 'text-amber-200' : 'text-stone-900'}`}>
               Incoming Customer Orders
             </h3>
-            <div className={`border rounded-3xl p-6 overflow-x-auto shadow-xl ${
+            <div className={`border rounded-3xl p-4 sm:p-6 overflow-x-auto scrollbar-none shadow-xl ${
               isDarkMode ? 'bg-stone-900/90 border-stone-800' : 'bg-white border-amber-200'
             }`}>
-              <table className="w-full text-left text-xs">
+              <table className="w-full min-w-[640px] text-left text-xs">
                 <thead className={`border-b ${
                   isDarkMode ? 'bg-stone-950 text-stone-400 border-stone-800' : 'bg-amber-50 text-stone-600 border-amber-200'
                 }`}>
@@ -504,7 +505,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ isDarkMode = tru
       {/* Edit / New Product Modal */}
       {editProductModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className={`border rounded-3xl p-6 max-w-lg w-full space-y-4 shadow-2xl ${
+          <div className={`border rounded-3xl p-6 max-w-lg w-full max-h-[90vh] overflow-y-auto space-y-4 shadow-2xl ${
             isDarkMode ? 'bg-stone-900 border-stone-800 text-stone-100' : 'bg-white border-amber-300 text-stone-900'
           }`}>
             <h3 className={`font-serif font-bold text-lg ${isDarkMode ? 'text-amber-200' : 'text-amber-900'}`}>

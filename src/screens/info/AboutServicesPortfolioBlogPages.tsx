@@ -408,7 +408,7 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
 
             {/* Tile 3: Dhoop Batti */}
             <button
-              onClick={() => onSelectCategory ? onSelectCategory('Pooja Products', 'Dhoop batti') : onSelectView('catalog')}
+              onClick={() => onSelectCategory ? onSelectCategory('Pooja Products', 'Dhoop Batti') : onSelectView('catalog')}
               className="bg-white/90 dark:bg-stone-900/90 border border-amber-200 dark:border-stone-800 hover:border-amber-500 dark:hover:border-amber-600/60 p-4 rounded-2xl text-center group transition-all hover:bg-amber-50/80 dark:hover:bg-stone-850 flex flex-col items-center gap-2 shadow-md dark:shadow"
             >
               <div className="w-12 h-12 rounded-xl bg-amber-100/90 dark:bg-amber-950/80 border border-amber-300 dark:border-amber-700/50 flex items-center justify-center text-amber-800 dark:text-amber-300 group-hover:scale-110 transition-transform">

@@ -113,17 +113,17 @@ export const CopperHeader: React.FC<CopperHeaderProps> = ({
           {/* Brand Logo & Name */}
           <div
             onClick={() => onSelectView('home')}
-            className="flex items-center gap-3 cursor-pointer group"
+            className="flex items-center gap-2 sm:gap-3 cursor-pointer group shrink-0"
           >
             <div>
               <div className="flex items-center gap-2">
-                <span className={`font-serif text-lg font-bold tracking-wide transition-colors ${
+                <span className={`font-serif text-sm sm:text-base md:text-lg font-bold tracking-wide transition-colors ${
                   isDarkMode ? 'text-amber-200 group-hover:text-amber-400' : 'text-amber-800 group-hover:text-amber-600'
                 }`}>
                   BHAVNA POOJA CENTER
                 </span>
               </div>
-              <p className={`text-[10px] tracking-wider ${isDarkMode ? 'text-stone-400' : 'text-stone-600'}`}>
+              <p className={`text-[9px] sm:text-[10px] tracking-wider truncate max-w-[160px] sm:max-w-none ${isDarkMode ? 'text-stone-400' : 'text-stone-600'}`}>
                 Authentic Copper Yantras & Ritual Essentials
               </p>
             </div>
@@ -234,9 +234,9 @@ export const CopperHeader: React.FC<CopperHeaderProps> = ({
           </nav>
 
           {/* Right Section: Search Bar, Dark/Light Mode Toggle, Cart & Login */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3">
             {/* Search Bar Before Cart */}
-            <form onSubmit={handleSearchSubmit} className="relative hidden sm:block">
+            <form onSubmit={handleSearchSubmit} className="relative hidden md:block">
               <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-stone-400" />
               <input
                 type="text"
@@ -258,7 +258,7 @@ export const CopperHeader: React.FC<CopperHeaderProps> = ({
             {onToggleDarkMode && (
               <button
                 onClick={onToggleDarkMode}
-                className={`flex items-center gap-1.5 border px-3 py-1.5 rounded-xl text-xs font-bold transition-all hover:scale-105 active:scale-95 shadow-sm ${
+                className={`flex items-center gap-1.5 border p-2 sm:px-3 sm:py-1.5 rounded-xl text-xs font-bold transition-all hover:scale-105 active:scale-95 shadow-sm ${
                   isDarkMode
                     ? 'bg-stone-900 border-stone-800 text-amber-300 hover:text-amber-200'
                     : 'bg-amber-100 border-amber-300 text-stone-900 hover:bg-amber-200'
@@ -283,7 +283,7 @@ export const CopperHeader: React.FC<CopperHeaderProps> = ({
             {isAdmin && (
               <button
                 onClick={() => onSelectView('admin')}
-                className="hidden sm:flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg border bg-stone-900 text-amber-400 border-amber-600/30 hover:border-amber-500/60 transition-all font-bold"
+                className="hidden lg:flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-xl border bg-stone-900 text-amber-400 border-amber-600/30 hover:border-amber-500/60 transition-all font-bold"
                 title="Admin Dashboard & Factory Logs"
               >
                 <Factory className="w-3.5 h-3.5" />
@@ -294,7 +294,7 @@ export const CopperHeader: React.FC<CopperHeaderProps> = ({
             {/* Cart Button */}
             <button
               onClick={onOpenCart}
-              className={`flex items-center gap-2 border px-3 py-1.5 rounded-xl text-xs font-bold transition-colors relative ${
+              className={`flex items-center gap-1.5 sm:gap-2 border p-2 sm:px-3 sm:py-1.5 rounded-xl text-xs font-bold transition-colors relative ${
                 isDarkMode 
                   ? 'bg-stone-900 hover:bg-stone-800 text-amber-300 border-stone-800' 
                   : 'bg-white hover:bg-amber-50 text-amber-900 border-amber-300 shadow-sm'
@@ -302,7 +302,7 @@ export const CopperHeader: React.FC<CopperHeaderProps> = ({
               title="View Shopping Cart"
             >
               <ShoppingBag className="w-4 h-4 text-amber-500" />
-              <span>Cart</span>
+              <span className="hidden sm:inline">Cart</span>
               {itemCount > 0 && (
                 <span className="bg-amber-500 text-stone-950 text-[10px] font-black px-1.5 py-0.2 rounded-full border border-stone-950">
                   {itemCount}
@@ -312,19 +312,19 @@ export const CopperHeader: React.FC<CopperHeaderProps> = ({
 
             {/* Login / Profile Button */}
             {firebaseUser ? (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 sm:gap-2">
                 <button
                   onClick={() => onSelectView('tracking')}
                   className="hidden sm:flex items-center gap-1.5 bg-stone-900 text-amber-200 border border-stone-800 px-3 py-1.5 rounded-xl text-xs font-bold hover:text-amber-400 transition-colors"
                 >
                   <User className="w-3.5 h-3.5 text-amber-400" />
-                  <span className="truncate max-w-[90px]">
+                  <span className="truncate max-w-[80px]">
                     {profile?.name?.split(' ')[0] || firebaseUser.email?.split('@')[0]}
                   </span>
                 </button>
                 <button
                   onClick={logout}
-                  className="text-xs text-stone-400 hover:text-rose-400 bg-stone-900 px-2.5 py-1.5 rounded-xl border border-stone-800 font-semibold"
+                  className="text-xs text-stone-400 hover:text-rose-400 bg-stone-900 px-2 sm:px-2.5 py-1.5 rounded-xl border border-stone-800 font-semibold"
                 >
                   Logout
                 </button>
@@ -332,7 +332,7 @@ export const CopperHeader: React.FC<CopperHeaderProps> = ({
             ) : (
               <button
                 onClick={onOpenAuth}
-                className="flex items-center gap-1.5 text-xs font-bold bg-amber-600 hover:bg-amber-500 text-stone-950 px-3.5 py-1.5 rounded-xl transition-colors shadow"
+                className="flex items-center gap-1.5 text-xs font-bold bg-amber-600 hover:bg-amber-500 text-stone-950 px-2.5 sm:px-3.5 py-1.5 rounded-xl transition-colors shadow shrink-0"
               >
                 <User className="w-3.5 h-3.5" />
                 <span>Login</span>
@@ -342,7 +342,12 @@ export const CopperHeader: React.FC<CopperHeaderProps> = ({
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-stone-300 hover:text-amber-400 bg-stone-900 rounded-lg border border-stone-800"
+              className={`md:hidden p-2 rounded-xl border transition-colors ${
+                isDarkMode 
+                  ? 'text-stone-300 hover:text-amber-400 bg-stone-900 border-stone-800' 
+                  : 'text-stone-700 hover:text-amber-800 bg-amber-50 border-amber-200 shadow-sm'
+              }`}
+              aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <MenuIcon className="w-5 h-5" />}
             </button>
@@ -352,10 +357,14 @@ export const CopperHeader: React.FC<CopperHeaderProps> = ({
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-stone-950 border-b border-stone-800 px-4 py-4 space-y-3">
+        <div className={`md:hidden border-b px-4 py-4 space-y-3 transition-colors ${
+          isDarkMode 
+            ? 'bg-stone-950/98 border-stone-800 text-stone-200' 
+            : 'bg-white border-amber-200 text-stone-900 shadow-xl'
+        }`}>
           {/* Mobile Search */}
           <form onSubmit={handleSearchSubmit} className="relative">
-            <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-stone-500" />
+            <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-stone-400" />
             <input
               type="text"
               value={searchQuery}
@@ -364,7 +373,11 @@ export const CopperHeader: React.FC<CopperHeaderProps> = ({
                 if (onSearch) onSearch(e.target.value);
               }}
               placeholder="Search products..."
-              className="w-full bg-stone-900 border border-stone-800 rounded-xl pl-8 pr-3 py-2 text-xs text-stone-200 placeholder-stone-500 focus:outline-none focus:border-amber-500"
+              className={`w-full border rounded-xl pl-8 pr-3 py-2 text-xs focus:outline-none focus:border-amber-500 ${
+                isDarkMode 
+                  ? 'bg-stone-900 border-stone-800 text-stone-200 placeholder-stone-500' 
+                  : 'bg-stone-50 border-amber-200 text-stone-900 placeholder-stone-400'
+              }`}
             />
           </form>
 
@@ -373,7 +386,11 @@ export const CopperHeader: React.FC<CopperHeaderProps> = ({
               onSelectView('home');
               setMobileMenuOpen(false);
             }}
-            className="w-full text-left px-4 py-2 rounded-lg text-sm font-bold text-stone-200 hover:bg-stone-900"
+            className={`w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold transition-colors ${
+              activeView === 'home'
+                ? 'bg-amber-600 text-stone-950 font-black'
+                : isDarkMode ? 'text-stone-200 hover:bg-stone-900' : 'text-stone-800 hover:bg-amber-50'
+            }`}
           >
             Home
           </button>
@@ -383,26 +400,82 @@ export const CopperHeader: React.FC<CopperHeaderProps> = ({
               onSelectView('about');
               setMobileMenuOpen(false);
             }}
-            className="w-full text-left px-4 py-2 rounded-lg text-sm font-bold text-stone-200 hover:bg-stone-900"
+            className={`w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold transition-colors ${
+              activeView === 'about'
+                ? 'bg-amber-600 text-stone-950 font-black'
+                : isDarkMode ? 'text-stone-200 hover:bg-stone-900' : 'text-stone-800 hover:bg-amber-50'
+            }`}
           >
             About Us
           </button>
 
-          <div className="space-y-1 pt-2 border-t border-stone-800">
-            <span className="text-xs font-bold text-amber-400 px-4 block">Products Categories:</span>
+          <button
+            onClick={() => {
+              onSelectView('catalog');
+              setMobileMenuOpen(false);
+            }}
+            className={`w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold transition-colors ${
+              activeView === 'catalog'
+                ? 'bg-amber-600 text-stone-950 font-black'
+                : isDarkMode ? 'text-stone-200 hover:bg-stone-900' : 'text-stone-800 hover:bg-amber-50'
+            }`}
+          >
+            Browse Catalog
+          </button>
+
+          {/* Admin shortcut in mobile menu if admin */}
+          {isAdmin && (
+            <button
+              onClick={() => {
+                onSelectView('admin');
+                setMobileMenuOpen(false);
+              }}
+              className="w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold bg-amber-950/60 text-amber-300 border border-amber-700/50 hover:bg-amber-900/60 flex items-center gap-2"
+            >
+              <Factory className="w-4 h-4 text-amber-400" />
+              <span>Admin Portal & Inventory</span>
+            </button>
+          )}
+
+          {/* My Orders shortcut in mobile menu if logged in */}
+          {firebaseUser && (
+            <button
+              onClick={() => {
+                onSelectView('tracking');
+                setMobileMenuOpen(false);
+              }}
+              className={`w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 ${
+                isDarkMode ? 'text-stone-300 hover:bg-stone-900' : 'text-stone-700 hover:bg-amber-50'
+              }`}
+            >
+              <User className="w-4 h-4 text-amber-500" />
+              <span>My Orders & Live Tracking</span>
+            </button>
+          )}
+
+          <div className={`space-y-1 pt-2 border-t ${isDarkMode ? 'border-stone-800' : 'border-amber-200'}`}>
+            <span className={`text-[11px] font-bold px-4 block uppercase tracking-wider ${
+              isDarkMode ? 'text-amber-400' : 'text-amber-800'
+            }`}>
+              Product Categories:
+            </span>
             <button
               onClick={() => handleCategoryClick('Copper Yantra')}
-              className="w-full text-left px-6 py-2 text-xs font-bold text-amber-200 hover:bg-stone-900 flex items-center gap-2"
+              className={`w-full text-left px-6 py-2 text-xs font-bold flex items-center gap-2 rounded-lg ${
+                isDarkMode ? 'text-amber-200 hover:bg-stone-900' : 'text-amber-900 hover:bg-amber-50'
+              }`}
             >
-              <Sparkles className="w-3.5 h-3.5" />
+              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
               <span>Copper Yantra</span>
             </button>
 
             <button
               onClick={() => handleCategoryClick('Pooja Products', 'All')}
-              className="w-full text-left px-6 py-2 text-xs font-bold text-amber-300 hover:bg-stone-900 flex items-center gap-2"
+              className={`w-full text-left px-6 py-2 text-xs font-bold flex items-center gap-2 rounded-lg ${
+                isDarkMode ? 'text-amber-300 hover:bg-stone-900' : 'text-amber-900 hover:bg-amber-50'
+              }`}
             >
-              <Package className="w-3.5 h-3.5" />
+              <Package className="w-3.5 h-3.5 text-amber-500" />
               <span>Pooja Products (All)</span>
             </button>
 
@@ -410,7 +483,9 @@ export const CopperHeader: React.FC<CopperHeaderProps> = ({
               <button
                 key={subCat}
                 onClick={() => handleCategoryClick('Pooja Products', subCat)}
-                className="w-full text-left px-8 py-1.5 text-xs text-stone-300 hover:text-amber-300 hover:bg-stone-900"
+                className={`w-full text-left px-8 py-1.5 text-xs rounded-lg transition-colors ${
+                  isDarkMode ? 'text-stone-300 hover:text-amber-300 hover:bg-stone-900' : 'text-stone-600 hover:text-amber-900 hover:bg-amber-50'
+                }`}
               >
                 • {subCat}
               </button>

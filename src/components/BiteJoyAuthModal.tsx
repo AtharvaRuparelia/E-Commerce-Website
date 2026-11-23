@@ -70,7 +70,7 @@ export const BiteJoyAuthModal: React.FC<BiteJoyAuthModalProps> = ({
       onClick={onClose}
     >
       <div
-        className="bg-white border-2 border-amber-300 text-stone-900 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative space-y-5"
+        className="bg-white border-2 border-amber-300 text-stone-900 rounded-3xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-2xl relative space-y-5"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}

@@ -58,6 +58,7 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
   useEffect(() => {
     setSearchQuery(initialSearchQuery);
   }, [initialSearchQuery]);
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [selectedWeight, setSelectedWeight] = useState<string>('All');
   const [selectedDimension, setSelectedDimension] = useState<string>('All');
   const [maxPrice, setMaxPrice] = useState<number>(5000);
@@ -147,7 +148,7 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
       {/* Sub-Navigation for Pooja Products */}
       {(selectedSection === 'Pooja Products' || selectedSection === 'All') && (
         <div className="border-b py-3 px-4 sm:px-6 lg:px-8 transition-colors bg-white/90 border-amber-200 dark:bg-stone-950/90 dark:border-stone-800">
-          <div className="max-w-7xl mx-auto flex items-center gap-2 overflow-x-auto text-xs whitespace-nowrap">
+          <div className="max-w-7xl mx-auto flex items-center gap-2 overflow-x-auto scrollbar-none text-xs whitespace-nowrap py-0.5">
             <span className="font-bold text-amber-600 dark:text-amber-400 mr-2 flex items-center gap-1 shrink-0">
               <Layers className="w-3.5 h-3.5" />
               <span>Categories:</span>
@@ -157,8 +158,8 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
                 setSelectedSection('Copper Yantra');
                 setSelectedPoojaSubCategory('All');
               }}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all border ${
-                selectedSection === 'Copper Yantra'
+              className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all border shrink-0 ${
+                (selectedSection as string) === 'Copper Yantra'
                   ? 'bg-amber-600 text-stone-950 border-amber-500 shadow'
                   : 'bg-stone-100 text-stone-700 border-amber-200 hover:bg-amber-100 dark:bg-stone-900 dark:text-stone-300 dark:border-stone-800 dark:hover:text-amber-300'
               }`}
@@ -176,7 +177,7 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
                     setSelectedSection('Pooja Products');
                     setSelectedPoojaSubCategory(subCat);
                   }}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all border ${
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all border shrink-0 ${
                     selectedSection === 'Pooja Products' && selectedPoojaSubCategory === subCat
                       ? 'bg-amber-600 text-stone-950 border-amber-500 shadow'
                       : 'bg-stone-100 text-stone-700 border-amber-200 hover:bg-amber-100 dark:bg-stone-900 dark:text-stone-300 dark:border-stone-800 dark:hover:text-amber-300'
@@ -192,8 +193,8 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
 
       {selectedSection === 'Copper Yantra' && (
         <div className="border-b py-3 px-4 sm:px-6 lg:px-8 transition-colors bg-white/90 border-amber-200 dark:bg-stone-950/90 dark:border-stone-800">
-          <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 overflow-x-auto text-xs whitespace-nowrap">
-            <div className="flex items-center gap-2">
+          <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 overflow-x-auto scrollbar-none text-xs whitespace-nowrap py-0.5">
+            <div className="flex items-center gap-2 shrink-0">
               <span className="font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1">
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>Sacred Copper Yantras:</span>
@@ -207,7 +208,7 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
                 setSelectedSection('All');
                 setSelectedPoojaSubCategory('All');
               }}
-              className="text-stone-600 dark:text-stone-400 hover:text-amber-600 dark:hover:text-amber-300 underline font-medium"
+              className="text-stone-600 dark:text-stone-400 hover:text-amber-600 dark:hover:text-amber-300 underline font-medium shrink-0"
             >
               Show All Products
             </button>
@@ -216,9 +217,25 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
       )}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        {/* Mobile Filter Collapsible Header Button */}
+        <div className="lg:hidden mb-4">
+          <button
+            onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
+            className="w-full flex items-center justify-between p-3.5 rounded-2xl border bg-white dark:bg-stone-900 border-amber-200 dark:border-stone-800 shadow-sm font-bold text-xs text-amber-900 dark:text-amber-300 transition-colors"
+          >
+            <div className="flex items-center gap-2">
+              <Filter className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+              <span>Filter & Search Products</span>
+            </div>
+            <span className="text-[11px] font-semibold text-stone-500 dark:text-stone-400">
+              {mobileFiltersOpen ? 'Hide Filters ▲' : 'Show Filters ▼'}
+            </span>
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
           {/* Left Sidebar: Filters */}
-          <div className="lg:col-span-1 space-y-6">
+          <div className={`lg:col-span-1 space-y-6 ${mobileFiltersOpen ? 'block' : 'hidden lg:block'}`}>
             <div className="rounded-2xl p-5 space-y-5 shadow-lg backdrop-blur border bg-white border-amber-200/80 text-stone-900 dark:bg-stone-900/80 dark:border-stone-800 dark:text-stone-100">
               <div className="flex items-center justify-between border-b border-amber-100 dark:border-stone-800 pb-3">
                 <div className="flex items-center gap-2 text-amber-700 dark:text-amber-300 font-bold text-sm">
@@ -355,7 +372,7 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
                 </p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {filteredItems.map((item) => {
                   const stock = item.stockCountRemaining ?? 0;
                   const isOutOfStock = stock <= 0 || item.isAvailable === false;

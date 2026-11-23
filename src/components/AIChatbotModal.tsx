@@ -86,7 +86,7 @@ export const AIChatbotModal: React.FC<AIChatbotModalProps> = ({ isOpen, onClose 
       onClick={onClose}
     >
       <div
-        className="bg-white border-2 border-amber-300 text-stone-900 rounded-3xl max-w-lg w-full h-[600px] flex flex-col shadow-2xl relative overflow-hidden"
+        className="bg-white border-2 border-amber-300 text-stone-900 rounded-3xl max-w-lg w-full h-[85vh] max-h-[600px] flex flex-col shadow-2xl relative overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}

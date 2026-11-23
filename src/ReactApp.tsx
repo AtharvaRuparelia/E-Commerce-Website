@@ -180,14 +180,14 @@ export const ReactApp: React.FC = () => {
       </main>
 
       {/* Floating Action Buttons (AI Advisor + WhatsApp below) */}
-      <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
+      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 flex flex-col items-end gap-2.5 sm:gap-3">
         {/* Floating AI Chatbot Button */}
         <button
           onClick={() => setAiChatOpen(true)}
-          className="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-stone-950 p-3.5 rounded-full shadow-2xl border-2 border-stone-950 flex items-center gap-2 group transition-all hover:scale-105 active:scale-95"
+          className="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-stone-950 p-3 sm:p-3.5 rounded-full shadow-2xl border-2 border-stone-950 flex items-center gap-2 group transition-all hover:scale-105 active:scale-95"
           title="Open AI Yantra Advisor"
         >
-          <Bot className="w-6 h-6" />
+          <Bot className="w-5 h-5 sm:w-6 sm:h-6" />
           <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 ease-in-out whitespace-nowrap text-xs font-bold pr-1">
             Ask AI Yantra Advisor
           </span>
@@ -196,10 +196,10 @@ export const ReactApp: React.FC = () => {
         {/* Floating WhatsApp Button (Below AI Chatbot) */}
         <button
           onClick={openWhatsApp}
-          className="bg-[#25D366] hover:bg-[#20ba5a] text-white p-3.5 rounded-full shadow-2xl border-2 border-stone-950 flex items-center gap-2 group transition-all hover:scale-105 active:scale-95"
+          className="bg-[#25D366] hover:bg-[#20ba5a] text-white p-3 sm:p-3.5 rounded-full shadow-2xl border-2 border-stone-950 flex items-center gap-2 group transition-all hover:scale-105 active:scale-95"
           title="Chat on WhatsApp"
         >
-          <MessageCircle className="w-6 h-6 fill-white text-[#25D366]" />
+          <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 fill-white text-[#25D366]" />
           <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 ease-in-out whitespace-nowrap text-xs font-bold pr-1">
             Chat on WhatsApp
           </span>

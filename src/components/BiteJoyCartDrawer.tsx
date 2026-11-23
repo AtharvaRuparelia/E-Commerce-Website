@@ -109,7 +109,7 @@ export const BiteJoyCartDrawer: React.FC<BiteJoyCartDrawerProps> = ({
       onClick={onClose}
     >
       <div
-        className={`w-full max-w-md border-l h-full flex flex-col justify-between p-6 shadow-2xl space-y-6 transition-colors duration-300 ${
+        className={`w-full max-w-md border-l h-full flex flex-col justify-between p-4 sm:p-6 shadow-2xl space-y-4 sm:space-y-6 transition-colors duration-300 ${
           isDarkMode
             ? 'bg-stone-900 border-amber-600/40 text-stone-100'
             : 'bg-white border-amber-300 text-stone-900'
