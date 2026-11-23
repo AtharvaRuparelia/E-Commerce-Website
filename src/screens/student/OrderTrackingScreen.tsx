@@ -73,7 +73,7 @@ export const OrderTrackingScreen: React.FC<OrderTrackingScreenProps> = ({
               onClick={onBackToMenu}
               className="px-6 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-stone-950 text-xs font-bold transition-all shadow"
             >
-              Browse Yantra Catalog ➔
+              Browse Catalog ➔
             </button>
           )}
         </div>

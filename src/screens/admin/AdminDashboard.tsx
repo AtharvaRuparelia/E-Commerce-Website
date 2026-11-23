@@ -172,7 +172,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ isDarkMode = tru
                   : isDarkMode ? 'text-stone-400 hover:text-stone-200' : 'text-stone-600 hover:text-stone-900'
               }`}
             >
-              Yantra Catalog ({products.length})
+              Catalog ({products.length})
             </button>
           </div>
         </div>
