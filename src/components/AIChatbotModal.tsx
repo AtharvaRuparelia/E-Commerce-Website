@@ -81,35 +81,45 @@ export const AIChatbotModal: React.FC<AIChatbotModalProps> = ({ isOpen, onClose 
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-stone-900 border border-amber-600/40 text-stone-100 rounded-3xl max-w-lg w-full h-[600px] flex flex-col shadow-2xl relative overflow-hidden">
+    <div
+      className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white border-2 border-amber-300 text-stone-900 rounded-3xl max-w-lg w-full h-[600px] flex flex-col shadow-2xl relative overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Header */}
-        <div className="bg-gradient-to-r from-amber-950 via-stone-900 to-amber-950 border-b border-stone-800 p-4 flex items-center justify-between">
+        <div className="bg-gradient-to-r from-amber-50 via-white to-amber-50 border-b border-amber-200 p-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-amber-600 text-stone-950 flex items-center justify-center font-bold shadow">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-600 to-amber-500 text-white flex items-center justify-center font-bold shadow-md">
               <Bot className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-serif font-bold text-amber-200 text-sm flex items-center gap-1.5">
+              <h3 className="font-serif font-bold text-amber-950 text-base flex items-center gap-2">
                 <span>Bhavna AI Yantra Advisor</span>
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="flex h-2 w-2 relative">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                </span>
               </h3>
-              <p className="text-[10px] text-stone-400">
-                Trained on Sacred Geometry, Rituals & Delivery FAQs
+              <p className="text-[11px] text-stone-600">
+                Trained on Sacred Geometry, Rituals & Order FAQs
               </p>
             </div>
           </div>
 
           <button
             onClick={onClose}
-            className="p-1.5 text-stone-400 hover:text-white bg-stone-800 rounded-full transition-colors"
+            className="p-1.5 text-stone-500 hover:text-stone-900 bg-stone-100 hover:bg-stone-200 rounded-full transition-colors"
+            title="Close AI Advisor"
           >
-            <X className="w-4 h-4" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Messages Container */}
-        <div className="flex-1 p-4 overflow-y-auto space-y-4 text-xs">
+        {/* Messages Container with light clean background */}
+        <div className="flex-1 p-4 overflow-y-auto space-y-4 text-xs bg-amber-50/20">
           {messages.map((msg) => (
             <div
               key={msg.id}
@@ -118,24 +128,24 @@ export const AIChatbotModal: React.FC<AIChatbotModalProps> = ({ isOpen, onClose 
               }`}
             >
               <div
-                className={`w-7 h-7 rounded-full flex items-center justify-center text-stone-950 shrink-0 ${
-                  msg.sender === 'user' ? 'bg-amber-400' : 'bg-amber-600'
+                className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 shadow-sm ${
+                  msg.sender === 'user' ? 'bg-amber-600 text-white' : 'bg-amber-100 text-amber-800 border border-amber-300'
                 }`}
               >
-                {msg.sender === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
+                {msg.sender === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4 text-amber-700" />}
               </div>
 
               <div
-                className={`max-w-[80%] p-3.5 rounded-2xl space-y-1 shadow ${
+                className={`max-w-[80%] p-3.5 rounded-2xl space-y-1 shadow-sm leading-relaxed ${
                   msg.sender === 'user'
-                    ? 'bg-amber-600 text-stone-950 font-medium rounded-tr-none'
-                    : 'bg-stone-950 border border-stone-800 text-stone-200 rounded-tl-none'
+                    ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white font-medium rounded-tr-none'
+                    : 'bg-white border border-amber-200 text-stone-800 rounded-tl-none shadow-sm'
                 }`}
               >
-                <p className="leading-relaxed">{msg.text}</p>
+                <p>{msg.text}</p>
                 <span
                   className={`text-[9px] block text-right font-mono ${
-                    msg.sender === 'user' ? 'text-stone-900/70' : 'text-stone-500'
+                    msg.sender === 'user' ? 'text-amber-100' : 'text-stone-400'
                   }`}
                 >
                   {msg.timestamp}
@@ -145,37 +155,38 @@ export const AIChatbotModal: React.FC<AIChatbotModalProps> = ({ isOpen, onClose 
           ))}
         </div>
 
-        {/* Quick Suggestion Chips */}
-        <div className="px-4 py-2 bg-stone-950/80 border-t border-stone-800 flex gap-2 overflow-x-auto text-[11px] whitespace-nowrap">
+        {/* Quick Suggestion Chips with light background */}
+        <div className="px-4 py-2.5 bg-amber-50/70 border-t border-amber-200 flex gap-2 overflow-x-auto text-[11px] whitespace-nowrap">
           {quickQuestions.map((q, i) => (
             <button
               key={i}
               onClick={() => handleSend(q)}
-              className="bg-stone-900 hover:bg-stone-800 text-amber-300 border border-amber-600/30 px-3 py-1 rounded-full transition-colors"
+              className="bg-white hover:bg-amber-100 text-amber-900 border border-amber-300 px-3 py-1 rounded-full font-medium transition-colors shadow-sm cursor-pointer"
             >
               {q}
             </button>
           ))}
         </div>
 
-        {/* Input Form */}
+        {/* Input Form with light styling */}
         <form
           onSubmit={(e) => {
             e.preventDefault();
             handleSend(input);
           }}
-          className="p-3 bg-stone-950 border-t border-stone-800 flex items-center gap-2"
+          className="p-3 bg-white border-t border-amber-200 flex items-center gap-2"
         >
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask about Yantra placement, copper cleaning..."
-            className="flex-1 bg-stone-900 border border-stone-800 rounded-xl px-4 py-2.5 text-xs text-stone-200 placeholder-stone-500 focus:outline-none focus:border-amber-500"
+            className="flex-1 bg-stone-50 border border-stone-300 rounded-xl px-4 py-2.5 text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-600 focus:bg-white focus:ring-1 focus:ring-amber-500"
           />
           <button
             type="submit"
-            className="p-2.5 bg-amber-600 hover:bg-amber-500 text-stone-950 rounded-xl shadow transition-all active:scale-95"
+            className="p-2.5 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white rounded-xl shadow transition-all active:scale-95 cursor-pointer"
+            title="Send Message"
           >
             <Send className="w-4 h-4" />
           </button>
