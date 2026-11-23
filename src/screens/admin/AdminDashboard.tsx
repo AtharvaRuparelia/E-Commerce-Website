@@ -569,8 +569,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ isDarkMode = tru
                 placeholder="Product Name"
                 value={editingItem.name || ''}
                 onChange={(e) => setEditingItem({ ...editingItem, name: e.target.value })}
-                className={`w-full border rounded-xl p-3 focus:outline-none focus:border-amber-500 ${
-                  isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200' : 'bg-amber-50/50 border-amber-300 text-stone-900'
+                className={`w-full border rounded-xl p-3 focus:outline-none focus:border-amber-500 text-base placeholder:text-base ${
+                  isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200 placeholder:text-stone-500' : 'bg-amber-50/50 border-amber-300 text-stone-900 placeholder:text-stone-400'
                 }`}
                 required
               />
@@ -580,8 +580,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ isDarkMode = tru
                   placeholder="Price (₹)"
                   value={editingItem.price || ''}
                   onChange={(e) => setEditingItem({ ...editingItem, price: Number(e.target.value) })}
-                  className={`w-full border rounded-xl p-3 focus:outline-none focus:border-amber-500 ${
-                    isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200' : 'bg-amber-50/50 border-amber-300 text-stone-900'
+                  className={`w-full border rounded-xl p-3 focus:outline-none focus:border-amber-500 text-base placeholder:text-base ${
+                    isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200 placeholder:text-stone-500' : 'bg-amber-50/50 border-amber-300 text-stone-900 placeholder:text-stone-400'
                   }`}
                   required
                 />
@@ -590,8 +590,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ isDarkMode = tru
                   placeholder="Quantity"
                   value={editingItem.stockCountRemaining || ''}
                   onChange={(e) => setEditingItem({ ...editingItem, stockCountRemaining: Number(e.target.value) })}
-                  className={`w-full border rounded-xl p-3 focus:outline-none focus:border-amber-500 ${
-                    isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200' : 'bg-amber-50/50 border-amber-300 text-stone-900'
+                  className={`w-full border rounded-xl p-3 focus:outline-none focus:border-amber-500 text-base placeholder:text-base ${
+                    isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200 placeholder:text-stone-500' : 'bg-amber-50/50 border-amber-300 text-stone-900 placeholder:text-stone-400'
                   }`}
                   required
                 />
@@ -603,8 +603,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ isDarkMode = tru
                   placeholder="Weight(Grams)"
                   value={editingItem.metalWeightGrams || ''}
                   onChange={(e) => setEditingItem({ ...editingItem, metalWeightGrams: Number(e.target.value) })}
-                  className={`w-full border rounded-xl p-3 focus:outline-none focus:border-amber-500 ${
-                    isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200' : 'bg-amber-50/50 border-amber-300 text-stone-900'
+                  className={`w-full border rounded-xl p-3 focus:outline-none focus:border-amber-500 text-base placeholder:text-base ${
+                    isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200 placeholder:text-stone-500' : 'bg-amber-50/50 border-amber-300 text-stone-900 placeholder:text-stone-400'
                   }`}
                 />
                 <input
@@ -612,8 +612,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ isDarkMode = tru
                   placeholder="size(eg.6x6 in)"
                   value={editingItem.dimensionsInches || ''}
                   onChange={(e) => setEditingItem({ ...editingItem, dimensionsInches: e.target.value })}
-                  className={`w-full border rounded-xl p-3 focus:outline-none focus:border-amber-500 ${
-                    isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200' : 'bg-amber-50/50 border-amber-300 text-stone-900'
+                  className={`w-full border rounded-xl p-3 focus:outline-none focus:border-amber-500 text-base placeholder:text-base ${
+                    isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200 placeholder:text-stone-500' : 'bg-amber-50/50 border-amber-300 text-stone-900 placeholder:text-stone-400'
                   }`}
                 />
               </div>
@@ -623,8 +623,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ isDarkMode = tru
                 placeholder="Description"
                 value={editingItem.description || ''}
                 onChange={(e) => setEditingItem({ ...editingItem, description: e.target.value })}
-                className={`w-full border rounded-xl p-3 focus:outline-none focus:border-amber-500 ${
-                  isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200' : 'bg-amber-50/50 border-amber-300 text-stone-900'
+                className={`w-full border rounded-xl p-3 focus:outline-none focus:border-amber-500 text-base placeholder:text-base ${
+                  isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200 placeholder:text-stone-500' : 'bg-amber-50/50 border-amber-300 text-stone-900 placeholder:text-stone-400'
                 }`}
               />
 
