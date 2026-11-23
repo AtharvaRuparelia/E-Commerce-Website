@@ -41,15 +41,15 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ isDarkMode = tru
   const [editProductModalOpen, setEditProductModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<Partial<MenuItem>>({
     name: '',
-    category: 'Shree Yantras',
-    price: 1499,
+    category: 'Copper Yantra',
+    price: undefined,
     description: '',
-    imageUrl: '/items/shree-yantra.jpg',
+    imageUrl: '',
     isAvailable: true,
-    stockCountRemaining: 30,
+    stockCountRemaining: undefined,
     minSafetyLimit: 5,
-    metalWeightGrams: 250,
-    dimensionsInches: '6x6 in'
+    metalWeightGrams: undefined,
+    dimensionsInches: ''
   });
 
   useEffect(() => {
@@ -375,15 +375,15 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ isDarkMode = tru
                 onClick={() => {
                   setEditingItem({
                     name: '',
-                    category: 'Shree Yantras',
-                    price: 1499,
+                    category: 'Copper Yantra',
+                    price: undefined,
                     description: '',
-                    imageUrl: '/items/shree-yantra.jpg',
+                    imageUrl: '',
                     isAvailable: true,
-                    stockCountRemaining: 30,
+                    stockCountRemaining: undefined,
                     minSafetyLimit: 5,
-                    metalWeightGrams: 250,
-                    dimensionsInches: '6x6 in'
+                    metalWeightGrams: undefined,
+                    dimensionsInches: ''
                   });
                   setEditProductModalOpen(true);
                 }}
@@ -578,8 +578,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ isDarkMode = tru
                 <input
                   type="number"
                   placeholder="Price (₹)"
-                  value={editingItem.price || ''}
-                  onChange={(e) => setEditingItem({ ...editingItem, price: Number(e.target.value) })}
+                  value={editingItem.price !== undefined && editingItem.price !== null ? editingItem.price : ''}
+                  onChange={(e) => setEditingItem({ ...editingItem, price: e.target.value === '' ? undefined : Number(e.target.value) })}
                   className={`w-full border rounded-xl p-3 focus:outline-none focus:border-amber-500 text-base placeholder:text-base ${
                     isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200 placeholder:text-stone-500' : 'bg-amber-50/50 border-amber-300 text-stone-900 placeholder:text-stone-400'
                   }`}
@@ -588,8 +588,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ isDarkMode = tru
                 <input
                   type="number"
                   placeholder="Quantity"
-                  value={editingItem.stockCountRemaining || ''}
-                  onChange={(e) => setEditingItem({ ...editingItem, stockCountRemaining: Number(e.target.value) })}
+                  value={editingItem.stockCountRemaining !== undefined && editingItem.stockCountRemaining !== null ? editingItem.stockCountRemaining : ''}
+                  onChange={(e) => setEditingItem({ ...editingItem, stockCountRemaining: e.target.value === '' ? undefined : Number(e.target.value) })}
                   className={`w-full border rounded-xl p-3 focus:outline-none focus:border-amber-500 text-base placeholder:text-base ${
                     isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200 placeholder:text-stone-500' : 'bg-amber-50/50 border-amber-300 text-stone-900 placeholder:text-stone-400'
                   }`}
@@ -601,8 +601,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ isDarkMode = tru
                 <input
                   type="number"
                   placeholder="Weight(Grams)"
-                  value={editingItem.metalWeightGrams || ''}
-                  onChange={(e) => setEditingItem({ ...editingItem, metalWeightGrams: Number(e.target.value) })}
+                  value={editingItem.metalWeightGrams !== undefined && editingItem.metalWeightGrams !== null ? editingItem.metalWeightGrams : ''}
+                  onChange={(e) => setEditingItem({ ...editingItem, metalWeightGrams: e.target.value === '' ? undefined : Number(e.target.value) })}
                   className={`w-full border rounded-xl p-3 focus:outline-none focus:border-amber-500 text-base placeholder:text-base ${
                     isDarkMode ? 'bg-stone-950 border-stone-800 text-stone-200 placeholder:text-stone-500' : 'bg-amber-50/50 border-amber-300 text-stone-900 placeholder:text-stone-400'
                   }`}
