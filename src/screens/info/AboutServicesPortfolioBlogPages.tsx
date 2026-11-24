@@ -33,6 +33,7 @@ import {
 import { ActiveAppView } from '../../components/CopperHeader';
 import { MenuItem, MainProductSection, PoojaSubCategory } from '../../types';
 import { useCart } from '../../context/CartContext';
+import { WhatsAppIcon } from '../../components/WhatsAppIcon';
 
 interface InfoPagesProps {
   currentView: ActiveAppView;
@@ -206,7 +207,7 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
                   onClick={openWhatsApp}
                   className="px-4 py-3.5 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold rounded-2xl text-xs sm:text-sm transition-all flex items-center gap-1.5 shadow-lg"
                 >
-                  <MessageCircle className="w-4 h-4 fill-white text-[#25D366]" />
+                  <WhatsAppIcon className="w-4 h-4 fill-white" />
                   <span>WhatsApp Inquiry</span>
                 </button>
               </div>
@@ -818,8 +819,8 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
                 onClick={openWhatsApp}
                 className="px-6 py-3.5 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold rounded-2xl text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg"
               >
-                <MessageCircle className="w-4.5 h-4.5 fill-white text-[#25D366]" />
-                <span>Chat on WhatsApp</span>
+                <WhatsAppIcon className="w-4.5 h-4.5 fill-white" />
+                <span>Chat on WhatsApp with Bhavna Pooja Center</span>
               </button>
               <button
                 onClick={() => onSelectView('about')}

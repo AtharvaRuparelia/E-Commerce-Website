@@ -17,7 +17,8 @@ import { AIChatbotModal } from './components/AIChatbotModal';
 // Cart & Auth Modals
 import { BiteJoyCartDrawer } from './components/BiteJoyCartDrawer';
 import { BiteJoyAuthModal } from './components/BiteJoyAuthModal';
-import { Bot, MessageCircle } from 'lucide-react';
+import { WhatsAppIcon } from './components/WhatsAppIcon';
+import { Bot } from 'lucide-react';
 
 export const ReactApp: React.FC = () => {
   const { firebaseUser, profile } = useAuth();
@@ -200,11 +201,11 @@ export const ReactApp: React.FC = () => {
         <button
           onClick={openWhatsApp}
           className="bg-[#25D366] hover:bg-[#20ba5a] text-white p-3 sm:p-3.5 rounded-full shadow-2xl border-2 border-white/80 flex items-center gap-2 group transition-all hover:scale-105 active:scale-95"
-          title="Chat with Bhavna Pooja Center on WhatsApp (+91 99673 13319)"
+          title="Chat on WhatsApp with Bhavna Pooja Center"
         >
-          <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 fill-white text-[#25D366]" />
-          <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 ease-in-out whitespace-nowrap text-xs font-bold pr-1">
-            Chat on WhatsApp
+          <WhatsAppIcon className="w-5 h-5 sm:w-6 sm:h-6 fill-white" />
+          <span className="max-w-0 overflow-hidden group-hover:max-w-md transition-all duration-300 ease-in-out whitespace-nowrap text-xs font-bold pr-1">
+            Chat on WhatsApp with Bhavna Pooja Center
           </span>
         </button>
       </div>
