@@ -68,7 +68,7 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
   };
 
   const openWhatsApp = () => {
-    const phoneNumber = '919876543210';
+    const phoneNumber = '919967313319';
     const message = encodeURIComponent('Hello Bhavna Pooja Center, I have an inquiry regarding your Copper Yantras and Pooja essentials.');
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
@@ -1004,7 +1004,7 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
 
                     <div className="flex items-center gap-2.5">
                       <Phone className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
-                      <span>+91 98765 43210 / Shop Counter</span>
+                      <span>+91 99673 13319 / Shop Counter</span>
                     </div>
                   </div>
                 </div>

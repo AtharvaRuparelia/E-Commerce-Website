@@ -30,7 +30,7 @@ const INITIAL_ACCOUNTS: RegisteredAccount[] = [
     email: 'admin@bhavnapooja.com',
     pass: 'Admin@123',
     role: 'admin',
-    phone: '9876543211',
+    phone: '9967313319',
     createdAt: Date.now() - 3600000 * 48
   }
 ];

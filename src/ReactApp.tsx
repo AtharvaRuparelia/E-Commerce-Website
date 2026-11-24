@@ -98,8 +98,11 @@ export const ReactApp: React.FC = () => {
   const activeTrackingId = trackingOrderId || (studentOrders.length > 0 ? studentOrders[0].id : null);
 
   const openWhatsApp = () => {
-    const phoneNumber = '919876543210';
-    const message = encodeURIComponent('Hello Bhavna Pooja Center, I have an inquiry regarding your Copper Yantras and Pooja essentials.');
+    const phoneNumber = '919967313319';
+    const customerInfo = profile?.name ? ` My name is ${profile.name}.` : '';
+    const message = encodeURIComponent(
+      `Hello Bhavna Pooja Center, I have an inquiry regarding your Copper Yantras and Pooja essentials.${customerInfo}`
+    );
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
 
@@ -197,7 +200,7 @@ export const ReactApp: React.FC = () => {
         <button
           onClick={openWhatsApp}
           className="bg-[#25D366] hover:bg-[#20ba5a] text-white p-3 sm:p-3.5 rounded-full shadow-2xl border-2 border-white/80 flex items-center gap-2 group transition-all hover:scale-105 active:scale-95"
-          title="Chat on WhatsApp"
+          title="Chat with Bhavna Pooja Center on WhatsApp (+91 99673 13319)"
         >
           <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 fill-white text-[#25D366]" />
           <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 ease-in-out whitespace-nowrap text-xs font-bold pr-1">
