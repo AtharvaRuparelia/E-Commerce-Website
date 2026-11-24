@@ -111,7 +111,7 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
       // Price Filter
       if (item.price > maxPrice) return false;
 
-      // Metal Weight Filter
+      // Weight Filter
       if (selectedWeight !== 'All') {
         const weight = item.metalWeightGrams || 0;
         if (selectedWeight === 'under-200' && weight >= 200) return false;
@@ -272,11 +272,11 @@ export const YantraCatalogScreen: React.FC<YantraCatalogScreenProps> = ({
                 </div>
               </div>
 
-              {/* Metal Weight Filter */}
+              {/* Weight Filter */}
               <div className="space-y-2 pt-2 border-t border-amber-200 dark:border-stone-800">
                 <label className="text-xs font-semibold text-stone-700 dark:text-stone-300 flex items-center gap-1.5">
                   <Weight className="w-3.5 h-3.5 text-amber-600 dark:text-amber-500" />
-                  <span>Metal Weight (Grams)</span>
+                  <span>Weights (Grams)</span>
                 </label>
                 <select
                   value={selectedWeight}
