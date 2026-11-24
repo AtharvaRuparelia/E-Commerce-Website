@@ -820,7 +820,7 @@ export const AboutServicesPortfolioBlogPages: React.FC<InfoPagesProps> = ({
                 className="px-6 py-3.5 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold rounded-2xl text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg"
               >
                 <WhatsAppIcon className="w-4.5 h-4.5 fill-white" />
-                <span>Chat on WhatsApp with Bhavna Pooja Center</span>
+                <span>Chat on WhatsApp</span>
               </button>
               <button
                 onClick={() => onSelectView('about')}

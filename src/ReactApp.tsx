@@ -201,11 +201,11 @@ export const ReactApp: React.FC = () => {
         <button
           onClick={openWhatsApp}
           className="bg-[#25D366] hover:bg-[#20ba5a] text-white p-3 sm:p-3.5 rounded-full shadow-2xl border-2 border-white/80 flex items-center gap-2 group transition-all hover:scale-105 active:scale-95"
-          title="Chat on WhatsApp with Bhavna Pooja Center"
+          title="Chat on WhatsApp"
         >
           <WhatsAppIcon className="w-5 h-5 sm:w-6 sm:h-6 fill-white" />
-          <span className="max-w-0 overflow-hidden group-hover:max-w-md transition-all duration-300 ease-in-out whitespace-nowrap text-xs font-bold pr-1">
-            Chat on WhatsApp with Bhavna Pooja Center
+          <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 ease-in-out whitespace-nowrap text-xs font-bold pr-1">
+            Chat on WhatsApp
           </span>
         </button>
       </div>
